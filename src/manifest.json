@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Sample WebExtension",
+  "name": "Netflix",
   "version": "0.0.0",
 
   "icons": {
@@ -10,21 +10,16 @@
     "128": "assets/icons/favicon-128.png"
   },
   "description": "Sample description",
-  "homepage_url": "https://github.com/abhijithvijayan/web-extension-starter",
-  "short_name": "Sample Name",
+  "homepage_url": "https://github.com/texas2010/netflix-chrome-extension",
+  "short_name": "Netflix",
 
-  "permissions": [
-    "activeTab",
-    "storage",
-    "http://*/*",
-    "https://*/*"
-  ],
+  "permissions": ["activeTab", "storage", "https://www.netflix.com/*"],
 
   "content_security_policy": "script-src 'self'; object-src 'self'",
 
-  "__chrome|firefox__author": "abhijithvijayan",
+  "__chrome|firefox__author": "texas2010",
   "__opera__developer": {
-    "name": "abhijithvijayan"
+    "name": "texas2010"
   },
 
   "__firefox__applications": {
@@ -57,19 +52,14 @@
   },
 
   "background": {
-    "scripts": [
-      "js/background.bundle.js"
-    ],
+    "scripts": ["js/background.bundle.js"],
     "__chrome|opera__persistent": false
   },
 
-  "content_scripts": [{
-    "matches": [
-      "http://*/*",
-      "https://*/*"
-    ],
-    "js": [
-      "js/contentScript.bundle.js"
-    ]
-  }]
+  "content_scripts": [
+    {
+      "matches": ["https://www.netflix.com/*"],
+      "js": ["js/contentScript.bundle.js"]
+    }
+  ]
 }
