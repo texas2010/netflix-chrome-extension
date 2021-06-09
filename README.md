@@ -71,7 +71,7 @@ If you don't want to use `package.json` version, you can disable the option [her
 
 Update `src/manifest.json` file with browser vendor prefixed manifest keys
 
-```js
+```json
 {
   "__chrome__name": "SuperChrome",
   "__firefox__name": "SuperFox",
@@ -82,9 +82,9 @@ Update `src/manifest.json` file with browser vendor prefixed manifest keys
 
 if the vendor is `chrome` this compiles to:
 
-```js
+```json
 {
-  "name": "SuperChrome",
+  "name": "SuperChrome"
 }
 ```
 
@@ -92,7 +92,7 @@ if the vendor is `chrome` this compiles to:
 
 Add keys to multiple vendors by separating them with | in the prefix
 
-```
+```json
 {
   __chrome|opera__name: "SuperBlink"
 }
@@ -100,7 +100,7 @@ Add keys to multiple vendors by separating them with | in the prefix
 
 if the vendor is `chrome` or `opera`, this compiles to:
 
-```
+```json
 {
   "name": "SuperBlink"
 }
