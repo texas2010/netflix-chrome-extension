@@ -94,7 +94,7 @@ Add keys to multiple vendors by separating them with | in the prefix
 
 ```json
 {
-  __chrome|opera__name: "SuperBlink"
+  "__chrome|opera__name": "SuperBlink"
 }
 ```
 
