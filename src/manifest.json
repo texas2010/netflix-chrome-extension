@@ -59,6 +59,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.netflix.com/*"],
+      "css": ["css/contentScript.css"],
       "js": ["js/contentScript.bundle.js"]
     }
   ]
