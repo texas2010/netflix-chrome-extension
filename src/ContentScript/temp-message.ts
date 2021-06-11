@@ -5,7 +5,7 @@ export default (): void => {
   const liEl = document.createElement('li');
   liEl.classList.add('navigation-tab');
 
-  const messageEl = document.createElement('h1');
+  const messageEl = document.createElement('h2');
   messageEl.textContent = 'Netflix Feature is on!';
 
   liEl.appendChild(messageEl);
