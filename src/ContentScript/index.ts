@@ -14,7 +14,7 @@ window.addEventListener('load', () => {
   listenDOM();
 
   if (netflixContainer) {
-    netflixContainer.appendChild(myListParentElement);
+    netflixContainer.prepend(myListParentElement);
   }
 
   renderPage();
