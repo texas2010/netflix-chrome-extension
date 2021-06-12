@@ -1,3 +1,5 @@
+import renderPage from './renderPage';
+
 const observerOptions = {
   attributes: true,
   characterData: true,
@@ -17,6 +19,7 @@ const mutationObserver = new MutationObserver((mutations) => {
     if (oldHref !== document.location.href) {
       oldHref = document.location.href;
       console.log(document.location.href);
+      renderPage();
     }
   });
 });

@@ -1,5 +1,6 @@
 import tempMessage from './temp-message';
 import listenDOM from './listen-dom';
+import renderPage from './renderPage';
 
 window.addEventListener('load', () => {
   console.log('window loaded');
@@ -7,10 +8,7 @@ window.addEventListener('load', () => {
   tempMessage();
   listenDOM();
 
-  if (document.location.pathname === '/browse/my-list') {
-    // Install feature in the my list page.
-    console.log('Installed feature in the my list page');
-  }
+  renderPage();
 });
 
 export {};
