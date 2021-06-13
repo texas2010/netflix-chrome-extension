@@ -1,24 +1,26 @@
-import { useEffect } from 'react';
+// eslint-disable-next-line prettier/prettier
+import React, { useEffect } from 'react';
+// eslint-disable-next-line prettier/prettier
 import { createPortal } from 'react-dom';
 
 const Portal: ({
-  id,
+  selector,
   children,
 }: {
-  id: string;
-  children: JSX.Element;
+  selector: string;
+  children: React.ReactNode;
   // eslint-disable-next-line prettier/prettier
-}) => React.ReactPortal = ({ id, children }) => {
-  const mount: Element | null = document.getElementById(id);
+}) => React.ReactPortal = ({ selector, children }) => {
+  const mount: Element | null = document.querySelector(selector);
   const el = document.createElement('div');
 
   useEffect(() => {
     if (mount) {
       mount.appendChild(el);
     } else {
-      throw new Error('element id is not exist!');
+      throw new Error('selector is not exist!');
     }
-    return () => {
+    return (): void => {
       if (mount) {
         mount.removeChild(el);
       }
