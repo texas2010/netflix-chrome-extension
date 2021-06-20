@@ -1,17 +1,20 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 
-interface FilterTagsProps {
-  filterArr: {
-    text: string;
-    active?: boolean;
-    hide?: boolean;
-  }[];
+type FilterArrType = {
+  text: string;
+  active?: boolean;
+  hide?: boolean;
+}[];
+
+// type FilterTagsType = (params: { filterArr: FilterArrType }) => JSX.Element;
+
+interface FilterTagsType {
+  // eslint-disable-next-line no-undef
+  (props: { filterArr: FilterArrType }): JSX.Element;
 }
 
-// eslint-disable-next-line no-undef
-const FilterTags = (props: FilterTagsProps): JSX.Element => {
-  const { filterArr } = props;
+const FilterTags: FilterTagsType = ({ filterArr }) => {
   return (
     <>
       {filterArr.map((item) => {
