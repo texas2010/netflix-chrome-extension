@@ -1,12 +1,11 @@
-@import "../styles/fonts";
-@import "../styles/reset";
-@import "../styles/variables";
+@import '../styles/fonts';
+@import '../styles/reset';
+@import '../styles/variables';
 
 body {
-  color: $black;
-  background-color: $greyWhite;
+  color: white;
+  background-color: #141414;
 }
-
 
 #popup {
   min-width: 350px;
@@ -15,6 +14,7 @@ body {
   h2 {
     font-size: 25px;
     text-align: center;
+    color: #e50914;
   }
 
   #options__button {
