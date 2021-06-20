@@ -9,6 +9,10 @@ import './styles.scss';
 
 // eslint-disable-next-line no-undef
 const MyListParent = (): JSX.Element => {
+  const realRowListArr: Element[] = Array.from(
+    document.querySelectorAll('.rowListItem')
+  );
+
   const [filterArr] = useState([
     { text: 'Show All' },
     { text: 'Must Watch' },
@@ -18,11 +22,22 @@ const MyListParent = (): JSX.Element => {
     { text: 'Incomplete' },
     { text: 'Watching' },
   ]);
+
+  // const getRowListIDs = (): string[] => {
+  //   return realRowListArr.map((listItem) => `#${listItem.id}`);
+  // };
+
   return (
     <>
-      <Portal id="n-filter-tags">
+      <Portal selector="#n-filter-tags">
         <FilterTags filterArr={filterArr} />
       </Portal>
+      {realRowListArr
+        .map((listItem) => `#${listItem.id}`)
+        .map((id: string): React.ReactPortal => {
+          const el = document.querySelector(`${id} .notes`) as Element;
+          return ReactDOM.createPortal(<h2>Test Message</h2>, el);
+        })}
     </>
   );
 };
@@ -35,16 +50,17 @@ const render = (): void => {
     '.sub-header .galleryHeader'
   );
   const rowList: Element | null = document.querySelector('.mainView .rowList');
+
   const myListFilterTags: Element = document.createElement('div');
   myListFilterTags.setAttribute('id', 'n-filter-tags');
   myListHeading?.appendChild(myListFilterTags);
   console.log('starting to install feature in the my list page');
 
-  if (myListParentRoot) {
-    ReactDOM.render(<MyListParent />, myListParentRoot);
-  }
   if (rowList) {
     rowList.setAttribute('id', 'n-row-list');
+  }
+  if (myListParentRoot) {
+    ReactDOM.render(<MyListParent />, myListParentRoot);
   }
 };
 
