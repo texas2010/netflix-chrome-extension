@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 interface UserInfoDataI {
   name: string;
   membershipStatus: string;
+  guid: string;
 }
 
 type SetCallbackType = React.Dispatch<
@@ -17,15 +18,10 @@ const messageEvent = (e: MessageEvent, setCallback: SetCallbackType): void => {
   if (e.data.type && e.data.type === 'USER_INFO_DATA') {
     // eslint-disable-next-line prettier/prettier
     const { name, membershipStatus } = e.data.data;
-    console.log('user info data', e.data.data);
     setCallback(e.data.data);
     chrome.storage.sync.set(
       // eslint-disable-next-line prettier/prettier
-      { 'n-user-info-data': { name, membershipStatus } },
-      () => {
-        // eslint-disable-next-line prettier/prettier
-        console.log(`Value is set to `, { name, membershipStatus });
-      }
+      { 'n-user-info-data': { name, membershipStatus } }
     );
   }
 };
@@ -56,16 +52,21 @@ const App = (): JSX.Element => {
     };
   }, []);
 
+  if (userInfoData) {
+    if (
+      userInfoData.guid &&
+      !userInfoData.membershipStatus.toLowerCase().includes('anon')
+    ) {
+      return <>{/* User Logging */}</>;
+    }
+    return <>{/* Guest */}</>;
+  }
   return (
     <>
       {isUserInfoDataLoading && (
         // eslint-disable-next-line react/self-closing-comp
         <span className="user-info-data-loading"></span>
       )}
-      <h1>test message</h1>
-      <p>some reason to leave this message on for test.</p>
-      {userInfoData && <h2>{userInfoData.name}</h2>}
-      {userInfoData && <h3>{userInfoData.membershipStatus}</h3>}
     </>
   );
 };
@@ -77,13 +78,3 @@ export default (): void => {
     ReactDOM.render(<App />, appRoot);
   }
 };
-
-// check if user logged in
-
-// if (
-//   userInfoData.guid &&
-//   !userInfoData.membershipStatus.toLowerCase().includes('anon')
-// ) {
-//   // guid && membershipStatus.toLowerCase().includes('anon')
-//   console.log('user is loggin');
-// }
