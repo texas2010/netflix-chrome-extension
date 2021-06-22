@@ -1,23 +1,24 @@
 import tempMessage from './temp-message';
-import listenDOM from './listen-dom';
-import renderPage from './renderPage';
+import appRender from './components/App';
+
+// eslint-disable-next-line prettier/prettier
+import { userInfoData } from './window-post-message';
+
+import './style.scss';
 
 window.addEventListener('load', () => {
-  const netflixContainer: Element | null | undefined =
-    document.querySelector('.mainView')?.parentElement;
-  const myListParentElement: Element = document.createElement('div');
-  myListParentElement.setAttribute('id', 'my-list-parent-root');
-
   console.log('window loaded');
+  const appRoot = document.createElement('div');
+  const theirAppRoot: Element | null = document.getElementById('appMountPoint');
+  appRoot.setAttribute('id', 'n-app-root');
 
-  tempMessage();
-  listenDOM();
+  if (theirAppRoot) {
+    tempMessage();
+    userInfoData();
 
-  if (netflixContainer) {
-    netflixContainer.prepend(myListParentElement);
+    theirAppRoot.appendChild(appRoot); // this code must be first before call app render
+    appRender();
   }
-
-  renderPage();
 });
 
 export {};
