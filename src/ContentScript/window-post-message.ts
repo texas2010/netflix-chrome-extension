@@ -16,12 +16,12 @@ export const userInfoData = async (): Promise<void> => {
   await ((): void => {
     function script(): void {
       setTimeout(function tick() {
-        console.log('tick');
+        // console.log('tick');
         const isElementExist: Element | null = document.querySelector(
           '#n-app-root .user-info-data-loading'
         );
         if (isElementExist) {
-          console.log('putting window post message');
+          // console.log('putting window post message');
           window.postMessage(
             {
               type: 'USER_INFO_DATA',

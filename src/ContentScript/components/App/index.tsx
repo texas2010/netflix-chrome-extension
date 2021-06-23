@@ -2,6 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
+// eslint-disable-next-line prettier/prettier
+
+import connectListenDom from './listen-dom';
+
 interface UserInfoDataI {
   name: string;
   membershipStatus: string;
@@ -31,6 +35,7 @@ const App = (): JSX.Element => {
   const [userInfoData, setUserInfoData] = useState<UserInfoDataI | null>(null);
   const [isUserInfoDataLoading, setUserInfoDataLoading] =
     useState<boolean>(false);
+  const [sitePage, setSitePage] = useState<string>(document.location.href);
 
   useEffect(() => {
     window.addEventListener(
@@ -52,12 +57,34 @@ const App = (): JSX.Element => {
     };
   }, []);
 
+  useEffect(() => {
+    const disconnect = connectListenDom(setSitePage);
+    return (): void => {
+      disconnect();
+    };
+  }, []);
+
+  // eslint-disable-next-line prettier/prettier
+  const { pathname, search, searchParams, href } = new URL(sitePage);
+
   if (userInfoData) {
     if (
       userInfoData.guid &&
       !userInfoData.membershipStatus.toLowerCase().includes('anon')
     ) {
-      return <>{/* User Logging */}</>;
+      return (
+        <>
+          {/* User Logging */}
+          {`href: ${href}`}
+          {pathname === '/browse' && search === '' && 'Browse Page'}
+          {pathname.includes('/browse') &&
+            search !== '' &&
+            `Browse/Title Page ${searchParams.get('jbv')}`}
+          {pathname.includes('/my-list') && 'My List Page'}
+          {pathname.includes('/title') &&
+            `Title Page: ${pathname.split('/').reverse()[0]}`}
+        </>
+      );
     }
     return <>{/* Guest */}</>;
   }
