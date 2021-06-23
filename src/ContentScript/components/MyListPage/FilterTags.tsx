@@ -7,8 +7,6 @@ type FilterArrType = {
   hide?: boolean;
 }[];
 
-// type FilterTagsType = (params: { filterArr: FilterArrType }) => JSX.Element;
-
 interface FilterTagsType {
   // eslint-disable-next-line no-undef
   (props: { filterArr: FilterArrType }): JSX.Element;
