@@ -15,12 +15,15 @@ declare global {
 export const userInfoData = async (): Promise<void> => {
   await ((): void => {
     function script(): void {
-      setTimeout(function tick() {
+      const started = Date.now();
+      const timerID = setTimeout(function tick() {
         // console.log('tick');
         const isElementExist: Element | null = document.querySelector(
           '#n-app-root .user-info-data-loading'
         );
-        if (isElementExist) {
+        if (Date.now() - started > 10000) {
+          clearTimeout(timerID);
+        } else if (isElementExist) {
           // console.log('putting window post message');
           window.postMessage(
             {

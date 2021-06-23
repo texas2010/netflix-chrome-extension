@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 
 // eslint-disable-next-line prettier/prettier
 
+import RoutePage from '../RoutePage';
 import connectListenDom from './listen-dom';
 
 interface UserInfoDataI {
@@ -76,13 +77,11 @@ const App = (): JSX.Element => {
         <>
           {/* User Logging */}
           {`href: ${href}`}
-          {pathname === '/browse' && search === '' && 'Browse Page'}
-          {pathname.includes('/browse') &&
-            search !== '' &&
-            `Browse/Title Page ${searchParams.get('jbv')}`}
-          {pathname.includes('/my-list') && 'My List Page'}
-          {pathname.includes('/title') &&
-            `Title Page: ${pathname.split('/').reverse()[0]}`}
+          <RoutePage
+            pathname={pathname}
+            search={search}
+            searchParams={searchParams}
+          />
         </>
       );
     }

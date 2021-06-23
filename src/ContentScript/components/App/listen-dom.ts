@@ -22,7 +22,7 @@ const connect: ConnectI = (setCallback) => {
       mutations.forEach(() => {
         if (oldHref !== document.location.href) {
           oldHref = document.location.href;
-          console.log(document.location.href);
+          // console.log(document.location.href);
           setCallback(document.location.href);
         }
       });
