@@ -58,16 +58,6 @@ const MyListPage = (): JSX.Element => {
   const [isMyListHeadingExist, setMyListHeadingExist] = useState(false);
   const [isRowListExist, setRowListExist] = useState(false);
 
-  const [filterArr] = useState([
-    { text: 'Show All' },
-    { text: 'Must Watch' },
-    { text: 'Movie' },
-    { text: 'Tv Show' },
-    { text: 'Complete' },
-    { text: 'Incomplete' },
-    { text: 'Watching' },
-  ]);
-
   useEffect(() => {
     const clear = checkElementExist(
       '.sub-header .galleryHeader',
@@ -104,7 +94,7 @@ const MyListPage = (): JSX.Element => {
         <h1>My List Page</h1>
         <h2>load finished</h2>
         <Portal selector="#n-filter-tags">
-          <FilterTags filterArr={filterArr} />
+          <FilterTags />
         </Portal>
       </>
     );

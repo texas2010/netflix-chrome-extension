@@ -18,6 +18,7 @@ const RoutePage: RoutePageI = ({ pathname, search, searchParams }) => {
       {pathname === '/browse' && search === '' && 'Browse Page'}
       {pathname.includes('/browse') &&
         search !== '' &&
+        searchParams.has('jbv') &&
         `Browse/Title Page ${searchParams.get('jbv')}`}
       {pathname.includes('/my-list') && <MyListPage />}
       {pathname.includes('/title') &&

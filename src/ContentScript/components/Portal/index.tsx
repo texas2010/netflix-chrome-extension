@@ -3,14 +3,13 @@ import React, { useEffect } from 'react';
 // eslint-disable-next-line prettier/prettier
 import { createPortal } from 'react-dom';
 
-const Portal: ({
-  selector,
-  children,
-}: {
-  selector: string;
-  children: React.ReactNode;
+interface PortalI {
   // eslint-disable-next-line prettier/prettier
-}) => React.ReactPortal = ({ selector, children }) => {
+  (props: { selector: string; children: React.ReactNode }): React.ReactPortal;
+}
+
+// eslint-disable-next-line prettier/prettier
+const Portal: PortalI = ({ selector, children }) => {
   const mount: Element | null = document.querySelector(selector);
   const el = document.createElement('div');
 
