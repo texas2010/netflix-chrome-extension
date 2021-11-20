@@ -1,18 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
+import { useStore } from '../../store';
 
-type FilterArrType = {
-  text: string;
-  active?: boolean;
-  hide?: boolean;
-}[];
+import { FilterTagsI, FilterArrI } from '../../types';
 
-interface FilterTagsType {
-  // eslint-disable-next-line no-undef
-  (props: { filterArr: FilterArrType }): JSX.Element;
-}
-
-const FilterTags: FilterTagsType = ({ filterArr }) => {
+const FilterTags: FilterTagsI = () => {
+  const { filterArr }: FilterArrI = useStore();
   return (
     <>
       {filterArr.map((item) => {

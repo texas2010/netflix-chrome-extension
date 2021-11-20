@@ -1,11 +1,11 @@
-// eslint-disable-next-line prettier/prettier
+/* eslint-disable prettier/prettier */
+
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-// eslint-disable-next-line prettier/prettier
-
 import RoutePage from '../RoutePage';
 import connectListenDom from './listen-dom';
+import { StoreProvider, stateDefaultValue } from '../../store';
 
 interface UserInfoDataI {
   name: string;
@@ -13,11 +13,12 @@ interface UserInfoDataI {
   guid: string;
 }
 
-type SetCallbackType = React.Dispatch<
-  React.SetStateAction<UserInfoDataI | null>
->;
+type SetCallBackType<T> = React.Dispatch<React.SetStateAction<T | null>>;
 
-const messageEvent = (e: MessageEvent, setCallback: SetCallbackType): void => {
+const messageEvent = (
+  e: MessageEvent,
+  setCallback: SetCallBackType<UserInfoDataI>
+): void => {
   if (e.source !== window) return;
 
   if (e.data.type && e.data.type === 'USER_INFO_DATA') {
@@ -101,6 +102,14 @@ const App = (): JSX.Element => {
 export default (): void => {
   const appRoot: Element | null = document.getElementById('n-app-root');
   if (appRoot) {
-    ReactDOM.render(<App />, appRoot);
+    ReactDOM.render(
+      <StoreProvider
+        initialState={stateDefaultValue}
+        reducer={(state): any => state}
+      >
+        <App />
+      </StoreProvider>,
+      appRoot
+    );
   }
 };
