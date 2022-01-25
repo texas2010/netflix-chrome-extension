@@ -1,6 +1,6 @@
 {
   "name": "netflix-chrome-extension",
-  "version": "0.0.1",
+  "version": "1.2.0",
   "description": "Web extension starter using react and typescript",
   "private": true,
   "repository": "https://github.com/texas2010/netflix-chrome-extension.git",
