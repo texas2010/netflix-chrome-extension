@@ -1,7 +1,7 @@
 {
   "name": "Chrome React SEO Extension",
   "description": "The power of React and TypeScript for building interactive Chrome extensions",
-  "version": "1.0",
+  "version": "2.0.0",
   "manifest_version": 3,
   "action": {
     "default_popup": "popup.html",
@@ -9,14 +9,19 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
+      "matches": ["*://*.netflix.com/*"],
+      "css": ["./static/css/contentScript.css"],
       "js": ["./static/js/contentScript.js"]
     }
   ],
-  "permissions": ["activeTab"],
+  "permissions": [],
   "icons": {
     "16": "favicon-16.png",
     "48": "favicon-48.png",
     "128": "favicon-128.png"
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "./static/js/background.js"
   }
 }
