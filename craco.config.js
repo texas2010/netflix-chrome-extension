@@ -3,13 +3,13 @@ const path = require('path');
 const rewireEntries = [
   {
     name: 'popup',
-    entry: path.resolve(__dirname, './src/popup/index.ts'),
+    entry: path.resolve(__dirname, './src/popup/index.tsx'),
     template: path.resolve(__dirname, './src/popup/index.html'),
     outPath: 'popup.html',
   },
   {
     name: 'options',
-    entry: path.resolve(__dirname, './src/options/index.ts'),
+    entry: path.resolve(__dirname, './src/options/index.tsx'),
     template: path.resolve(__dirname, './src/options/index.html'),
     outPath: 'options.html',
   },
@@ -38,8 +38,13 @@ const appIndexes = ['js', 'tsx', 'ts', 'jsx'].map((ext) =>
   path.resolve(__dirname, `src/index.${ext}`)
 );
 
-function webpackMultipleEntries(config, paths) {
+function webpackMultipleEntries(config) {
   // Multiple Entry JS
+  config.plugins.forEach((plugin) => {
+    if (plugin.constructor.name === 'MiniCssExtractPlugin') {
+      plugin.options.filename = 'static/css/[name].css';
+    }
+  });
   const defaultEntryHTMLPlugin = config.plugins.filter((plugin) => {
     return plugin.constructor.name === 'HtmlWebpackPlugin';
   })[0];
@@ -102,6 +107,11 @@ module.exports = {
           runtimeChunk: false,
         },
       };
+    },
+  },
+  devServer: {
+    devMiddleware: {
+      writeToDisk: true,
     },
   },
 };
