@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Options from '../components/Options';
-import './index.css';
+import OptionsPage from '../components/OptionsPage';
 document.title = 'Options Page';
 console.log('Options file');
 
-ReactDOM.render(<Options />, document.getElementById('root'));
+ReactDOM.render(<OptionsPage />, document.getElementById('root'));

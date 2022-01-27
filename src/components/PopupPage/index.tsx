@@ -1,5 +1,5 @@
 import React from 'react';
-// import { hot } from 'react-hot-loader';
+import './index.css';
 
 const Popup = () => {
   return (
@@ -9,5 +9,4 @@ const Popup = () => {
   );
 };
 
-// export default hot(module)(Popup);
 export default Popup;
