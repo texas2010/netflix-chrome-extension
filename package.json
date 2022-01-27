@@ -19,9 +19,13 @@
   },
   "scripts": {
     "start": "craco start",
+    "prebuild": "npm run clean",
     "build": "craco build",
+    "postbuild": "npm run deleteignore",
     "test": "craco test",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "clean": "rm -rf build/*",
+    "deleteignore": "rm -rf build/ignore-this/"
   },
   "eslintConfig": {
     "extends": [
@@ -42,6 +46,7 @@
     ]
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.177"
+    "@types/chrome": "^0.0.177",
+    "copy-webpack-plugin": "^10.2.1"
   }
 }

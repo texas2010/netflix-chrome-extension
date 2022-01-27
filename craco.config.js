@@ -1,16 +1,17 @@
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const rewireEntries = [
   {
     name: 'popup',
     entry: path.resolve(__dirname, './src/popup/index.tsx'),
-    template: path.resolve(__dirname, './src/popup/index.html'),
+    template: path.resolve(__dirname, './public/index.html'),
     outPath: 'popup.html',
   },
   {
     name: 'options',
     entry: path.resolve(__dirname, './src/options/index.tsx'),
-    template: path.resolve(__dirname, './src/options/index.html'),
+    template: path.resolve(__dirname, './public/index.html'),
     outPath: 'options.html',
   },
   {
@@ -85,12 +86,26 @@ function webpackMultipleEntries(config) {
     names[0] = '[name].' + names[0];
     config.output.filename = names.reverse().join('/');
   }
-  // console.log(config.output);
   return config;
 }
 
 module.exports = {
   webpack: {
+    plugins: {
+      add: [
+        new CopyPlugin({
+          patterns: [
+            {
+              from: path.resolve('public/manifest.json'),
+            },
+            {
+              from: path.resolve('public/assets'),
+              to: path.resolve('build/assets'),
+            },
+          ],
+        }),
+      ],
+    },
     configure: (webpackConfig, { env, paths }) => {
       const newWebpackConfig = webpackMultipleEntries(webpackConfig);
       return {
