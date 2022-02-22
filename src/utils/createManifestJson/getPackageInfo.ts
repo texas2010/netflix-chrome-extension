@@ -19,12 +19,14 @@ const getPackageInfo = async (
 
     // get data from package.json file
     const dataStr = await afs.readFile(filename, 'utf8');
+
     // check and throw error when it is empty string.
     if (!dataStr) {
       throw new Error(error.packageExistEmpty);
     }
 
     const dataObj = JSON.parse(dataStr);
+
     // check and throw error when it is not object.
     if (Object.prototype.toString.call(dataObj) !== '[object Object]') {
       throw new Error(error.packageObjectRequired);
