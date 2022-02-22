@@ -96,9 +96,6 @@ module.exports = {
         new CopyPlugin({
           patterns: [
             {
-              from: path.resolve('public/manifest.json'),
-            },
-            {
               from: path.resolve('public/assets'),
               to: path.resolve('build/assets'),
             },
