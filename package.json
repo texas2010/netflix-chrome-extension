@@ -11,22 +11,28 @@
     "@types/node": "^16.11.21",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "dotenv": "^16.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
+    "ts-node": "^10.5.0",
     "typescript": "^4.5.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "prestart": "npm run clean",
+    "deleteignore": "rm -rf build/ignore-this/",
+    "clean": "rm -rf build/*",
+    "premanifest-dev": "npm run clean",
+    "premanifest-prod": "npm run clean",
+    "manifest-dev": "NODE_ENV=development ts-node --skip-project src/utils/createManifestJson",
+    "manifest-prod": "NODE_ENV=production ts-node --skip-project src/utils/createManifestJson",
+    "prestart": "npm run manifest-dev",
     "start": "craco start",
-    "prebuild": "npm run clean",
+    "prebuild": "npm run manifest-prod",
     "build": "craco build",
     "postbuild": "npm run deleteignore",
     "test": "craco test",
-    "eject": "craco eject",
-    "clean": "rm -rf build/*",
-    "deleteignore": "rm -rf build/ignore-this/"
+    "eject": "craco eject"
   },
   "eslintConfig": {
     "extends": [
