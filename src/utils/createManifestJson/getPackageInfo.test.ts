@@ -6,24 +6,14 @@ import getPackageInfo, { error } from './getPackageInfo';
 describe('getPackageInfo function', () => {
   test('should have throw error when package.json is not exist', async () => {
     const filename = `${path.resolve('./fake-test')}/fake-package.json`;
-    const expected = error.packageRequired;
+    const expected = error.fileRequired;
 
     await expect(getPackageInfo(filename)).rejects.toThrowError(expected);
-  });
-  test('should have package.json exist', async () => {
-    const filename = `${path.resolve('./fake-test')}/temp-package.json`;
-    const input = JSON.stringify({ testMessage: 'ok', version: '1.4.1' });
-    const expected = { testMessage: 'ok', version: '1.4.1' };
-
-    await afs.writeFile(filename, input);
-
-    await expect(getPackageInfo(filename)).resolves.toEqual(expected);
-    await afs.unlink(filename);
   });
   test('should throw error when package.json is exist but empty', async () => {
     const filename = `${path.resolve('./fake-test')}/temp-package.json`;
     const input = '';
-    const expected = error.packageExistEmpty;
+    const expected = error.fileExistEmpty;
 
     await afs.writeFile(filename, input);
 
@@ -34,7 +24,7 @@ describe('getPackageInfo function', () => {
   test('should throw error when it is not object in the package.json', async () => {
     const filename = `${path.resolve('./fake-test')}/temp-package.json`;
     const input: any[] = [];
-    const expected = error.packageObjectRequired;
+    const expected = error.ObjectRequired;
 
     await afs.writeFile(filename, JSON.stringify(input));
 
@@ -45,7 +35,7 @@ describe('getPackageInfo function', () => {
   test('should throw error when object is empty in the package.json', async () => {
     const filename = `${path.resolve('./fake-test')}/temp-package.json`;
     const input = {};
-    const expected = error.packageObjectEmpty;
+    const expected = error.ObjectEmpty;
 
     await afs.writeFile(filename, JSON.stringify(input));
 
@@ -60,12 +50,22 @@ describe('getPackageInfo function', () => {
       asdf: 'asdf',
       fdsa: 'fdas',
     };
-    const expected = error.packageVersionRequired;
+    const expected = error.VersionRequired;
 
     await afs.writeFile(filename, JSON.stringify(input));
 
     await expect(getPackageInfo(filename)).rejects.toThrowError(expected);
 
+    await afs.unlink(filename);
+  });
+  test('should have package.json exist', async () => {
+    const filename = `${path.resolve('./fake-test')}/temp-package.json`;
+    const input = JSON.stringify({ testMessage: 'ok', version: '1.4.1' });
+    const expected = { testMessage: 'ok', version: '1.4.1' };
+
+    await afs.writeFile(filename, input);
+
+    await expect(getPackageInfo(filename)).resolves.toEqual(expected);
     await afs.unlink(filename);
   });
   test('should have version property in the package.json', async () => {

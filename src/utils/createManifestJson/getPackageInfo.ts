@@ -2,12 +2,11 @@ import afs from 'fs/promises';
 import path from 'path';
 
 export const error = {
-  packageRequired: 'package.json is not exist. package.json file is required',
-  packageExistEmpty:
-    'package.json is exist but empty. it must have information!',
-  packageObjectEmpty: 'Object is empty. it must have information!',
-  packageObjectRequired: 'object is required in the package.json',
-  packageVersionRequired: 'version property is required in the package.json',
+  fileRequired: 'package.json is not exist. package.json file is required',
+  fileExistEmpty: 'package.json is exist but empty. information is required!',
+  ObjectEmpty: 'Object is empty. information is required!',
+  ObjectRequired: 'object is required in the package.json',
+  VersionRequired: 'version property is required in the package.json',
 };
 
 const getPackageInfo = async (
@@ -22,34 +21,34 @@ const getPackageInfo = async (
 
     // check and throw error when it is empty string.
     if (!dataStr) {
-      throw new Error(error.packageExistEmpty);
+      throw new Error(error.fileExistEmpty);
     }
 
     const dataObj = JSON.parse(dataStr);
 
     // check and throw error when it is not object.
     if (Object.prototype.toString.call(dataObj) !== '[object Object]') {
-      throw new Error(error.packageObjectRequired);
+      throw new Error(error.ObjectRequired);
     }
 
     // check and throw error when object is empty
     if (Object.keys(dataObj).length === 0) {
-      throw new Error(error.packageObjectEmpty);
+      throw new Error(error.ObjectEmpty);
     }
 
     // check and throw error when it do not have version property
     if (!dataObj.hasOwnProperty('version')) {
-      throw new Error(error.packageVersionRequired);
+      throw new Error(error.VersionRequired);
     }
 
     return dataObj;
   } catch (err: any) {
     if (err.code === 'ENOENT') {
       // package.json file is not exist!
-      throw new Error(error.packageRequired);
+      throw new Error(error.fileRequired);
     }
 
-    return Promise.reject(err);
+    throw err; // this code will be reject
   }
 };
 
