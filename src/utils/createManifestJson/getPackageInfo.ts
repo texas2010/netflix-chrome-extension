@@ -4,9 +4,9 @@ import path from 'path';
 export const error = {
   fileRequired: 'package.json is not exist. package.json file is required',
   fileExistEmpty: 'package.json is exist but empty. information is required!',
-  ObjectEmpty: 'Object is empty. information is required!',
-  ObjectRequired: 'object is required in the package.json',
-  VersionRequired: 'version property is required in the package.json',
+  objectEmpty: 'Object is empty. information is required!',
+  objectRequired: 'object is required in the package.json',
+  versionRequired: 'version property is required in the package.json',
 };
 
 const getPackageInfo = async (
@@ -28,17 +28,17 @@ const getPackageInfo = async (
 
     // check and throw error when it is not object.
     if (Object.prototype.toString.call(dataObj) !== '[object Object]') {
-      throw new Error(error.ObjectRequired);
+      throw new Error(error.objectRequired);
     }
 
     // check and throw error when object is empty
     if (Object.keys(dataObj).length === 0) {
-      throw new Error(error.ObjectEmpty);
+      throw new Error(error.objectEmpty);
     }
 
     // check and throw error when it do not have version property
     if (!dataObj.hasOwnProperty('version')) {
-      throw new Error(error.VersionRequired);
+      throw new Error(error.versionRequired);
     }
 
     return dataObj;

@@ -24,7 +24,7 @@ describe('getPackageInfo function', () => {
   test('should throw error when it is not object in the package.json', async () => {
     const filename = `${path.resolve('./fake-test')}/temp-package.json`;
     const input: any[] = [];
-    const expected = error.ObjectRequired;
+    const expected = error.objectRequired;
 
     await afs.writeFile(filename, JSON.stringify(input));
 
@@ -35,7 +35,7 @@ describe('getPackageInfo function', () => {
   test('should throw error when object is empty in the package.json', async () => {
     const filename = `${path.resolve('./fake-test')}/temp-package.json`;
     const input = {};
-    const expected = error.ObjectEmpty;
+    const expected = error.objectEmpty;
 
     await afs.writeFile(filename, JSON.stringify(input));
 
@@ -50,7 +50,7 @@ describe('getPackageInfo function', () => {
       asdf: 'asdf',
       fdsa: 'fdas',
     };
-    const expected = error.VersionRequired;
+    const expected = error.versionRequired;
 
     await afs.writeFile(filename, JSON.stringify(input));
 
