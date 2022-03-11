@@ -14,6 +14,11 @@ interface ManifestConfigI {
   version: string;
   manifest_version: number;
   action: {
+    default_icon: {
+      16: string;
+      24: string;
+      32: string;
+    };
     default_popup: string;
     default_title: string;
   };
@@ -222,6 +227,33 @@ const createManifestFile = async (
             ) {
               throw new Error(
                 `${dataKey} must have properties of default_icon, default_title, and default_popup`
+              );
+            }
+
+            // check and make sure it is string in the default_title and default_popup
+            if (
+              typeof actionObj['default_title'] !== 'string' ||
+              typeof actionObj['default_popup'] !== 'string'
+            ) {
+              throw new Error(
+                `${dataKey}'s properties of default_title and default_popup must be string`
+              );
+            }
+
+            // check and make sure default_title and default_popup string is not empty
+            if (!actionObj['default_title'] || !actionObj['default_popup']) {
+              throw new Error(
+                `${dataKey}'s properties of default_title and default_popup value can't be empty in the string`
+              );
+            }
+
+            // check and make sure default_icon is object.
+            if (
+              Object.prototype.toString.call(actionObj['default_icon']) !==
+              '[object Object]'
+            ) {
+              throw new Error(
+                `${dataKey}'s properties of default_icon must be string`
               );
             }
           }

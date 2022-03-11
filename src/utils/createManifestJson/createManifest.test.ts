@@ -335,7 +335,6 @@ describe('createManifestFile function', () => {
     await afs.writeFile(filename, JSON.stringify(input));
     await expect(createManifestFile(filename)).rejects.toThrowError(expected);
   });
-
   test(`should throw error when action's properties do not have default_icon, default_title, and default_popup`, async () => {
     const input = {
       name: 'title',
@@ -359,6 +358,55 @@ describe('createManifestFile function', () => {
     await afs.writeFile(filename, JSON.stringify(input));
     await expect(createManifestFile(filename)).rejects.toThrowError(expected);
   });
+  test(`should throw error when action's properties of default_title, and default_popup is not string`, async () => {
+    const input = {
+      name: 'title',
+      description: 'description',
+      options_page: 'options.html',
+      manifest_version: 3,
+      permissions: [],
+      content_scripts: [
+        {
+          matches: ['asdf'],
+          css: ['asdf'],
+          js: ['asdf'],
+        },
+      ],
+      background: { service_worker: 'background.js' },
+      action: { default_icon: {}, default_title: 4, default_popup: {} },
+      icons: {},
+    };
+    const expected = /must be string/;
+    await afs.writeFile(filename, JSON.stringify(input));
+    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+  });
+  test(`should throw error when action's properties of default_title, and default_popup is not empty in the string`, async () => {
+    const input = {
+      name: 'title',
+      description: 'description',
+      options_page: 'options.html',
+      manifest_version: 3,
+      permissions: [],
+      content_scripts: [
+        {
+          matches: ['asdf'],
+          css: ['asdf'],
+          js: ['asdf'],
+        },
+      ],
+      background: { service_worker: 'background.js' },
+      action: {
+        default_icon: {},
+        default_title: '',
+        default_popup: '',
+      },
+      icons: {},
+    };
+    const expected = /can't be empty in the string/;
+    await afs.writeFile(filename, JSON.stringify(input));
+    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+  });
+
   test('should get resolve when information is correct', async () => {
     const input = {
       name: 'title',
@@ -379,9 +427,9 @@ describe('createManifestFile function', () => {
         default_title: 'Open the popup',
       },
       icons: {
-        '16': 'assets/favicon-16.png',
-        '48': 'assets/favicon-48.png',
-        '128': 'assets/favicon-128.png',
+        16: 'assets/favicon-16.png',
+        48: 'assets/favicon-48.png',
+        128: 'assets/favicon-128.png',
       },
       background: {
         service_worker: './static/js/background.js',
