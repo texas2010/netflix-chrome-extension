@@ -90,8 +90,8 @@ const createManifestFile = async (
     // check manifest config file
     for (const dataKey in dataObj) {
       switch (dataKey) {
-        case 'name':
         case 'description':
+        case 'name':
         case 'options_page':
           // check and make sure it is string.
           if (typeof dataObj[dataKey] !== 'string') {
@@ -111,8 +111,8 @@ const createManifestFile = async (
           }
 
           break;
-        case 'permissions':
         case 'content_scripts':
+        case 'permissions':
           // check and make sure it is array
           if (
             Object.prototype.toString.call(dataObj[dataKey]) !==
@@ -200,8 +200,49 @@ const createManifestFile = async (
           }
           break;
         case 'action':
-        case 'icons':
         case 'background':
+        case 'icons':
+          // check and make sure it is only object.
+          if (
+            Object.prototype.toString.call(dataObj[dataKey]) !==
+            '[object Object]'
+          ) {
+            throw new Error(`${dataKey} must be object`);
+          }
+
+          // check action data
+          if (dataKey === 'action') {
+          }
+
+          // check background data
+          if (dataKey === 'background') {
+            const backgroundObj = dataObj['background'];
+
+            // check and make sure property is exist. service_worker
+            if (!['service_worker'].every((prop) => prop in backgroundObj)) {
+              throw new Error(
+                `${dataKey} must have property of service_worker`
+              );
+            }
+
+            // check and make sure it is string in the property of service_worker
+            if (typeof backgroundObj['service_worker'] !== 'string') {
+              throw new Error(
+                `${dataKey}'s property of service_worker must be string`
+              );
+            }
+
+            // check and make sure it is not empty in the property of service_worker
+            if (!backgroundObj['service_worker']) {
+              throw new Error(
+                `${dataKey}'s property of service_worker's value can't be empty in the string`
+              );
+            }
+          }
+
+          // check icons data
+          if (dataKey === 'icons') {
+          }
           break;
         default:
           throw new Error(`${dataKey} is not suppose to be in the object!`);

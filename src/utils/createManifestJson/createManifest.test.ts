@@ -276,6 +276,102 @@ describe('createManifestFile function', () => {
     await expect(createManifestFile(filename)).rejects.toThrowError(expected);
     await afs.unlink(filename);
   });
+  test(`should throw error when action, icons and background is not object`, async () => {
+    const filename = `${path.resolve('./fake-test')}/manifest.config.json`;
+    const input = {
+      name: 'title',
+      description: 'description',
+      options_page: 'options.html',
+      manifest_version: 3,
+      permissions: [],
+      content_scripts: [
+        {
+          matches: ['asdf'],
+          css: ['asdf'],
+          js: ['asdf'],
+        },
+      ],
+      action: {},
+      icons: [],
+      background: {},
+    };
+    const expected = /must be object/;
+    await afs.writeFile(filename, JSON.stringify(input));
+    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await afs.unlink(filename);
+  });
+  test(`should throw error when background's property do not have service_worker`, async () => {
+    const filename = `${path.resolve('./fake-test')}/manifest.config.json`;
+    const input = {
+      name: 'title',
+      description: 'description',
+      options_page: 'options.html',
+      manifest_version: 3,
+      permissions: [],
+      content_scripts: [
+        {
+          matches: ['asdf'],
+          css: ['asdf'],
+          js: ['asdf'],
+        },
+      ],
+      background: { asdf: '' },
+      action: {},
+      icons: {},
+    };
+    const expected = /must have property of service_worker/;
+    await afs.writeFile(filename, JSON.stringify(input));
+    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await afs.unlink(filename);
+  });
+  test(`should throw error when background's property of service_worker is not string`, async () => {
+    const filename = `${path.resolve('./fake-test')}/manifest.config.json`;
+    const input = {
+      name: 'title',
+      description: 'description',
+      options_page: 'options.html',
+      manifest_version: 3,
+      permissions: [],
+      content_scripts: [
+        {
+          matches: ['asdf'],
+          css: ['asdf'],
+          js: ['asdf'],
+        },
+      ],
+      background: { service_worker: 4 },
+      action: {},
+      icons: {},
+    };
+    const expected = /must be string/;
+    await afs.writeFile(filename, JSON.stringify(input));
+    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await afs.unlink(filename);
+  });
+  test(`should throw error when background's property of service_worker's value is empty in the string`, async () => {
+    const filename = `${path.resolve('./fake-test')}/manifest.config.json`;
+    const input = {
+      name: 'title',
+      description: 'description',
+      options_page: 'options.html',
+      manifest_version: 3,
+      permissions: [],
+      content_scripts: [
+        {
+          matches: ['asdf'],
+          css: ['asdf'],
+          js: ['asdf'],
+        },
+      ],
+      background: { service_worker: '' },
+      action: {},
+      icons: {},
+    };
+    const expected = /can't be empty in the string/;
+    await afs.writeFile(filename, JSON.stringify(input));
+    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await afs.unlink(filename);
+  });
 
   test('should get resolve when information is correct', async () => {
     const filename = `${path.resolve('./fake-test')}/manifest.config.json`;
