@@ -212,6 +212,18 @@ const createManifestFile = async (
 
           // check action data
           if (dataKey === 'action') {
+            const actionObj = dataObj['action'];
+
+            // check and make sure properties is exist. default_icon, default_title, default_popup
+            if (
+              !['default_icon', 'default_title', 'default_popup'].every(
+                (prop) => prop in actionObj
+              )
+            ) {
+              throw new Error(
+                `${dataKey} must have properties of default_icon, default_title, and default_popup`
+              );
+            }
           }
 
           // check background data
