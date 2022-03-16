@@ -2,7 +2,13 @@ import afs from 'fs/promises';
 import path from 'path';
 // import getPackageInfo from './getPackageInfo';
 
-type contentScriptsArrPropType = {
+type DefaultIconObjType = {
+  16: string;
+  24: string;
+  32: string;
+};
+
+type ContentScriptsObjType = {
   matches: string[];
   css: string[];
   js: string[];
@@ -14,15 +20,11 @@ interface ManifestConfigI {
   version: string;
   manifest_version: number;
   action: {
-    default_icon: {
-      16: string;
-      24: string;
-      32: string;
-    };
+    default_icon: DefaultIconObjType;
     default_popup: string;
     default_title: string;
   };
-  content_scripts: contentScriptsArrPropType[];
+  content_scripts: ContentScriptsObjType[];
   permissions: string[];
   icons: {
     16: string;
@@ -162,7 +164,7 @@ const createManifestFile = async (
               for (const contentScriptsArrObjKey in contentScriptsArrObj) {
                 const contentScriptsArrObjArr =
                   contentScriptsArrObj[
-                    contentScriptsArrObjKey as keyof contentScriptsArrPropType
+                    contentScriptsArrObjKey as keyof ContentScriptsObjType
                   ];
 
                 // check contentScriptsArrObjArr and make sure it is only array.
@@ -255,6 +257,36 @@ const createManifestFile = async (
               throw new Error(
                 `${dataKey}'s properties of default_icon must be string`
               );
+            }
+
+            // check and make sure default_icon's properties is exist.
+            if (
+              ![16, 24, 32].every((prop) => prop in actionObj['default_icon'])
+            ) {
+              throw new Error(
+                `default_icon's properties must have 16, 24, 32 in the key`
+              );
+            }
+
+            // check each property in the loop from object
+            const defaultIconObj = actionObj['default_icon'];
+            for (const numKey in defaultIconObj) {
+              const defaultIconValue =
+                defaultIconObj[numKey as unknown as keyof DefaultIconObjType];
+
+              // check and make sure default_icon's value must be string
+              if (typeof defaultIconValue !== 'string') {
+                throw new Error(
+                  `default_icon's ${numKey}'s value must be string`
+                );
+              }
+
+              // check and make sure default_icon's value string is not empty
+              if (!defaultIconValue) {
+                throw new Error(
+                  `default_icon's ${numKey} can't be empty in the string.`
+                );
+              }
             }
           }
 
