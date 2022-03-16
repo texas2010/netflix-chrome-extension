@@ -207,6 +207,25 @@ const createManifestFile = async (
               // end loop contentScriptsArr
             }
           }
+
+          // check permissions data
+          if (dataKey === 'permissions') {
+            const permissionsArr = dataObj['permissions'];
+
+            // check each element in the array if something is exist in the array.
+            if (permissionsArr.length > 0) {
+              for (const element of permissionsArr) {
+                if (typeof element !== 'string') {
+                  throw new Error(`${dataKey}' element must be string`);
+                }
+                if (!element) {
+                  throw new Error(
+                    `${dataKey}' element can't be empty in the string`
+                  );
+                }
+              }
+            }
+          }
           break;
         case 'action':
         case 'background':

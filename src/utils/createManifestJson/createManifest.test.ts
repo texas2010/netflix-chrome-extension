@@ -247,6 +247,67 @@ describe('createManifestFile function', () => {
     await afs.writeFile(filename, JSON.stringify(input));
     await expect(createManifestFile(filename)).rejects.toThrowError(expected);
   });
+  test(`should throw error when permissions's each element is not string in the array`, async () => {
+    const input = {
+      name: 'title',
+      description: 'description',
+      options_page: 'options.html',
+      manifest_version: 3,
+      permissions: [{}],
+      content_scripts: [
+        {
+          matches: ['asdf'],
+          css: ['asdf'],
+          js: ['asdf'],
+        },
+      ],
+      action: {
+        default_icon: { 16: 'asdf', 24: 'asdf', 32: 'asdf' },
+        default_title: 'title',
+        default_popup: 'popup.html',
+      },
+      icons: {
+        16: 'assets/favicon-16.png',
+        48: 'assets/favicon-48.png',
+        128: 'assets/favicon-128.png',
+      },
+      background: { service_worker: './static/js/background.js' },
+    };
+    const expected = /element must be string/;
+    await afs.writeFile(filename, JSON.stringify(input));
+    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+  });
+  test(`should throw error when permissions's each element is not empty in the string`, async () => {
+    const input = {
+      name: 'title',
+      description: 'description',
+      options_page: 'options.html',
+      manifest_version: 3,
+      permissions: [''],
+      content_scripts: [
+        {
+          matches: ['asdf'],
+          css: ['asdf'],
+          js: ['asdf'],
+        },
+      ],
+      action: {
+        default_icon: { 16: 'asdf', 24: 'asdf', 32: 'asdf' },
+        default_title: 'title',
+        default_popup: 'popup.html',
+      },
+      icons: {
+        16: 'assets/favicon-16.png',
+        48: 'assets/favicon-48.png',
+        128: 'assets/favicon-128.png',
+      },
+      background: { service_worker: './static/js/background.js' },
+    };
+    const expected = /element can't be empty in the string/;
+    await afs.writeFile(filename, JSON.stringify(input));
+    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+  });
+
   test(`should throw error when action, icons and background is not object`, async () => {
     const input = {
       name: 'title',
@@ -511,7 +572,6 @@ describe('createManifestFile function', () => {
     await afs.writeFile(filename, JSON.stringify(input));
     await expect(createManifestFile(filename)).rejects.toThrowError(expected);
   });
-
   test(`should throw error when icons' properties do not have 16, 48 and 128`, async () => {
     const input = {
       name: 'title',
@@ -591,7 +651,7 @@ describe('createManifestFile function', () => {
     await expect(createManifestFile(filename)).rejects.toThrowError(expected);
   });
 
-  test('should get resolve when information is correct', async () => {
+  test('should get resolve when manifest.config.json information is correct', async () => {
     const input = {
       name: 'title',
       description: 'just description',
