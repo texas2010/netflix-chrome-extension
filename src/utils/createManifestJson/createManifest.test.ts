@@ -307,7 +307,6 @@ describe('createManifestFile function', () => {
     await afs.writeFile(filename, JSON.stringify(input));
     await expect(createManifestFile(filename)).rejects.toThrowError(expected);
   });
-
   test(`should throw error when action, icons and background is not object`, async () => {
     const input = {
       name: 'title',
@@ -650,7 +649,6 @@ describe('createManifestFile function', () => {
     await afs.writeFile(filename, JSON.stringify(input));
     await expect(createManifestFile(filename)).rejects.toThrowError(expected);
   });
-
   test('should get resolve when manifest.config.json information is correct', async () => {
     const input = {
       name: 'title',
@@ -687,5 +685,53 @@ describe('createManifestFile function', () => {
     await afs.writeFile(filename, JSON.stringify(input));
 
     await expect(createManifestFile(filename)).resolves.toBeTruthy();
+  });
+
+  test(`should have manifest.json file in the fake-test folder when it got created`, async () => {
+    const fakeBuildFilename = `${path.resolve('./')}/fake-test/manifest.json`;
+    const input = {
+      name: 'title',
+      description: 'just description',
+      options_page: 'asdf.html',
+      manifest_version: 3,
+      permissions: [],
+      content_scripts: [
+        {
+          matches: ['*://*.netflix.com/*'],
+          css: ['./static/css/contentScript.css'],
+          js: ['./static/js/contentScript.js'],
+        },
+      ],
+      action: {
+        default_icon: {
+          16: 'assets/favicon-16.png',
+          24: 'assets/favicon-24.png',
+          32: 'assets/favicon-32.png',
+        },
+        default_popup: 'popup.html',
+        default_title: 'Open the popup',
+      },
+      icons: {
+        16: 'assets/favicon-16.png',
+        48: 'assets/favicon-48.png',
+        128: 'assets/favicon-128.png',
+      },
+      background: {
+        service_worker: './static/js/background.js',
+      },
+    };
+
+    await afs.writeFile(filename, JSON.stringify(input));
+
+    await expect(
+      createManifestFile(filename, fakeBuildFilename)
+    ).resolves.toBeTruthy();
+
+    // get manifest json file and check if it is exist.
+
+    expect(await afs.access(fakeBuildFilename)).toBeUndefined();
+
+    // remove manifest json
+    await afs.unlink(fakeBuildFilename);
   });
 });

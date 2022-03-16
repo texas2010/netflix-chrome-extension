@@ -1,6 +1,6 @@
 import afs from 'fs/promises';
 import path from 'path';
-// import getPackageInfo from './getPackageInfo';
+import getPackageInfo from './getPackageInfo';
 
 type DefaultIconObjType = {
   16: string;
@@ -64,7 +64,8 @@ const allPropArr = [
 ];
 
 const createManifestFile = async (
-  filename: string = `${path.resolve('./')}/manifest.config.json`
+  filename: string = `${path.resolve('./')}/manifest.config.json`,
+  buildFilename?: string
 ) => {
   try {
     //check if manifest.config.json is exist
@@ -373,15 +374,16 @@ const createManifestFile = async (
         default:
           throw new Error(`${dataKey} is not suppose to be in the object!`);
       }
-    }
+    } // end of manifest config file
 
-    // const packageInfo = await getPackageInfo();
-    // if (!packageInfo) return;
-    // if (!packageInfo.version) {
-    //   throw new Error('in the Package.json, version is missing!');
-    // }
-    // const newManifestObj = { ...manifestObj, version: packageInfo.version };
-    // await afs.writeFile(`${path.resolve('./')}/build/manifest.json`, JSON.stringify(newManifestObj));
+    const packageInfo = await getPackageInfo();
+    const newManifestObj = { ...dataObj, version: packageInfo.version };
+    const newBuildFilename = !buildFilename
+      ? `${path.resolve('./')}/build/manifest.json`
+      : buildFilename;
+
+    await afs.writeFile(newBuildFilename, JSON.stringify(newManifestObj));
+
     return true;
   } catch (err: any) {
     if (err.code === 'ENOENT') {
