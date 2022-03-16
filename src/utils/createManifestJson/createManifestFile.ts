@@ -8,6 +8,12 @@ type DefaultIconObjType = {
   32: string;
 };
 
+type IconsObjType = {
+  16: string;
+  48: string;
+  128: string;
+};
+
 type ContentScriptsObjType = {
   matches: string[];
   css: string[];
@@ -26,11 +32,7 @@ interface ManifestConfigI {
   };
   content_scripts: ContentScriptsObjType[];
   permissions: string[];
-  icons: {
-    16: string;
-    48: string;
-    128: string;
-  };
+  icons: IconsObjType;
   options_page: string;
   background: {
     service_worker: string;
@@ -318,7 +320,36 @@ const createManifestFile = async (
 
           // check icons data
           if (dataKey === 'icons') {
+            const iconsObj = dataObj['icons'];
+
+            // check and make sure icons have properties of 16, 48, and 128 in the key
+            if (![16, 48, 128].every((prop) => prop in iconsObj)) {
+              throw new Error(
+                `icons' properties must have 16, 48, and 128 in the key`
+              );
+            }
+
+            // check each properties in the loop from object.
+            for (const numKey in iconsObj) {
+              const iconsObjValue =
+                iconsObj[numKey as unknown as keyof IconsObjType];
+
+              // check and make sure icons' values is string.
+              if (typeof iconsObjValue !== 'string') {
+                throw new Error(
+                  `default_icon's ${numKey}'s value must be string`
+                );
+              }
+
+              // check and make sure icons' values is not empty in the string.
+              if (!iconsObjValue) {
+                throw new Error(
+                  `default_icon's ${numKey} can't be empty in the string.`
+                );
+              }
+            }
           }
+
           break;
         default:
           throw new Error(`${dataKey} is not suppose to be in the object!`);

@@ -512,6 +512,85 @@ describe('createManifestFile function', () => {
     await expect(createManifestFile(filename)).rejects.toThrowError(expected);
   });
 
+  test(`should throw error when icons' properties do not have 16, 48 and 128`, async () => {
+    const input = {
+      name: 'title',
+      description: 'description',
+      options_page: 'options.html',
+      manifest_version: 3,
+      permissions: [],
+      content_scripts: [
+        {
+          matches: ['asdf'],
+          css: ['asdf'],
+          js: ['asdf'],
+        },
+      ],
+      background: { service_worker: 'background.js' },
+      action: {
+        default_icon: { 16: 'asdf', 24: 'asdf', 32: 'asdf' },
+        default_title: 'title',
+        default_popup: 'popup.html',
+      },
+      icons: { asdf: '' },
+    };
+    const expected = /icons' properties must have 16, 48, and 128 in the key/;
+    await afs.writeFile(filename, JSON.stringify(input));
+    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+  });
+  test(`should throw error when icons' value is not string`, async () => {
+    const input = {
+      name: 'title',
+      description: 'description',
+      options_page: 'options.html',
+      manifest_version: 3,
+      permissions: [],
+      content_scripts: [
+        {
+          matches: ['asdf'],
+          css: ['asdf'],
+          js: ['asdf'],
+        },
+      ],
+      background: { service_worker: 'background.js' },
+      action: {
+        default_icon: { 16: 'asdf', 24: 'asdf', 32: 'asdf' },
+        default_title: 'title',
+        default_popup: 'popup.html',
+      },
+      icons: { 16: 4, 48: {}, 128: [] },
+    };
+    const expected = /must be string/;
+    await afs.writeFile(filename, JSON.stringify(input));
+    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+  });
+  test(`should throw error when icons' value is not empty in the string`, async () => {
+    const input = {
+      name: 'title',
+      description: 'description',
+      options_page: 'options.html',
+      manifest_version: 3,
+      permissions: [],
+      content_scripts: [
+        {
+          matches: ['asdf'],
+          css: ['asdf'],
+          js: ['asdf'],
+        },
+      ],
+      background: { service_worker: 'background.js' },
+      action: {
+        default_icon: { 16: 'asdf', 24: 'asdf', 32: 'asdf' },
+        default_title: 'title',
+        default_popup: 'popup.html',
+      },
+      icons: { 16: '', 48: '', 128: '' },
+    };
+    const expected = /can't be empty in the string/;
+    await afs.writeFile(filename, JSON.stringify(input));
+    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+  });
+
   test('should get resolve when information is correct', async () => {
     const input = {
       name: 'title',
