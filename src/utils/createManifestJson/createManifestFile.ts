@@ -1,6 +1,5 @@
 import afs from 'fs/promises';
 import path from 'path';
-import { exit } from 'process';
 import getPackageInfo from './getPackageInfo';
 
 type DefaultIconObjType = {
