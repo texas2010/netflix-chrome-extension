@@ -4,7 +4,12 @@ const devLog = (callback: Function) => {
   if (!callback) {
     throw new Error(error.emptyArg);
   }
-  const userSettingDevEnable = true;
+  let userSettingDevEnable = true;
+  chrome.storage.local.get(['userSettings'], (result) => {
+    if (result) {
+      result.userSettings.dev;
+    }
+  });
 
   if (process.env.NODE_ENV === 'production' && !userSettingDevEnable) {
     return;

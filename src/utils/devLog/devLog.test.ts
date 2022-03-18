@@ -1,7 +1,22 @@
+import { chrome } from 'jest-chrome';
 import devLog, { error } from '.';
 
 describe('devLog function', () => {
   const originalEnv = process.env;
+
+  beforeEach(() => {
+    const get = jest.fn();
+    const set = jest.fn();
+    global.chrome = {
+      storage: {
+        local: {
+          set,
+          get,
+        },
+      },
+    };
+  });
+
   afterEach(() => {
     process.env = originalEnv;
   });
