@@ -5,20 +5,22 @@ describe('devLog function', () => {
   const originalEnv = process.env;
 
   beforeEach(() => {
-    const get = jest.fn();
-    const set = jest.fn();
-    global.chrome = {
-      storage: {
-        local: {
-          set,
-          get,
-        },
-      },
-    };
+    // const get = jest.fn();
+    // const set = jest.fn();
+    // chrome = {
+    //   storage: {
+    //     local: {
+    //       set,
+    //       get,
+    //     },
+    //   },
+    // };
+    chrome.storage.local.set(jest.fn());
   });
 
   afterEach(() => {
     process.env = originalEnv;
+    chrome.storage.local.clear();
   });
   test('should throw error when argument is empty', () => {
     const expected = error.emptyArg;
@@ -83,6 +85,11 @@ describe('devLog function', () => {
       ...originalEnv,
       NODE_ENV: 'production',
     };
+    // chrome.storage.local.set({
+    //   userSettings: {
+    //     dev: true,
+    //   },
+    // });
     jest.spyOn(global.console, 'log').mockImplementation();
 
     const input = 'prod test';
