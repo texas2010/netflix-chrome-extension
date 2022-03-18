@@ -70,14 +70,16 @@ const createManifestFile = async () => {
     throw new Error('NODE_ENV is not exist. it is required to have');
   }
   // check if build_path is not exist during test env
-  if (process.env.NODE_ENV === 'test' && !process.env.BUILD_PATH) {
+  if (process.env.REAL_NODE_ENV === 'test' && !process.env.BUILD_PATH) {
     throw new Error(
       'BUILD_PATH is not exist in the test env file. it is required to have'
     );
   }
 
   const buildPath =
-    process.env.NODE_ENV === 'test' ? (process.env.BUILD_PATH as string) : './';
+    process.env.REAL_NODE_ENV === 'test'
+      ? (process.env.BUILD_PATH as string)
+      : './';
   const configFilename = `${path.resolve(buildPath)}/manifest.config.json`;
   try {
     //check if manifest.config.json is exist
@@ -386,18 +388,34 @@ const createManifestFile = async () => {
         default:
           throw new Error(`${dataKey} is not suppose to be in the object!`);
       }
-    } // end of manifest config file
+    } // end of check manifest config data
 
     const packageInfo = await getPackageInfo();
-    const newManifestObj = { ...dataObj, version: packageInfo.version };
+    const newContentScriptsArr = dataObj.content_scripts.map((obj) => {
+      if (process.env.NODE_ENV === 'development') {
+        const { matches, js } = obj;
+        return {
+          matches,
+          js,
+        };
+      }
+      return obj;
+    });
+
+    const newManifestObj = {
+      ...dataObj,
+      version: packageInfo.version,
+      content_scripts: newContentScriptsArr,
+    };
+
     const buildFilename =
-      process.env.NODE_ENV === 'test'
+      process.env.REAL_NODE_ENV === 'test'
         ? `${path.resolve(process.env.BUILD_PATH as string)}/manifest.json`
         : `${path.resolve('./')}/build/manifest.json`;
 
     await afs.writeFile(buildFilename, JSON.stringify(newManifestObj));
 
-    return true;
+    return 'manifest.json created';
   } catch (err: any) {
     if (err.code === 'ENOENT') {
       // package.json file is not exist!
