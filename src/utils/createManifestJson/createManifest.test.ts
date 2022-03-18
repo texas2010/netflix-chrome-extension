@@ -4,7 +4,24 @@ import path from 'path';
 import createManifestFile, { error } from './createManifestFile';
 
 describe('createManifestFile function', () => {
-  const filename = `${path.resolve('./fake-test')}/manifest.config.json`;
+  const buildPath = process.env.BUILD_PATH as string;
+  const packageFilename = `${path.resolve(buildPath)}/package.json`;
+  const filename = `${path.resolve(buildPath)}/manifest.config.json`;
+  beforeEach(async () => {
+    const input = {
+      name: 'fake project',
+      version: '1.4.1',
+      asdf: 'asdf',
+      fdsa: 'fdas',
+    };
+
+    await afs.writeFile(packageFilename, JSON.stringify(input));
+  });
+  afterEach(async () => {
+    try {
+      await afs.unlink(packageFilename);
+    } catch (error) {}
+  });
   afterEach(async () => {
     try {
       await afs.unlink(filename);
@@ -13,7 +30,7 @@ describe('createManifestFile function', () => {
   test('should throw error when manifest.config.json is not exist', async () => {
     const expected = error.fileRequired;
 
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test('should throw error when manifest.config.json is exist but empty', async () => {
     const input = '';
@@ -21,7 +38,7 @@ describe('createManifestFile function', () => {
 
     await afs.writeFile(filename, input);
 
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test('should throw error when it is not object in the manifest.config.json', async () => {
     const input: any[] = [];
@@ -29,7 +46,7 @@ describe('createManifestFile function', () => {
 
     await afs.writeFile(filename, JSON.stringify(input));
 
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test('should throw error when object is empty in the manifest.config.json', async () => {
     const input = {};
@@ -37,7 +54,7 @@ describe('createManifestFile function', () => {
 
     await afs.writeFile(filename, JSON.stringify(input));
 
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test('should throw error when object do not have correct property', async () => {
     const input = { asdf: '', fdsa: 4, name: 'test' };
@@ -45,7 +62,7 @@ describe('createManifestFile function', () => {
 
     await afs.writeFile(filename, JSON.stringify(input));
 
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test('should throw error when name, description, and options_page is not string', async () => {
     const input = {
@@ -61,7 +78,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /must be string/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test('should throw error when name, description, and options_page string is empty', async () => {
     const input = {
@@ -77,7 +94,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /can't be empty/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test('should throw error when manifest_version is not number', async () => {
     const input = {
@@ -93,7 +110,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /must be number./;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test('should throw error when permissions and content_scripts is not array', async () => {
     const input = {
@@ -109,7 +126,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /must be array/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when content_scripts' array is empty`, async () => {
     const input = {
@@ -125,7 +142,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /array can't be empty/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when content_scripts' array's element don't have object`, async () => {
     const input = {
@@ -141,7 +158,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /array must have object in the each element./;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when content_scripts' array's each object's properties do not have matches, css and js`, async () => {
     const input = {
@@ -157,7 +174,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /each object's properties must be matches, css and js/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when content_scripts' array's each object's values is not array`, async () => {
     const input = {
@@ -179,7 +196,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /must be array/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when content_scripts' array's each object's values' element is empty`, async () => {
     const input = {
@@ -201,7 +218,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /can't be empty/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when content_scripts' array's each object's values' element is not string`, async () => {
     const input = {
@@ -223,7 +240,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /array's element must be string/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when content_scripts' array's each object's values' element string can't be empty`, async () => {
     const input = {
@@ -245,7 +262,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /string can't be empty/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when permissions's each element is not string in the array`, async () => {
     const input = {
@@ -275,7 +292,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /element must be string/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when permissions's each element is not empty in the string`, async () => {
     const input = {
@@ -305,7 +322,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /element can't be empty in the string/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when action, icons and background is not object`, async () => {
     const input = {
@@ -327,7 +344,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /must be object/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when background's property do not have service_worker`, async () => {
     const input = {
@@ -349,7 +366,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /must have property of service_worker/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when background's property of service_worker is not string`, async () => {
     const input = {
@@ -371,7 +388,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /must be string/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when background's property of service_worker's value is empty in the string`, async () => {
     const input = {
@@ -393,7 +410,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /can't be empty in the string/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when action's properties do not have default_icon, default_title, and default_popup`, async () => {
     const input = {
@@ -416,7 +433,7 @@ describe('createManifestFile function', () => {
     const expected =
       /must have properties of default_icon, default_title, and default_popup/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when action's properties of default_title, and default_popup is not string`, async () => {
     const input = {
@@ -438,7 +455,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /must be string/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when action's properties of default_title, and default_popup is not empty in the string`, async () => {
     const input = {
@@ -464,7 +481,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /can't be empty in the string/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when action's property of default_icon is not object`, async () => {
     const input = {
@@ -490,7 +507,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /can't be empty in the string/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when action's property of default_icon's property of 16, 24, and 32`, async () => {
     const input = {
@@ -517,7 +534,7 @@ describe('createManifestFile function', () => {
     const expected =
       /default_icon's properties must have 16, 24, 32 in the key/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when action's property of default_icon's value is not string`, async () => {
     const input = {
@@ -543,7 +560,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /must be string/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when action's property of default_icon's value is not empty in the string`, async () => {
     const input = {
@@ -569,7 +586,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /can't be empty in the string/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when icons' properties do not have 16, 48 and 128`, async () => {
     const input = {
@@ -595,7 +612,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /icons' properties must have 16, 48, and 128 in the key/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when icons' value is not string`, async () => {
     const input = {
@@ -621,7 +638,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /must be string/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test(`should throw error when icons' value is not empty in the string`, async () => {
     const input = {
@@ -647,7 +664,7 @@ describe('createManifestFile function', () => {
     };
     const expected = /can't be empty in the string/;
     await afs.writeFile(filename, JSON.stringify(input));
-    await expect(createManifestFile(filename)).rejects.toThrowError(expected);
+    await expect(createManifestFile()).rejects.toThrowError(expected);
   });
   test('should get resolve when manifest.config.json information is correct', async () => {
     const input = {
@@ -684,11 +701,11 @@ describe('createManifestFile function', () => {
 
     await afs.writeFile(filename, JSON.stringify(input));
 
-    await expect(createManifestFile(filename)).resolves.toBeTruthy();
+    await expect(createManifestFile()).resolves.toBeTruthy();
   });
 
-  test(`should have manifest.json file in the fake-test folder when it got created`, async () => {
-    const fakeBuildFilename = `${path.resolve('./')}/fake-test/manifest.json`;
+  test(`should have manifest.json file in the build-test folder when it got created`, async () => {
+    const fakeBuildFilename = `${path.resolve(buildPath)}/manifest.json`;
     const input = {
       name: 'title',
       description: 'just description',
@@ -723,9 +740,7 @@ describe('createManifestFile function', () => {
 
     await afs.writeFile(filename, JSON.stringify(input));
 
-    await expect(
-      createManifestFile(filename, fakeBuildFilename)
-    ).resolves.toBeTruthy();
+    await expect(createManifestFile()).resolves.toBeTruthy();
 
     // get manifest json file and check if it is exist.
 

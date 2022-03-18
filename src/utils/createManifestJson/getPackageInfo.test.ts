@@ -4,47 +4,44 @@ import path from 'path';
 import getPackageInfo, { error } from './getPackageInfo';
 
 describe('getPackageInfo function', () => {
+  const buildPath = process.env.BUILD_PATH as string;
+  const packageFilename = `${path.resolve(buildPath)}/package.json`;
+  afterEach(async () => {
+    try {
+      await afs.unlink(packageFilename);
+    } catch (error) {}
+  });
+
   test('should have throw error when package.json is not exist', async () => {
-    const filename = `${path.resolve('./fake-test')}/fake-package.json`;
     const expected = error.fileRequired;
 
-    await expect(getPackageInfo(filename)).rejects.toThrowError(expected);
+    await expect(getPackageInfo()).rejects.toThrowError(expected);
   });
   test('should throw error when package.json is exist but empty', async () => {
-    const filename = `${path.resolve('./fake-test')}/temp-package.json`;
     const input = '';
     const expected = error.fileExistEmpty;
 
-    await afs.writeFile(filename, input);
+    await afs.writeFile(packageFilename, input);
 
-    await expect(getPackageInfo(filename)).rejects.toThrowError(expected);
-
-    await afs.unlink(filename);
+    await expect(getPackageInfo()).rejects.toThrowError(expected);
   });
   test('should throw error when it is not object in the package.json', async () => {
-    const filename = `${path.resolve('./fake-test')}/temp-package.json`;
     const input: any[] = [];
     const expected = error.objectRequired;
 
-    await afs.writeFile(filename, JSON.stringify(input));
+    await afs.writeFile(packageFilename, JSON.stringify(input));
 
-    await expect(getPackageInfo(filename)).rejects.toThrowError(expected);
-
-    await afs.unlink(filename);
+    await expect(getPackageInfo()).rejects.toThrowError(expected);
   });
   test('should throw error when object is empty in the package.json', async () => {
-    const filename = `${path.resolve('./fake-test')}/temp-package.json`;
     const input = {};
     const expected = error.objectEmpty;
 
-    await afs.writeFile(filename, JSON.stringify(input));
+    await afs.writeFile(packageFilename, JSON.stringify(input));
 
-    await expect(getPackageInfo(filename)).rejects.toThrowError(expected);
-
-    await afs.unlink(filename);
+    await expect(getPackageInfo()).rejects.toThrowError(expected);
   });
   test('should throw error when package.json do not have version property', async () => {
-    const filename = `${path.resolve('./fake-test')}/temp-package.json`;
     const input = {
       name: 'fake project',
       asdf: 'asdf',
@@ -52,24 +49,19 @@ describe('getPackageInfo function', () => {
     };
     const expected = error.versionRequired;
 
-    await afs.writeFile(filename, JSON.stringify(input));
+    await afs.writeFile(packageFilename, JSON.stringify(input));
 
-    await expect(getPackageInfo(filename)).rejects.toThrowError(expected);
-
-    await afs.unlink(filename);
+    await expect(getPackageInfo()).rejects.toThrowError(expected);
   });
   test('should have package.json exist', async () => {
-    const filename = `${path.resolve('./fake-test')}/temp-package.json`;
-    const input = JSON.stringify({ testMessage: 'ok', version: '1.4.1' });
+    const input = { testMessage: 'ok', version: '1.4.1' };
     const expected = { testMessage: 'ok', version: '1.4.1' };
 
-    await afs.writeFile(filename, input);
+    await afs.writeFile(packageFilename, JSON.stringify(input));
 
-    await expect(getPackageInfo(filename)).resolves.toEqual(expected);
-    await afs.unlink(filename);
+    await expect(getPackageInfo()).resolves.toEqual(expected);
   });
   test('should have version property in the package.json', async () => {
-    const filename = `${path.resolve('./fake-test')}/temp-package.json`;
     const input = {
       name: 'fake project',
       version: '1.4.1',
@@ -80,10 +72,8 @@ describe('getPackageInfo function', () => {
       version: '1.4.1',
     };
 
-    await afs.writeFile(filename, JSON.stringify(input));
+    await afs.writeFile(packageFilename, JSON.stringify(input));
 
-    await expect(getPackageInfo(filename)).resolves.toMatchObject(expected);
-
-    await afs.unlink(filename);
+    await expect(getPackageInfo()).resolves.toMatchObject(expected);
   });
 });

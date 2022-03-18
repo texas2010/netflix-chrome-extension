@@ -9,9 +9,22 @@ export const error = {
   versionRequired: 'version property is required in the package.json',
 };
 
-const getPackageInfo = async (
-  filename: string = `${path.resolve('./')}/package.json`
-) => {
+const getPackageInfo = async () => {
+  // check if node_env is not exist.
+  if (!process.env.NODE_ENV) {
+    throw new Error('NODE_ENV is not exist. it is required to have');
+  }
+  // check if build_path is not exist during test env
+  if (process.env.NODE_ENV === 'test' && !process.env.BUILD_PATH) {
+    throw new Error(
+      'BUILD_PATH is not exist in the test env file. it is required to have'
+    );
+  }
+
+  const buildPath =
+    process.env.NODE_ENV === 'test' ? (process.env.BUILD_PATH as string) : './';
+  const filename = `${path.resolve(buildPath)}/package.json`;
+
   try {
     // check if package.json is exist. if not. it will throw error in the catch
     await afs.access(filename);
