@@ -1,9 +1,15 @@
-export const emptyArg = 'argument required';
+export const error = { emptyArg: 'argument required' };
 
-const devLog = (callback: () => {}) => {
+const devLog = (callback: Function) => {
   if (!callback) {
-    throw new Error(emptyArg);
+    throw new Error(error.emptyArg);
   }
+  const userSettingDevEnable = true;
+
+  if (process.env.NODE_ENV === 'production' && !userSettingDevEnable) {
+    return;
+  }
+  callback();
 };
 
 export default devLog;
