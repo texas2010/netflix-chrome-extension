@@ -761,7 +761,6 @@ describe('createManifestFile async function', () => {
     await afs.unlink(manifestJsonFilename);
   });
   test(`should not have content script css in the manifest.json during development env`, async () => {
-    jest.resetModules();
     process.env = {
       ...originalEnv,
       NODE_ENV: 'development',
@@ -821,7 +820,6 @@ describe('createManifestFile async function', () => {
     await afs.unlink(manifestJsonFilename);
   });
   test(`should have content script css in the manifest.json during production env`, async () => {
-    jest.resetModules();
     process.env = {
       ...originalEnv,
       NODE_ENV: 'production',
