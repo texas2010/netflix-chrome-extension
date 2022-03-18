@@ -1,3 +1,4 @@
+import { exit } from 'process';
 import createManifestFile from './createManifestFile';
 
 if (!process.env.NODE_ENV) {
@@ -10,5 +11,6 @@ if (!process.env.NODE_ENV) {
     console.log(data);
   } catch (error) {
     console.error(error);
+    exit(1);
   }
 })();
