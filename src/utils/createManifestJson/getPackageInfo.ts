@@ -14,6 +14,7 @@ const getPackageInfo = async () => {
   if (!process.env.NODE_ENV) {
     throw new Error('NODE_ENV is not exist. it is required to have');
   }
+
   // check if build_path is not exist during test env
   if (process.env.NODE_ENV === 'test' && !process.env.BUILD_PATH) {
     throw new Error(

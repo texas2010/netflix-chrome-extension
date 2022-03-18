@@ -3,7 +3,7 @@ import path from 'path';
 
 import getPackageInfo, { error } from './getPackageInfo';
 
-describe('getPackageInfo function', () => {
+describe('getPackageInfo async function', () => {
   const buildPath = process.env.BUILD_PATH as string;
   const packageFilename = `${path.resolve(buildPath)}/package.json`;
   afterEach(async () => {
