@@ -1,0 +1,31 @@
+{
+  "name": "Netflix Chrome Extension",
+  "description": "The power of React and TypeScript for building interactive Chrome extensions",
+  "manifest_version": 3,
+  "action": {
+    "default_icon": {
+      "16": "assets/favicon-16.png",
+      "24": "assets/favicon-24.png",
+      "32": "assets/favicon-32.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Open the popup"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.netflix.com/*"],
+      "css": ["./static/css/contentScript.css"],
+      "js": ["./static/js/contentScript.js"]
+    }
+  ],
+  "permissions": [],
+  "icons": {
+    "16": "assets/favicon-16.png",
+    "48": "assets/favicon-48.png",
+    "128": "assets/favicon-128.png"
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "./static/js/background.js"
+  }
+}
