@@ -4,10 +4,10 @@ const devLog = (callback: Function) => {
   if (!callback) {
     throw new Error(error.emptyArg);
   }
-  let userSettingDevEnable = true;
+  let userSettingDevEnable;
   chrome.storage.local.get(['userSettings'], (result) => {
     if (result) {
-      result.userSettings.dev;
+      userSettingDevEnable = result.userSettings.dev;
     }
   });
 
