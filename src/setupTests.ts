@@ -5,16 +5,6 @@
 import '@testing-library/jest-dom';
 import { chrome } from 'jest-chrome';
 
-// chrome.storage.local.get()
-
-// const localStorageMock = {
-//   getItem: jest.fn(),
-//   setItem: jest.fn(),
-//   removeItem: jest.fn(),
-//   clear: jest.fn(),
-// };
-// global.localStorage = localStorageMock;
-
 const chromeStorageMock = {
   local: {
     get: function (keys, cb) {
@@ -49,14 +39,20 @@ const chromeStorageMock = {
         localStorage.removeItem(keys);
       }
 
-      cb();
+      if (cb) {
+        cb();
+      }
     },
     set: function (obj, cb) {
       const key = Object.keys(obj)[0];
       localStorage.setItem(key, JSON.stringify(obj[key]));
-      cb();
+      if (cb) {
+        cb();
+      }
     },
-    clear: chrome.storage.local.clear,
+    clear: function () {
+      localStorage.clear();
+    },
   },
   sync: {
     get: function (key, cb) {
@@ -81,12 +77,16 @@ const chromeStorageMock = {
         sessionStorage.removeItem(keys);
       }
 
-      cb();
+      if (cb) {
+        cb();
+      }
     },
     set: function (obj, cb) {
       const key = Object.keys(obj)[0];
       sessionStorage.setItem(key, JSON.stringify(obj[key]));
-      cb();
+      if (cb) {
+        cb();
+      }
     },
   },
   onChanged: {
@@ -99,5 +99,3 @@ global.chrome = {
   ...chrome,
   storage: chromeStorageMock,
 };
-
-// global.chrome = chrome;

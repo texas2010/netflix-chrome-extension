@@ -4,7 +4,7 @@ describe('devLog function', () => {
   const originalEnv = process.env;
 
   beforeEach(() => {
-    chrome.storage.local.set({ userSettings: { dev: false } }, () => {});
+    chrome.storage.local.set({ userSettings: { dev: false } });
   });
 
   afterEach(() => {
@@ -18,7 +18,6 @@ describe('devLog function', () => {
 
     expect(devLog).toThrowError(expected);
   });
-  // check devlog and inform them, callback is required.
 
   test('should have console.log when it called', () => {
     jest.spyOn(global.console, 'log').mockImplementation();
@@ -70,14 +69,11 @@ describe('devLog function', () => {
       ...originalEnv,
       NODE_ENV: 'production',
     };
-    chrome.storage.local.set(
-      {
-        userSettings: {
-          dev: true,
-        },
+    chrome.storage.local.set({
+      userSettings: {
+        dev: true,
       },
-      () => {}
-    );
+    });
 
     jest.spyOn(global.console, 'log').mockImplementation();
 
@@ -89,20 +85,3 @@ describe('devLog function', () => {
     expect(console.log).toBeCalledWith(expected);
   });
 });
-
-// test('should get data from chrome storage', () => {
-//   const input = 'only data';
-//   console.log(input);
-
-//   // localStorage.setItem('user', input);
-//   chrome.storage.sync.set(
-//     {
-//       user: input,
-//     },
-//     () => {
-//       console.log('it saved!');
-//     }
-//   );
-
-//   expect(devLog('test')).toBe(input);
-// });

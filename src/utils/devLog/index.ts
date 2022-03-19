@@ -13,7 +13,6 @@ const devLog = (...args: any) => {
         return;
       }
     }
-    return;
   });
   if (process.env.NODE_ENV === 'production') {
     return;
@@ -22,21 +21,3 @@ const devLog = (...args: any) => {
 };
 
 export default devLog;
-
-// let final = 'local storage is not work at all';
-// const data = localStorage.getItem('user');
-// if (data) {
-//   return data;
-// }
-// return final;
-// let final = 'chrome is not work at all';
-// chrome.storage.sync.get('user', (result) => {
-//   console.log('result', result);
-
-//   if (result) {
-//     final = result.user;
-//     return;
-//   }
-//   final = 'error';
-// });
-// return final;
