@@ -1,27 +1,18 @@
-import { chrome } from 'jest-chrome';
 import devLog, { error } from '.';
 
 describe('devLog function', () => {
   const originalEnv = process.env;
 
   beforeEach(() => {
-    // const get = jest.fn();
-    // const set = jest.fn();
-    // chrome = {
-    //   storage: {
-    //     local: {
-    //       set,
-    //       get,
-    //     },
-    //   },
-    // };
-    chrome.storage.local.set(jest.fn());
+    chrome.storage.local.set({ userSettings: { dev: false } }, () => {});
   });
 
   afterEach(() => {
     process.env = originalEnv;
     chrome.storage.local.clear();
   });
+
+  // throw error when argument is empty
   test('should throw error when argument is empty', () => {
     const expected = error.emptyArg;
 
@@ -35,9 +26,7 @@ describe('devLog function', () => {
     const input = 'test';
     const expected = 'test';
 
-    devLog(() => {
-      console.log(input);
-    });
+    devLog(input);
     expect(console.log).toHaveBeenCalled();
     expect(console.log).toBeCalledWith(expected);
   });
@@ -54,9 +43,7 @@ describe('devLog function', () => {
     const input = 'dev test';
     const expected = 'dev test';
 
-    devLog(() => {
-      console.log(input);
-    });
+    devLog(input);
     expect(console.log).toHaveBeenCalled();
     expect(console.log).toBeCalledWith(expected);
   });
@@ -69,12 +56,10 @@ describe('devLog function', () => {
     };
     jest.spyOn(global.console, 'log').mockImplementation();
 
-    const input = 'prod test';
-    const expected = 'prod test';
+    const input = 'prod not log';
+    const expected = 'prod not log';
 
-    devLog(() => {
-      console.log(input);
-    });
+    devLog(input);
     expect(console.log).not.toHaveBeenCalled();
     expect(console.log).not.toBeCalledWith(expected);
   });
@@ -85,20 +70,39 @@ describe('devLog function', () => {
       ...originalEnv,
       NODE_ENV: 'production',
     };
-    // chrome.storage.local.set({
-    //   userSettings: {
-    //     dev: true,
-    //   },
-    // });
+    chrome.storage.local.set(
+      {
+        userSettings: {
+          dev: true,
+        },
+      },
+      () => {}
+    );
+
     jest.spyOn(global.console, 'log').mockImplementation();
 
-    const input = 'prod test';
-    const expected = 'prod test';
+    const input = 'prod log';
+    const expected = 'prod log';
 
-    devLog(() => {
-      console.log(input);
-    });
+    devLog(input);
     expect(console.log).toHaveBeenCalled();
     expect(console.log).toBeCalledWith(expected);
   });
 });
+
+// test('should get data from chrome storage', () => {
+//   const input = 'only data';
+//   console.log(input);
+
+//   // localStorage.setItem('user', input);
+//   chrome.storage.sync.set(
+//     {
+//       user: input,
+//     },
+//     () => {
+//       console.log('it saved!');
+//     }
+//   );
+
+//   expect(devLog('test')).toBe(input);
+// });

@@ -1,20 +1,42 @@
 export const error = { emptyArg: 'argument required' };
 
-const devLog = (callback: Function) => {
-  if (!callback) {
+const devLog = (...args: any) => {
+  if (!args.length) {
     throw new Error(error.emptyArg);
   }
-  let userSettingDevEnable;
   chrome.storage.local.get(['userSettings'], (result) => {
     if (result) {
-      userSettingDevEnable = result.userSettings.dev;
-    }
-  });
+      const userSettingDevEnable = result.userSettings.dev;
 
-  if (process.env.NODE_ENV === 'production' && !userSettingDevEnable) {
+      if (userSettingDevEnable) {
+        console.log(...args);
+        return;
+      }
+    }
+    return;
+  });
+  if (process.env.NODE_ENV === 'production') {
     return;
   }
-  callback();
+  console.log(...args);
 };
 
 export default devLog;
+
+// let final = 'local storage is not work at all';
+// const data = localStorage.getItem('user');
+// if (data) {
+//   return data;
+// }
+// return final;
+// let final = 'chrome is not work at all';
+// chrome.storage.sync.get('user', (result) => {
+//   console.log('result', result);
+
+//   if (result) {
+//     final = result.user;
+//     return;
+//   }
+//   final = 'error';
+// });
+// return final;
