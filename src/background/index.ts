@@ -1,3 +1,11 @@
-console.log('Background file');
+import devLog from '../utils/devLog';
 
-export {};
+chrome.runtime.onInstalled.addListener((details) => {
+  chrome.storage.local.set({
+    userSettings: {
+      devLog: false,
+    },
+  });
+});
+
+devLog('Background file');
