@@ -13,11 +13,13 @@ const devLog = (...args: any) => {
         return;
       }
     }
+    return;
   });
   if (process.env.NODE_ENV === 'production') {
     return;
   }
   console.log(...args);
+  return;
 };
 
 export default devLog;

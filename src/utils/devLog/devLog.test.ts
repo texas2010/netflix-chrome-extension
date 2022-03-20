@@ -20,6 +20,10 @@ describe('devLog function', () => {
   });
 
   test('should have console.log when it called', () => {
+    process.env = {
+      ...originalEnv,
+      NODE_ENV: 'development',
+    };
     jest.spyOn(global.console, 'log').mockImplementation();
 
     const input = 'test';
@@ -83,5 +87,75 @@ describe('devLog function', () => {
     devLog(input);
     expect(console.log).toHaveBeenCalled();
     expect(console.log).toBeCalledWith(expected);
+  });
+  test('should have console.log when it called with number and object during development env', () => {
+    process.env = {
+      ...originalEnv,
+      NODE_ENV: 'development',
+    };
+
+    jest.spyOn(global.console, 'log').mockImplementation();
+
+    const input = [
+      4,
+      {
+        data: 'asdf asdf',
+      },
+    ];
+    const expected = [...input];
+
+    devLog(...input);
+    expect(console.log).toHaveBeenCalled();
+    expect(console.log).toBeCalledWith(...expected);
+  });
+  test('should not have console.log when it called with number and object during production env', () => {
+    process.env = {
+      ...originalEnv,
+      NODE_ENV: 'production',
+    };
+    chrome.storage.local.set({
+      userSettings: {
+        dev: false,
+      },
+    });
+
+    jest.spyOn(global.console, 'log').mockImplementation();
+
+    const input = [
+      4,
+      {
+        data: 'asdf asdf',
+      },
+    ];
+    const expected = [...input];
+
+    devLog(...input);
+    expect(console.log).not.toHaveBeenCalled();
+    expect(console.log).not.toBeCalledWith(...expected);
+  });
+  test('should have console.log when it called with number and object during production env', () => {
+    process.env = {
+      ...originalEnv,
+      NODE_ENV: 'production',
+    };
+    chrome.storage.local.set({
+      userSettings: {
+        dev: true,
+      },
+    });
+
+    jest.spyOn(global.console, 'log').mockImplementation();
+
+    const input = [
+      4,
+      {
+        data: 'asdf asdf',
+      },
+    ];
+    const expected = [...input];
+
+    devLog(...input);
+    expect(console.log).toHaveBeenCalled();
+    expect(console.log).toBeCalledWith(...expected);
   });
 });
