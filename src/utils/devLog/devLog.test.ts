@@ -4,7 +4,7 @@ describe('devLog function', () => {
   const originalEnv = process.env;
 
   beforeEach(() => {
-    chrome.storage.local.set({ userSettings: { dev: false } });
+    chrome.storage.local.set({ userSettings: { devLog: false } });
   });
 
   afterEach(() => {
@@ -75,7 +75,7 @@ describe('devLog function', () => {
     };
     chrome.storage.local.set({
       userSettings: {
-        dev: true,
+        devLog: true,
       },
     });
 
@@ -115,7 +115,7 @@ describe('devLog function', () => {
     };
     chrome.storage.local.set({
       userSettings: {
-        dev: false,
+        devLog: false,
       },
     });
 
@@ -140,7 +140,7 @@ describe('devLog function', () => {
     };
     chrome.storage.local.set({
       userSettings: {
-        dev: true,
+        devLog: true,
       },
     });
 

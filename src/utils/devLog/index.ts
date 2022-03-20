@@ -6,7 +6,7 @@ const devLog = (...args: any) => {
   }
   chrome.storage.local.get(['userSettings'], (result) => {
     if (result) {
-      const userSettingDevEnable = result.userSettings.dev;
+      const userSettingDevEnable = result.userSettings.devLog;
 
       if (userSettingDevEnable) {
         console.log(...args);

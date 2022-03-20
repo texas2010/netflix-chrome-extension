@@ -18,7 +18,7 @@
       "js": ["./static/js/contentScript.js"]
     }
   ],
-  "permissions": [],
+  "permissions": ["storage"],
   "icons": {
     "16": "assets/favicon-16.png",
     "48": "assets/favicon-48.png",
