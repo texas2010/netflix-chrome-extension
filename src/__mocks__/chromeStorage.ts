@@ -1,3 +1,4 @@
+// @ts-nocheck
 const chromeStorageMock = {
   local: {
     get: function (keys: any, cb: Function) {
