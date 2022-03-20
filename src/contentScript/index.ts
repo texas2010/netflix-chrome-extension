@@ -1,4 +1,10 @@
+import devLog from '../utils/devLog';
 import './index.css';
-console.log('Content Script file');
+
+devLog('Content Script file');
+
+window.addEventListener('load', () => {
+  devLog('window loaded');
+});
 
 export {};

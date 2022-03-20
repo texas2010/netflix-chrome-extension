@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import PopupPage from '../components/PopupPage';
+import devLog from '../utils/devLog';
 
 document.title = 'Popup Page';
-console.log('popup file');
+devLog('popup file');
 
 ReactDOM.render(<PopupPage />, document.getElementById('root'));
