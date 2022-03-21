@@ -11,15 +11,11 @@ window.addEventListener('load', async () => {
   mainAppRoot.setAttribute('id', 'nAppRoot');
 
   const theirAppRoot: Element | null = document.getElementById('appMountPoint');
-  const isAppMountPointExist = await isElementExist('#appMountPoint');
-  if (isAppMountPointExist) {
-    if (theirAppRoot) {
-      theirAppRoot.appendChild(mainAppRoot);
-      // render main app.
-    }
+  if ((await isElementExist('#appMountPoint')) && theirAppRoot) {
+    theirAppRoot.appendChild(mainAppRoot);
+    devLog('nAppRoot added in the dom!');
+    // render main app.
   }
-  const isGalleryLockupsExist = await isElementExist('.galleryLockups');
-  if (isGalleryLockupsExist) {
-    console.log('I saw .galleryLockups element!');
-  }
+
+  devLog('end of window loading.');
 });
