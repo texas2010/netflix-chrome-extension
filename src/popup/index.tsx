@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import PopupPage from '../components/PopupPage';
+import PopupApp from '../components/PopupApp';
 import devLog from '../utils/devLog';
 
 document.title = 'Popup Page';
 devLog('popup file');
 
-ReactDOM.render(<PopupPage />, document.getElementById('root'));
+ReactDOM.render(<PopupApp />, document.getElementById('root'));

@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import OptionsPage from '../components/OptionsPage';
+import OptionsApp from '../components/OptionsApp';
 import devLog from '../utils/devLog';
 
 document.title = 'Options Page';
 devLog('Options file');
 
-ReactDOM.render(<OptionsPage />, document.getElementById('root'));
+ReactDOM.render(<OptionsApp />, document.getElementById('root'));
