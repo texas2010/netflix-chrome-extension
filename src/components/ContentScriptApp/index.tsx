@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 const ContentScriptApp = () => {
-  return <div>i am here now!</div>;
+  return <h1>i am here now!</h1>;
 };
 
 const appRender = () => {
