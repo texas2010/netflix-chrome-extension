@@ -1,62 +1,46 @@
-/*
-need to check element is exist. if it is exist. return true.
-if it is not exist. need to monitor them until it is exist or end of monitor 
+import devLog from '../devLog';
 
+export const observerOptions = {
+  childList: true,
+  subtree: true,
+};
 
-*/
+export const findElement = (selector: string) => {
+  return new Promise((resolve) => {
+    const elementExist = document.querySelector(selector);
+    if (elementExist) {
+      devLog('findElement: it is exist.', selector);
+      resolve(elementExist);
+      return;
+    }
 
-import { callbackify } from 'util';
-
-export const connect = (element: string) => {
-  return new Promise((resolve, reject) => {
-    const observerOptions = {
-      attributes: true,
-      characterData: true,
-      childList: true,
-      subtree: true,
-      attributeOldValue: true,
-      characterDataOldValue: true,
-    };
-    const targetAppMountPointElement: Element | null =
-      document.querySelector('body');
-
-    const mutationObserver: MutationObserver = new MutationObserver(
-      (mutationsList, observer) => {
-        for (const mutation of mutationsList) {
-          // console.log(mutation);
-          switch (mutation.type) {
-            case 'childList':
-              console.log(
-                `${element}: `,
-                mutation.target,
-                mutation.target.isSameNode(document.querySelector(element))
-              );
-              if (mutation.target.isSameNode(document.querySelector(element))) {
-                // TRUE!
-                // need to return this line.
-                resolve('it is exist!');
-                observer.disconnect();
-                console.log(element, 'stop and disconnect it!');
-              }
-              break;
-          }
+    const mutationCallback: MutationCallback = (mutationsList, observer) => {
+      for (const mutation of mutationsList) {
+        switch (mutation.type) {
+          case 'childList':
+            if (document.querySelector(selector)) {
+              devLog('findElement: found!', selector);
+              resolve(document.querySelector(selector));
+              observer.disconnect();
+            }
+            break;
         }
       }
+    };
+    const mutationObserver: MutationObserver = new MutationObserver(
+      mutationCallback
     );
-    if (targetAppMountPointElement) {
-      mutationObserver.observe(targetAppMountPointElement, observerOptions);
-    }
+
+    mutationObserver.observe(document.body, observerOptions);
   });
 };
 
-const isElementExist = async (element: string) => {
-  const data = await connect(element);
-  console.log(data);
-
-  if (document.querySelector(element)) {
+const isElementExist = async (selector: string) => {
+  const data = await findElement(selector);
+  if (data) {
     return true;
   }
-  return data;
+  return false;
 };
 
 export default isElementExist;
