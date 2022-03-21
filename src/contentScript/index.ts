@@ -1,5 +1,6 @@
 import devLog from '../utils/devLog';
 import isElementExist from '../utils/isElementExist';
+import appRender from '../components/ContentScriptApp';
 import './index.css';
 
 devLog('Content Script file');
@@ -15,6 +16,7 @@ window.addEventListener('load', async () => {
     theirAppRoot.appendChild(mainAppRoot);
     devLog('nAppRoot added in the dom!');
     // render main app.
+    appRender();
   }
 
   devLog('end of window loading.');
