@@ -1,118 +1,46 @@
-## Features
+# Getting Started with Create React App
 
-- Cross Browser Support (Web-Extensions API)
-- Browser Tailored Manifest generation
-- Automatic build on code changes
-- Auto packs browser specific build files
-- SASS styling
-- TypeScript by default
-- ES6 modules support
-- React UI Library by default
-- Smart reload
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## 🚀 Quick Start
+## Available Scripts
 
-Ensure you have
+In the project directory, you can run:
 
-- [Node.js](https://nodejs.org) 10 or later installed
-- [Yarn](https://yarnpkg.com) v1 or v2 installed
+### `npm start`
 
-Then run the following:
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-- `yarn install` to install dependencies.
-- `yarn run dev:chrome` to start the development server for chrome extension
-- `yarn run dev:firefox` to start the development server for firefox addon
-- `yarn run dev:opera` to start the development server for opera extension
-- `yarn run build:chrome` to build chrome extension
-- `yarn run build:firefox` to build firefox addon
-- `yarn run build:opera` to build opera extension
-- `yarn run build` builds and packs extensions all at once to extension/ directory
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-### Development
+### `npm test`
 
-- `yarn install` to install dependencies.
-- To watch file changes in development
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-  - Chrome
-    - `yarn run dev:chrome`
-  - Firefox
-    - `yarn run dev:firefox`
-  - Opera
-    - `yarn run dev:opera`
+### `npm run build`
 
-- **Load extension in browser**
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-- ### Chrome
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-  - Go to the browser address bar and type `chrome://extensions`
-  - Check the `Developer Mode` button to enable it.
-  - Click on the `Load Unpacked Extension…` button.
-  - Select your extension’s extracted directory.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-- ### Firefox
+### `npm run eject`
 
-  - Load the Add-on via `about:debugging` as temporary Add-on.
-  - Choose the `manifest.json` file in the extracted directory
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-- ### Opera
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-  - Load the extension via `opera:extensions`
-  - Check the `Developer Mode` and load as unpacked from extension’s extracted directory.
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-### Production
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-- `yarn run build` builds the extension for all the browsers to `extension/BROWSER` directory respectively.
+## Learn More
 
-Note: By default the `manifest.json` is set with version `0.0.0`. The webpack loader will update the version in the build with that of the `package.json` version. In order to release a new version, update version in `package.json` and run script.
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-If you don't want to use `package.json` version, you can disable the option [here](https://github.com/abhijithvijayan/web-extension-starter/blob/e10158c4a49948dea9fdca06592876d9ca04e028/webpack.config.js#L79).
-
-### Generating browser specific manifest.json
-
-Update `src/manifest.json` file with browser vendor prefixed manifest keys
-
-```json
-{
-  "__chrome__name": "SuperChrome",
-  "__firefox__name": "SuperFox",
-  "__edge__name": "SuperEdge",
-  "__opera__name": "SuperOpera"
-}
-```
-
-if the vendor is `chrome` this compiles to:
-
-```json
-{
-  "name": "SuperChrome"
-}
-```
-
----
-
-Add keys to multiple vendors by separating them with | in the prefix
-
-```json
-{
-  "__chrome|opera__name": "SuperBlink"
-}
-```
-
-if the vendor is `chrome` or `opera`, this compiles to:
-
-```json
-{
-  "name": "SuperBlink"
-}
-```
-
-See the original [README](https://github.com/abhijithvijayan/wext-manifest-loader) of `wext-manifest-loader` package for more details
-
-## Bugs
-
-Please file an issue [here](https://github.com/abhijithvijayan/web-extension-starter/issues/new) for bugs, missing documentation, or unexpected behavior.
-
-### Linting & TypeScript Config
-
-- Shared Eslint & Prettier Configuration - [`@abhijithvijayan/eslint-config`](https://www.npmjs.com/package/@abhijithvijayan/eslint-config)
-- Shared TypeScript Configuration - [`@abhijithvijayan/tsconfig`](https://www.npmjs.com/package/@abhijithvijayan/tsconfig)
+To learn React, check out the [React documentation](https://reactjs.org/).

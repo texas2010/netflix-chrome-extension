@@ -1,88 +1,60 @@
 {
   "name": "netflix-chrome-extension",
-  "version": "1.2.1",
-  "description": "Web extension starter using react and typescript",
+  "version": "2.0.0",
   "private": true,
-  "repository": "https://github.com/texas2010/netflix-chrome-extension.git",
-  "author": {
-    "name": "texas2010"
-  },
-  "license": "MIT",
-  "engines": {
-    "node": ">=10.0.0",
-    "yarn": ">= 1.0.0"
-  },
-  "scripts": {
-    "start": "npm run dev:chrome",
-    "dev:chrome": "cross-env NODE_ENV=development cross-env TARGET_BROWSER=chrome webpack --watch",
-    "dev:firefox": "cross-env NODE_ENV=development cross-env TARGET_BROWSER=firefox webpack --watch",
-    "dev:opera": "cross-env NODE_ENV=development cross-env TARGET_BROWSER=opera webpack --watch",
-    "build:chrome": "cross-env NODE_ENV=production cross-env TARGET_BROWSER=chrome webpack",
-    "build:firefox": "cross-env NODE_ENV=production cross-env TARGET_BROWSER=firefox webpack",
-    "build:opera": "cross-env NODE_ENV=production cross-env TARGET_BROWSER=opera webpack",
-    "build": "yarn run build:chrome && yarn run build:firefox && yarn run build:opera",
-    "lint": "eslint . --ext .ts,.tsx",
-    "lint:fix": "eslint . --ext .ts,.tsx --fix"
-  },
   "dependencies": {
-    "@babel/runtime": "^7.14.0",
-    "@types/chrome": "0.0.145",
-    "advanced-css-reset": "^1.2.2",
-    "emoji-log": "^1.0.2",
+    "@craco/craco": "^6.4.3",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^16.11.21",
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
+    "dotenv": "^16.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "webext-base-css": "^1.3.1",
-    "webextension-polyfill-ts": "^0.25.0"
+    "react-scripts": "5.0.0",
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "deleteignore": "rm -rf build/ignore-this/",
+    "clean": "rm -rf build/*",
+    "premanifest-dev": "npm run clean",
+    "manifest-dev": "NODE_ENV=development ts-node --skip-project src/utils/createManifestJson",
+    "manifest-prod": "NODE_ENV=production ts-node --skip-project src/utils/createManifestJson",
+    "postmanifest-prod": "npm run deleteignore",
+    "prestart": "npm run manifest-dev",
+    "start": "craco start",
+    "prebuild": "npm run clean",
+    "build": "craco build",
+    "postbuild": "npm run manifest-prod",
+    "test": "craco test",
+    "eject": "craco eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
-    "@abhijithvijayan/eslint-config": "2.6.3",
-    "@abhijithvijayan/eslint-config-airbnb": "^1.0.2",
-    "@abhijithvijayan/tsconfig": "^1.3.0",
-    "@babel/core": "^7.14.3",
-    "@babel/eslint-parser": "^7.12.16",
-    "@babel/plugin-proposal-class-properties": "^7.13.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.14.2",
-    "@babel/plugin-transform-destructuring": "^7.13.17",
-    "@babel/plugin-transform-runtime": "^7.14.3",
-    "@babel/preset-env": "^7.14.2",
-    "@babel/preset-react": "^7.13.13",
-    "@babel/preset-typescript": "^7.13.0",
-    "@types/react": "^17.0.6",
-    "@types/react-dom": "^17.0.5",
-    "@types/webpack": "^4.41.29",
-    "@typescript-eslint/eslint-plugin": "^4.4.1",
-    "@typescript-eslint/parser": "^4.4.1",
-    "autoprefixer": "^10.2.5",
-    "babel-loader": "^8.2.2",
-    "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^6.4.1",
-    "cross-env": "^7.0.3",
-    "css-loader": "^5.2.5",
-    "eslint": "^7.27.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-import": "^2.23.3",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.23.2",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "filemanager-webpack-plugin": "^3.1.1",
-    "fork-ts-checker-webpack-plugin": "^6.2.10",
-    "html-webpack-plugin": "^4.5.2",
-    "mini-css-extract-plugin": "^1.6.0",
-    "node-sass": "^4.14.1",
-    "optimize-css-assets-webpack-plugin": "^5.0.6",
-    "postcss": "^8.3.0",
-    "postcss-loader": "^4.3.0",
-    "prettier": "^2.3.1",
-    "resolve-url-loader": "^3.1.3",
-    "sass-loader": "^10.2.0",
-    "terser-webpack-plugin": "^4.2.3",
-    "typescript": "4.1.5",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^4.7.0",
-    "webpack-extension-reloader": "^1.1.4",
-    "wext-manifest-loader": "^2.3.0",
-    "wext-manifest-webpack-plugin": "^1.2.1"
+    "@types/chrome": "^0.0.177",
+    "copy-webpack-plugin": "^10.2.1",
+    "jest-chrome": "^0.7.2"
   }
 }
