@@ -418,6 +418,8 @@ const createManifestFile = async () => {
   } catch (err: any) {
     if (err.code === 'ENOENT') {
       // manifest.config.json file is not exist!
+      console.log('NODE_ENV: ', process.env.NODE_ENV);
+
       throw new Error(error.fileRequired);
     }
 
