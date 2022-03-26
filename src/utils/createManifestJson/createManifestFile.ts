@@ -69,7 +69,7 @@ const createManifestFile = async () => {
     throw new Error('NODE_ENV is not exist. it is required to have');
   }
   // check if TEST_BUILD_PATH is not exist during test env
-  if (process.env.TEST_NODE_ENV && !process.env.TEST_BUILD_PATH) {
+  if (process.env.NODE_ENV && !process.env.TEST_BUILD_PATH) {
     throw new Error(
       'TEST_BUILD_PATH is not exist in the test env file. it is required to have'
     );
