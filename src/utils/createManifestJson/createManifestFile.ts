@@ -390,14 +390,13 @@ const createManifestFile = async () => {
 
     const packageInfo = await getPackageInfo();
     const newContentScriptsArr = dataObj.content_scripts.map((obj) => {
-      if (process.env.NODE_ENV === 'development') {
-        const { matches, js } = obj;
-        return {
-          matches,
-          js,
-        };
-      }
-      return obj;
+      const { matches, js } = obj;
+      return process.env.NODE_ENV === 'development'
+        ? {
+            matches,
+            js,
+          }
+        : obj;
     });
 
     const newManifestObj = {
