@@ -76,7 +76,7 @@ const createManifestFile = async () => {
   }
 
   const buildPath =
-    process.env.TEST_NODE_ENV === 'test'
+    process.env.NODE_ENV === 'test'
       ? (process.env.TEST_BUILD_PATH as string)
       : './';
   const configFilename = `${path.resolve(buildPath)}/manifest.config.json`;
