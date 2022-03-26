@@ -6,7 +6,7 @@ import createManifestFile, { error } from './createManifestFile';
 describe('createManifestFile async function', () => {
   const originalEnv = process.env;
 
-  const buildPath = process.env.BUILD_PATH as string;
+  const buildPath = process.env.BUILD_PATH || ('./' as string);
   const packageFilename = `${path.resolve(buildPath)}/package.json`;
   const manifestConfigFilename = `${path.resolve(
     buildPath
