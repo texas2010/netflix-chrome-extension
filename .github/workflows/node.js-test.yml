@@ -1,8 +1,5 @@
 name: Node.js Testing CI
 
-env:
-  TEST_NODE_ENV: prod
-
 on:
   push:
     branches: [main]
