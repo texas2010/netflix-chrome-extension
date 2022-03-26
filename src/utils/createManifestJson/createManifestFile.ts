@@ -68,16 +68,16 @@ const createManifestFile = async () => {
   if (!process.env.NODE_ENV) {
     throw new Error('NODE_ENV is not exist. it is required to have');
   }
-  // check if build_path is not exist during test env
-  if (process.env.TEST_NODE_ENV === 'test' && !process.env.BUILD_PATH) {
+  // check if TEST_BUILD_PATH is not exist during test env
+  if (process.env.TEST_NODE_ENV === 'test' && !process.env.TEST_BUILD_PATH) {
     throw new Error(
-      'BUILD_PATH is not exist in the test env file. it is required to have'
+      'TEST_BUILD_PATH is not exist in the test env file. it is required to have'
     );
   }
 
   const buildPath =
     process.env.TEST_NODE_ENV === 'test'
-      ? (process.env.BUILD_PATH as string)
+      ? (process.env.TEST_BUILD_PATH as string)
       : './';
   const configFilename = `${path.resolve(buildPath)}/manifest.config.json`;
   try {
@@ -409,7 +409,7 @@ const createManifestFile = async () => {
 
     const buildFilename =
       process.env.TEST_NODE_ENV === 'test'
-        ? `${path.resolve(process.env.BUILD_PATH as string)}/manifest.json`
+        ? `${path.resolve(process.env.TEST_BUILD_PATH as string)}/manifest.json`
         : `${path.resolve('./')}/build/manifest.json`;
 
     await afs.writeFile(buildFilename, JSON.stringify(newManifestObj));
