@@ -16,16 +16,15 @@ const getPackageInfo = async () => {
   }
 
   // check if TEST_BUILD_PATH is not exist during test env
-  if (process.env.TEST_NODE_ENV === 'test' && !process.env.TEST_BUILD_PATH) {
+  if (process.env.TEST_NODE_ENV && !process.env.TEST_BUILD_PATH) {
     throw new Error(
       'TEST_BUILD_PATH is not exist in the test env file. it is required to have'
     );
   }
 
-  const buildPath =
-    process.env.NODE_ENV === 'test'
-      ? (process.env.TEST_BUILD_PATH as string)
-      : './';
+  const buildPath = process.env.TEST_NODE_ENV
+    ? (process.env.TEST_BUILD_PATH as string)
+    : './';
   const filename = `${path.resolve(buildPath)}/package.json`;
 
   try {

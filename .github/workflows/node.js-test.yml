@@ -23,4 +23,6 @@ jobs:
       - run: mkdir build-test
       - run: npm ci
       - run: npm run build
-      - run: npm test
+
+      - name: Run Tests
+        run: npm test

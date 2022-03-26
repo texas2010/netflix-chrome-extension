@@ -2,7 +2,7 @@ import { exit } from 'process';
 import createManifestFile from './createManifestFile';
 
 if (!process.env.NODE_ENV) {
-  throw new Error('node_env in the env is missing!');
+  throw new Error('NODE_ENV in the env is missing!');
 }
 
 (async () => {
