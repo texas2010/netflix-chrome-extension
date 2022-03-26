@@ -19,11 +19,11 @@ jobs:
       - run: mkdir build-test
       - run: npm ci
       - name: Run Build
-        run: echo 'NODE_ENV: ${{env.NODE_ENV}}'
+        run: echo 'NODE_ENV ${{env.NODE_ENV}}'
         # run: npm run build
 
       - name: Run Tests
-        run: echo 'NODE_ENV: ${{env.NODE_ENV}}'
+        run: echo 'NODE_ENV ${{env.NODE_ENV}}'
         # run: npm test
         env:
           TEST_BUILD_PATH: ./build-test
