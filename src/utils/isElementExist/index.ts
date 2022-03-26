@@ -6,22 +6,29 @@ export const observerOptions = {
 };
 
 export const findElement = (selector: string) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const elementExist = document.querySelector(selector);
     if (elementExist) {
-      devLog('findElement: it is exist.', selector);
+      devLog('findElement: exist!', selector);
       resolve(elementExist);
       return;
     }
+
+    const timeoutID = setTimeout(() => {
+      mutationObserver.disconnect();
+      reject();
+      devLog('findElement: not exist!', selector);
+    }, 1000 * 5);
 
     const mutationCallback: MutationCallback = (mutationsList, observer) => {
       for (const mutation of mutationsList) {
         switch (mutation.type) {
           case 'childList':
             if (document.querySelector(selector)) {
+              observer.disconnect();
               devLog('findElement: found!', selector);
               resolve(document.querySelector(selector));
-              observer.disconnect();
+              clearTimeout(timeoutID);
             }
             break;
         }
@@ -36,11 +43,15 @@ export const findElement = (selector: string) => {
 };
 
 const isElementExist = async (selector: string) => {
-  const data = await findElement(selector);
-  if (data) {
-    return true;
+  try {
+    const data = await findElement(selector);
+    if (data) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    return false;
   }
-  return false;
 };
 
 export default isElementExist;

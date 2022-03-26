@@ -12,7 +12,7 @@ window.addEventListener('load', async () => {
     devBannerMessage();
   }
 
-  const mainAppRoot: Element = document.createElement('div');
+  const mainAppRoot = document.createElement('div');
   mainAppRoot.setAttribute('id', 'nAppRoot');
 
   const theirAppRoot: Element | null = document.getElementById('appMountPoint');
