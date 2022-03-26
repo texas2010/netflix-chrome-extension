@@ -23,12 +23,14 @@ jobs:
       - run: npm ci
 
       - name: Run Build
-        run: echo 'TEST_NODE_ENV ${{env.TEST_NODE_ENV}}'
-        run: npm run build
+        run: |
+          echo 'TEST_NODE_ENV ${{env.TEST_NODE_ENV}}'
+          npm run build
 
       - name: Run Tests
-        run: echo 'TEST_NODE_ENV ${{env.TEST_NODE_ENV}}'
-        run: npm test
+        run: |
+          echo 'TEST_NODE_ENV ${{env.TEST_NODE_ENV}}'
+          npm test
         env:
           TEST_BUILD_PATH: ./build-test
           TEST_NODE_ENV: test
