@@ -1,9 +1,9 @@
 name: Node.js Testing CI
 
-env:
-  # BUILD_PATH: ./build
-  # BUILD_PATH: ./build-test
-  # TEST_NODE_ENV: test
+# env:
+# BUILD_PATH: ./build
+# BUILD_PATH: ./build-test
+# TEST_NODE_ENV: test
 
 on:
   push:
