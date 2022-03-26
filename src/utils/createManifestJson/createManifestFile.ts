@@ -64,7 +64,6 @@ const allPropArr = [
 ];
 
 const createManifestFile = async () => {
-  // filename: string = `${path.resolve('./')}/manifest.config.json`,
   // check if node_env is not exist.
   if (!process.env.NODE_ENV) {
     throw new Error('NODE_ENV is not exist. it is required to have');
