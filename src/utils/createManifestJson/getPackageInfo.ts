@@ -22,10 +22,9 @@ const getPackageInfo = async () => {
     );
   }
 
-  const buildPath =
-    process.env.NODE_ENV === 'test'
-      ? (process.env.TEST_BUILD_PATH as string)
-      : './';
+  const buildPath = process.env.TEST_NODE_ENV
+    ? (process.env.TEST_BUILD_PATH as string)
+    : './';
   const filename = `${path.resolve(buildPath)}/package.json`;
 
   try {

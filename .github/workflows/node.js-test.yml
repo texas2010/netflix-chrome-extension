@@ -1,9 +1,5 @@
 name: Node.js Testing CI
 
-env:
-  TEST_BUILD_PATH: ./build-test
-  TEST_NODE_ENV: test
-
 on:
   push:
     branches: [main]
@@ -22,7 +18,13 @@ jobs:
           node-version: '16.x'
       - run: mkdir build-test
       - run: npm ci
-      - run: npm run build
+      - name: Run Build
+        run: echo 'NODE_ENV: ${{env.NODE_ENV}}'
+        # run: npm run build
 
       - name: Run Tests
-        run: npm test
+        run: echo 'NODE_ENV: ${{env.NODE_ENV}}'
+        # run: npm test
+        env:
+          TEST_BUILD_PATH: ./build-test
+          TEST_NODE_ENV: test
