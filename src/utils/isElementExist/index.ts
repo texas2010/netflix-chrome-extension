@@ -14,12 +14,6 @@ export const findElement = (selector: string) => {
       return;
     }
 
-    const timeoutID = setTimeout(() => {
-      mutationObserver.disconnect();
-      reject();
-      devLog('findElement: not exist!', selector);
-    }, 1000 * 5);
-
     const mutationCallback: MutationCallback = (mutationsList, observer) => {
       for (const mutation of mutationsList) {
         switch (mutation.type) {
@@ -39,6 +33,12 @@ export const findElement = (selector: string) => {
     );
 
     mutationObserver.observe(document.body, observerOptions);
+
+    const timeoutID = setTimeout(() => {
+      mutationObserver.disconnect();
+      reject();
+      devLog('findElement: not exist!', selector);
+    }, 1000 * 5);
   });
 };
 
