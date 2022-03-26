@@ -75,9 +75,10 @@ const createManifestFile = async () => {
     );
   }
 
-  const buildPath = process.env.TEST_NODE_ENV
-    ? (process.env.TEST_BUILD_PATH as string)
-    : './';
+  const buildPath =
+    process.env.TEST_NODE_ENV === 'test'
+      ? (process.env.TEST_BUILD_PATH as string)
+      : './';
   const configFilename = `${path.resolve(buildPath)}/manifest.config.json`;
   try {
     //check if manifest.config.json is exist
