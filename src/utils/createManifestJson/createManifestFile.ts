@@ -417,7 +417,7 @@ const createManifestFile = async () => {
     return 'manifest.json created';
   } catch (err: any) {
     if (err.code === 'ENOENT') {
-      // package.json file is not exist!
+      // manifest.config.json file is not exist!
       throw new Error(error.fileRequired);
     }
 
