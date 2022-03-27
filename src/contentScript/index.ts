@@ -19,7 +19,6 @@ window.addEventListener('load', async () => {
   if ((await isElementExist('#appMountPoint')) && theirAppRoot) {
     theirAppRoot.appendChild(mainAppRoot);
     devLog('nAppRoot added in the dom!');
-    // render main app.
     contentScriptAppRender();
   }
 
