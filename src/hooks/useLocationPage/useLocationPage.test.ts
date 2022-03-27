@@ -1,5 +1,6 @@
-import { screen, waitFor } from '@testing-library/react';
-import { act, renderHook } from '@testing-library/react-hooks';
+import { screen } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
+
 import useLocationPage from '.';
 
 describe('useLocationPage', () => {
