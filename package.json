@@ -53,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^7.0.2",
     "@types/chrome": "^0.0.177",
     "copy-webpack-plugin": "^10.2.1",
     "jest-chrome": "^0.7.2",
