@@ -7,6 +7,7 @@ export const ContentScriptApp = () => {
 
   useEffect(() => {
     const hrefChangedisconnect = hrefChangeEventListen(setSitePage);
+
     return (): void => {
       hrefChangedisconnect();
     };
