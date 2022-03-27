@@ -13,10 +13,10 @@ export const ContentScriptApp = () => {
   }, [sitePage]);
 
   return (
-    <div>
+    <>
       <h1 style={{ textAlign: 'center' }}>i am here now!</h1>
-      <h1 style={{ textAlign: 'center' }}>{sitePage}</h1>
-    </div>
+      <h2 style={{ textAlign: 'center' }}>SitePage: {sitePage}</h2>
+    </>
   );
 };
 
