@@ -26,7 +26,6 @@ describe('hrefChangeEventListen function', () => {
       screen.getByTestId('bodyElement').appendChild(divEl1);
     }, 1);
 
-    // do not remove this third of set Timeout. or it will throw weird error.
     setTimeout(() => {
       const divEl2 = document.createElement('div');
       divEl2.setAttribute('data-testid', 'divEl2');
@@ -58,7 +57,6 @@ describe('hrefChangeEventListen function', () => {
       window.location.replace('https://www.fake-website.com/new-page');
     }, 2);
 
-    // do not remove this third of set Timeout. or it will throw weird error.
     setTimeout(() => {
       const divEl2 = document.createElement('div');
       divEl2.setAttribute('data-testid', 'divEl2');
