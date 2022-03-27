@@ -1,3 +1,5 @@
+import devLog from '../devLog';
+
 type setNewUrlT = (url: React.SetStateAction<string>) => void;
 
 const observerOptions = {
@@ -11,20 +13,23 @@ const observerOptions = {
 
 export const hrefChangeEventListen = (setNewURL: setNewUrlT) => {
   let oldHref = window.location.href;
-  const mutationCallback: MutationCallback = (mutationsList, observer) => {
+
+  const mutationCallback: MutationCallback = (mutationsList) => {
     mutationsList.forEach(() => {
       if (oldHref !== window.location.href) {
         oldHref = window.location.href;
-        console.log('new href:', window.location.href);
+        devLog('new href:', window.location.href);
         setNewURL(window.location.href);
       }
     });
   };
+
   const mutationObserver: MutationObserver = new MutationObserver(
     mutationCallback
   );
 
   mutationObserver.observe(document.body, observerOptions);
+
   return () => {
     mutationObserver.disconnect();
   };
