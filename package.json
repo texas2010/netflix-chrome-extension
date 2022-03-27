@@ -55,6 +55,7 @@
   "devDependencies": {
     "@types/chrome": "^0.0.177",
     "copy-webpack-plugin": "^10.2.1",
-    "jest-chrome": "^0.7.2"
+    "jest-chrome": "^0.7.2",
+    "jest-location-mock": "^1.0.9"
   }
 }

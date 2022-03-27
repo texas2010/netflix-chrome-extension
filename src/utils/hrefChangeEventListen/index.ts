@@ -10,13 +10,13 @@ const observerOptions = {
 };
 
 export const hrefChangeEventListen = (setNewURL: setNewUrlT) => {
-  let oldHref = document.location.href;
+  let oldHref = window.location.href;
   const mutationCallback: MutationCallback = (mutationsList, observer) => {
     mutationsList.forEach(() => {
-      if (oldHref !== document.location.href) {
-        oldHref = document.location.href;
-        console.log('new href:', document.location.href);
-        setNewURL(document.location.href);
+      if (oldHref !== window.location.href) {
+        oldHref = window.location.href;
+        console.log('new href:', window.location.href);
+        setNewURL(window.location.href);
       }
     });
   };
