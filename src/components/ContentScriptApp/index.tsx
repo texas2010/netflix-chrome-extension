@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import useLocationPage from '../../hooks/useLocationPage';
-// import { hrefChangeEventListen } from '../../utils/hrefChangeEventListen';
 import './index.css';
 
 export const ContentScriptApp = () => {
