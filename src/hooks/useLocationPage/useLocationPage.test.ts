@@ -13,15 +13,15 @@ describe('useLocationPage', () => {
     document.body.innerHTML = `<div data-testid='bodyElement'></div>`;
   });
 
-  test('should get default raw url', () => {
+  test('should get default origin url from object', () => {
     const expected = 'https://www.fake-website.com/';
 
     const { result } = renderHook(useLocationPage);
 
-    expect(result.current).toBe(expected);
+    expect(result.current.originUrl).toBe(expected);
   });
 
-  test('should get new raw url when the page changed.', (done) => {
+  test('should get new origin url when the page changed.', (done) => {
     const input = 'https://www.fake-website.com/new-page';
     const expected = 'https://www.fake-website.com/new-page';
 
@@ -44,7 +44,7 @@ describe('useLocationPage', () => {
     }, 3);
 
     setTimeout(() => {
-      expect(result.current).toBe(expected);
+      expect(result.current.originUrl).toBe(expected);
       done();
     }, 4);
   }, 10);
