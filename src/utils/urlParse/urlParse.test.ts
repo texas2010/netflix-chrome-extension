@@ -64,7 +64,7 @@ describe('urlParse', () => {
     expect(result).toMatchObject(expected);
   });
 
-  test('should have 3 element in the pathname array', () => {
+  test('should have 3 elements in the pathname array', () => {
     const input = 'https://www.netflix.com/browse/genre/34399?jbv=81453003';
 
     const expected = {
