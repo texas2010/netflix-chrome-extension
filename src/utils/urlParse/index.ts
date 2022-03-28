@@ -2,44 +2,53 @@ const urlParse = (urlStr: string) => {
   if (!urlStr) {
     throw new Error('url argument is required');
   }
-  const parsedUrl: URL = new URL(urlStr);
+  try {
+    const parsedUrl = new URL(urlStr);
 
-  const urlSearchParams = new URLSearchParams(parsedUrl.search);
-  const queryObject = Object.fromEntries(urlSearchParams.entries());
-  const pathnameArr = parsedUrl.pathname.split('/').filter((item) => item);
+    const urlSearchParamsObj = new URLSearchParams(parsedUrl.search);
+    const queryObject = Object.fromEntries(urlSearchParamsObj.entries());
+    const pathnameArr = parsedUrl.pathname.split('/').filter((item) => item);
 
-  const {
-    username,
-    origin,
-    password,
-    pathname,
-    port,
-    protocol,
-    hash,
-    host,
-    hostname,
-    href,
-    search,
-  } = parsedUrl;
+    const {
+      username,
+      origin,
+      password,
+      pathname,
+      port,
+      protocol,
+      hash,
+      host,
+      hostname,
+      href,
+      search,
+    } = parsedUrl;
 
-  return {
-    username,
-    password,
-    port,
-    originUrl: parsedUrl.toString(),
-    href,
-    origin,
-    protocol,
-    host,
-    hostname,
-    pathname,
-    pathnameArr,
-    search,
-    queryString: search,
-    queryObject,
-    searchParams: new URLSearchParams(parsedUrl.search),
-    hash,
-  };
+    return {
+      username,
+      password,
+      port,
+      originUrl: parsedUrl.toString(),
+      href,
+      origin,
+      protocol,
+      host,
+      hostname,
+      pathname,
+      pathnameArr,
+      search,
+      queryString: search,
+      queryObject,
+      searchParams: urlSearchParamsObj,
+      hash,
+    };
+  } catch (error: any) {
+    if (error.name === 'TypeError') {
+      if (error.message.includes('Invalid URL')) {
+        throw error.message;
+      }
+    }
+    throw error;
+  }
 };
 
 export default urlParse;
