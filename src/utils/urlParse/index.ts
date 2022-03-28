@@ -22,7 +22,7 @@ const urlParse = (urlStr: string) => {
     search,
   } = parsedUrl;
 
-  const newUrlObj = {
+  return {
     username,
     password,
     port,
@@ -40,13 +40,6 @@ const urlParse = (urlStr: string) => {
     searchParams: new URLSearchParams(parsedUrl.search),
     hash,
   };
-  console.log(newUrlObj);
-  console.log(newUrlObj.pathname.split('/').filter((item) => item));
-
-  //   console.log(newUrlObj.queryObj);
-  //   console.log(newUrlObj.searchParams.get('asdf'));
-
-  //   return newUrlObj;
 };
 
 export default urlParse;
