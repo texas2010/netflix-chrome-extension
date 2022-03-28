@@ -10,7 +10,7 @@ const useLocationPage = () => {
     return (): void => {
       hrefChangedisconnect();
     };
-  }, [rawURL]);
+  }, []);
 
   return rawURL;
 };

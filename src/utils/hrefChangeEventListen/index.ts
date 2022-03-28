@@ -18,7 +18,7 @@ export const hrefChangeEventListen = (setNewURL: setNewUrlT) => {
     mutationsList.forEach(() => {
       if (oldHref !== window.location.href) {
         oldHref = window.location.href;
-        devLog('new href:', window.location.href);
+        devLog('New Location:', window.location.href);
         setNewURL(window.location.href);
       }
     });
