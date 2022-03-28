@@ -4,8 +4,9 @@ import path from 'path';
 import getPackageInfo, { error } from './getPackageInfo';
 
 describe('getPackageInfo async function', () => {
-  const buildPath = process.env.BUILD_PATH as string;
+  const buildPath = process.env.TEST_BUILD_PATH as string;
   const packageFilename = `${path.resolve(buildPath)}/package.json`;
+
   afterEach(async () => {
     try {
       await afs.unlink(packageFilename);

@@ -1,6 +1,6 @@
 import devLog from '../utils/devLog';
 import isElementExist from '../utils/isElementExist';
-import appRender from '../components/ContentScriptApp';
+import contentScriptAppRender from './contentScriptAppRender';
 import devBannerMessage from './devBannerMessage';
 import './index.css';
 
@@ -12,15 +12,14 @@ window.addEventListener('load', async () => {
     devBannerMessage();
   }
 
-  const mainAppRoot: Element = document.createElement('div');
+  const mainAppRoot = document.createElement('div');
   mainAppRoot.setAttribute('id', 'nAppRoot');
 
   const theirAppRoot: Element | null = document.getElementById('appMountPoint');
   if ((await isElementExist('#appMountPoint')) && theirAppRoot) {
     theirAppRoot.appendChild(mainAppRoot);
     devLog('nAppRoot added in the dom!');
-    // render main app.
-    appRender();
+    contentScriptAppRender();
   }
 
   devLog('end of window loading.');

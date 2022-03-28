@@ -64,22 +64,20 @@ const allPropArr = [
 ];
 
 const createManifestFile = async () => {
-  // filename: string = `${path.resolve('./')}/manifest.config.json`,
   // check if node_env is not exist.
   if (!process.env.NODE_ENV) {
     throw new Error('NODE_ENV is not exist. it is required to have');
   }
-  // check if build_path is not exist during test env
-  if (process.env.TEST_NODE_ENV === 'test' && !process.env.BUILD_PATH) {
+  // check if TEST_BUILD_PATH is not exist during test env
+  if (process.env.TEST_NODE_ENV && !process.env.TEST_BUILD_PATH) {
     throw new Error(
-      'BUILD_PATH is not exist in the test env file. it is required to have'
+      'TEST_BUILD_PATH is not exist in the test env file. it is required to have'
     );
   }
 
-  const buildPath =
-    process.env.TEST_NODE_ENV === 'test'
-      ? (process.env.BUILD_PATH as string)
-      : './';
+  const buildPath = process.env.TEST_NODE_ENV
+    ? (process.env.TEST_BUILD_PATH as string)
+    : './';
   const configFilename = `${path.resolve(buildPath)}/manifest.config.json`;
   try {
     //check if manifest.config.json is exist
@@ -392,14 +390,13 @@ const createManifestFile = async () => {
 
     const packageInfo = await getPackageInfo();
     const newContentScriptsArr = dataObj.content_scripts.map((obj) => {
-      if (process.env.NODE_ENV === 'development') {
-        const { matches, js } = obj;
-        return {
-          matches,
-          js,
-        };
-      }
-      return obj;
+      const { matches, js } = obj;
+      return process.env.NODE_ENV === 'development'
+        ? {
+            matches,
+            js,
+          }
+        : obj;
     });
 
     const newManifestObj = {
@@ -408,17 +405,16 @@ const createManifestFile = async () => {
       content_scripts: newContentScriptsArr,
     };
 
-    const buildFilename =
-      process.env.TEST_NODE_ENV === 'test'
-        ? `${path.resolve(process.env.BUILD_PATH as string)}/manifest.json`
-        : `${path.resolve('./')}/build/manifest.json`;
+    const buildFilename = process.env.TEST_NODE_ENV
+      ? `${path.resolve(process.env.TEST_BUILD_PATH as string)}/manifest.json`
+      : `${path.resolve('./')}/build/manifest.json`;
 
     await afs.writeFile(buildFilename, JSON.stringify(newManifestObj));
 
     return 'manifest.json created';
   } catch (err: any) {
     if (err.code === 'ENOENT') {
-      // package.json file is not exist!
+      // manifest.config.json file is not exist!
       throw new Error(error.fileRequired);
     }
 

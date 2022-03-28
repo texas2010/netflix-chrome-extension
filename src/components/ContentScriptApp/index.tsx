@@ -1,13 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import useLocationPage from '../../hooks/useLocationPage';
+import './index.css';
 
-const ContentScriptApp = () => {
-  return <h1>i am here now!</h1>;
+export const ContentScriptApp = () => {
+  const locationPage = useLocationPage();
+
+  return (
+    <>
+      <h1 style={{ textAlign: 'center' }}>i am here now!</h1>
+      <h2 style={{ textAlign: 'center' }}>
+        SitePage: {locationPage.originUrl}
+      </h2>
+    </>
+  );
 };
 
-const appRender = () => {
-  const appRoot = document.getElementById('nAppRoot') as Element;
-  ReactDOM.render(<ContentScriptApp />, appRoot);
-};
-
-export default appRender;
+export default ContentScriptApp;
