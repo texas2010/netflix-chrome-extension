@@ -14,7 +14,7 @@ describe('urlParse', () => {
     expect(result).toBeDefined();
   });
 
-  test('should have object', () => {
+  test('should have object return', () => {
     const input = 'https://www.netflix.com/title/70143825';
     const expected = {
       hash: '',
