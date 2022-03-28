@@ -8,7 +8,9 @@ export const ContentScriptApp = () => {
   return (
     <>
       <h1 style={{ textAlign: 'center' }}>i am here now!</h1>
-      <h2 style={{ textAlign: 'center' }}>SitePage: {locationPage}</h2>
+      <h2 style={{ textAlign: 'center' }}>
+        SitePage: {locationPage.originUrl}
+      </h2>
     </>
   );
 };
