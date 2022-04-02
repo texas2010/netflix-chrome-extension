@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { hrefChangeEventListen } from '../../utils/hrefChangeEventListen';
 import urlParse from '../../utils/urlParse';
 
-const useLocationPage = () => {
+const useWindowLocation = () => {
   const [rawURL, setRawURL] = useState<string>(window.location.href);
 
   useEffect(() => {
@@ -16,4 +16,4 @@ const useLocationPage = () => {
   return urlParse(rawURL);
 };
 
-export default useLocationPage;
+export default useWindowLocation;
