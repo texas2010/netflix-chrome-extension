@@ -1,11 +1,13 @@
 import React, { useLayoutEffect } from 'react';
 import { createPortal } from 'react-dom';
+import useIsElementExist from '../../hooks/useIsElementExist';
 
 interface PortalI {
   (props: { rootId: string; children: React.ReactNode }): JSX.Element | null;
 }
 
 const Portal: PortalI = ({ rootId, children }) => {
+  const isElementExist = useIsElementExist(rootId || 'nFakeRoot');
   const mountEl: Element | null = document.querySelector(rootId || 'nFakeRoot');
   const divEl = document.createElement('div');
 
@@ -18,9 +20,9 @@ const Portal: PortalI = ({ rootId, children }) => {
         mountEl.removeChild(divEl);
       }
     };
-  }, [divEl, mountEl]);
+  }, [divEl, rootId, mountEl, isElementExist]);
 
-  if (!mountEl || !children) {
+  if (!rootId || !mountEl || !children || !isElementExist) {
     return null;
   }
 
