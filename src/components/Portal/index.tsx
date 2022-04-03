@@ -23,7 +23,7 @@ const Portal: PortalI = ({ rootId, children }) => {
     };
   }, [divEl, mountEl]);
 
-  if (!mountEl) {
+  if (!mountEl || !children) {
     return null;
   }
 

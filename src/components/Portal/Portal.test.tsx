@@ -8,8 +8,18 @@ describe('Portal component', () => {
       <divExistRoot data-testid="fakeRootId"></divExistRoot> // close portal
     </divBody>// close divBody`;
   });
+  test('should have not Portal in the dom when rootId is not exist', () => {
+    render(
+      <Portal rootId={''}>
+        <span>asdf</span>
+      </Portal>
+    );
 
-  test('should have not Portal in the dom when rootId prop is empty', () => {
+    expect(screen.queryByTestId('fakeRootId')).toBeEmptyDOMElement();
+    expect(screen.queryByTestId('fakeRootId')).not.toHaveTextContent('asdf');
+  });
+
+  test('should have not Portal in the dom when rootId is empty', () => {
     render(
       <Portal rootId=''>
         <span>asdf</span>
@@ -18,6 +28,15 @@ describe('Portal component', () => {
 
     expect(screen.queryByTestId('fakeRootId')).toBeEmptyDOMElement();
     expect(screen.queryByTestId('fakeRootId')).not.toHaveTextContent('asdf');
+  });
+
+  test('should have not Portal in the dom when children is empty', () => {
+    render(<Portal rootId="[data-testid='fakeRootId']">{undefined}</Portal>);
+    expect(screen.getByTestId('fakeRootId')).toBeInTheDocument();
+    expect(screen.getByTestId('fakeRootId')).toHaveTextContent('');
+    screen.getByTestId('fakeRootId').childNodes.forEach((element) => {
+      expect(element).toBeEmptyDOMElement();
+    });
   });
 
   test('should have Portal in the dom and rootId is exist', () => {
