@@ -2,10 +2,7 @@ import React, { useLayoutEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 interface PortalI {
-  (props: {
-    rootId: string;
-    children: React.ReactNode;
-  }): React.ReactPortal | null;
+  (props: { rootId: string; children: React.ReactNode }): JSX.Element | null;
 }
 
 const Portal: PortalI = ({ rootId, children }) => {
