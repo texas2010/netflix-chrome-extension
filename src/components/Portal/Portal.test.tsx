@@ -8,6 +8,7 @@ describe('Portal component', () => {
       <divExistRoot data-testid="fakeRootId"></divExistRoot> // close portal
     </divBody>// close divBody`;
   });
+
   test('should have not Portal in the dom when rootId is not exist', () => {
     render(
       <Portal rootId={''}>
@@ -32,8 +33,10 @@ describe('Portal component', () => {
 
   test('should have not Portal in the dom when children is empty', () => {
     render(<Portal rootId="[data-testid='fakeRootId']">{undefined}</Portal>);
+
     expect(screen.getByTestId('fakeRootId')).toBeInTheDocument();
     expect(screen.getByTestId('fakeRootId')).toHaveTextContent('');
+
     screen.getByTestId('fakeRootId').childNodes.forEach((element) => {
       expect(element).toBeEmptyDOMElement();
     });
@@ -56,7 +59,9 @@ describe('Portal component', () => {
         <span>asdf</span>
       </Portal>
     );
+
     unmount();
+
     expect(screen.getByTestId('fakeRootId')).toBeEmptyDOMElement();
   });
 
@@ -72,7 +77,7 @@ describe('Portal component', () => {
         <span>second render</span>
       </Portal>
     );
-    // screen.debug();
+
     expect(screen.getByTestId('fakeRootId')).toBeInTheDocument();
     expect(screen.queryByTestId('fakeRootId')).toHaveTextContent(
       'second render'
