@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import isElementExist from '../../utils/isElementExist';
+import isElementExist from '@utils/isElementExist';
 
 const useIsElementExist = (selector: string) => {
   const [elementBooleanData, setElementBooleanData] = useState<Boolean>(false);

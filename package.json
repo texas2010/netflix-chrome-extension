@@ -58,5 +58,14 @@
     "copy-webpack-plugin": "^10.2.1",
     "jest-chrome": "^0.7.2",
     "jest-location-mock": "^1.0.9"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "@app(.*)$": "<rootDir>/src/$1",
+      "@components(.*)$": "<rootDir>/src/components/$1",
+      "@hooks(.*)$": "<rootDir>/src/hooks/$1",
+      "@types(.*)$": "<rootDir>/src/types/$1",
+      "@utils(.*)$": "<rootDir>/src/utils/$1"
+    }
   }
 }
