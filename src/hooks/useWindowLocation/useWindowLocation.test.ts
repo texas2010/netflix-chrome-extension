@@ -47,5 +47,5 @@ describe('useWindowLocation', () => {
       expect(result.current.originUrl).toBe(expected);
       done();
     }, 4);
-  }, 10);
+  }, 14);
 });
