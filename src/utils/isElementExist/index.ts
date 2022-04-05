@@ -7,10 +7,10 @@ export const observerOptions = {
 
 export const findElement = (selector: string) => {
   return new Promise((resolve, reject) => {
-    const elementExist = document.querySelector(selector);
-    if (elementExist) {
+    // const elementExist = document.querySelector(selector);
+    if (document.querySelector(selector)) {
       devLog('findElement: exist!', selector);
-      resolve(elementExist);
+      resolve(document.querySelector(selector));
       return;
     }
 
@@ -36,21 +36,22 @@ export const findElement = (selector: string) => {
 
     const timeoutID = setTimeout(() => {
       mutationObserver.disconnect();
-      reject();
+      resolve(false);
       devLog('findElement: not exist!', selector);
     }, 1000 * 5);
   });
 };
 
 const isElementExist = async (selector: string) => {
+  if (!selector) {
+    return false;
+  }
   try {
     const data = await findElement(selector);
-    if (data) {
-      return true;
-    }
-    return false;
+
+    return data ? true : false;
   } catch (error) {
-    return false;
+    console.error('isElementExist function:', error);
   }
 };
 

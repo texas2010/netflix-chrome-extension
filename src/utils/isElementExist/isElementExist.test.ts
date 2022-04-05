@@ -6,6 +6,14 @@ describe('isElementExist async function', () => {
     chrome.storage.local.set({ userSettings: { devLog: false } });
   });
 
+  test('should get false when string argument is empty', async () => {
+    document.body.innerHTML = `<div data-testid='bodyElement'>
+      <div data-testid="fakeAppRoot"></div>
+    </div>`;
+
+    await expect(isElementExist('')).resolves.toBe(false);
+  });
+
   test('should get #fakeAppRoot right now', async () => {
     document.body.innerHTML = `<div data-testid='bodyElement'>
       <div data-testid="fakeAppRoot"></div>
@@ -34,19 +42,15 @@ describe('isElementExist async function', () => {
     });
   });
 
-  test(
-    'should get false when #fake-root is not exist.',
-    async () => {
-      document.body.innerHTML = `<div data-testid='bodyElement'></div>`;
+  test('should get false when #fakeRoot is not exist.', async () => {
+    document.body.innerHTML = `<div data-testid='bodyElement'></div>`;
 
-      await expect(isElementExist("[data-testid='fake-root']")).resolves.toBe(
-        false
-      );
-      await waitFor(() => {
-        const fakeRoot = screen.queryByTestId('fake-root');
-        expect(fakeRoot).toBeNull();
-      });
-    },
-    1000 * 6
-  );
+    await expect(isElementExist("[data-testid='fakeRoot']")).resolves.toBe(
+      false
+    );
+    await waitFor(() => {
+      const fakeRoot = screen.queryByTestId('fakeRoot');
+      expect(fakeRoot).toBeNull();
+    });
+  }, 6000);
 });
