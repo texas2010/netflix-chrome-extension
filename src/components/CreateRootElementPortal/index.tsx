@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useEffect, useLayoutEffect } from 'react';
-import useIsElementExist from '../../hooks/useIsElementExist';
-import Portal from '../Portal';
+import useIsElementExist from '@hooks/useIsElementExist';
+import Portal from '@components/Portal';
 
 interface CreateRootElementPortalI {
   (props: {
