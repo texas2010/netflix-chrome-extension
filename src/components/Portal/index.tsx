@@ -7,22 +7,25 @@ interface PortalI {
 }
 
 const Portal: PortalI = ({ rootId, children }) => {
-  const isElementExist = useIsElementExist(rootId || 'nFakeRoot');
-  const mountEl: Element | null = document.querySelector(rootId || 'nFakeRoot');
   const divEl = document.createElement('div');
 
+  const isElementExist = useIsElementExist(rootId);
+
   useLayoutEffect(() => {
+    const mountEl = isElementExist ? document.querySelector(rootId) : false;
+
     if (mountEl) {
       mountEl.appendChild(divEl);
     }
+
     return (): void => {
       if (mountEl) {
         mountEl.removeChild(divEl);
       }
     };
-  }, [divEl, rootId, mountEl, isElementExist]);
+  }, [rootId, isElementExist, divEl]);
 
-  if (!rootId || !mountEl || !children || !isElementExist) {
+  if (!rootId || !children || !isElementExist) {
     return null;
   }
 

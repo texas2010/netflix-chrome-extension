@@ -13,18 +13,21 @@ describe('Portal component', () => {
     </divBody>// close divBody`;
   });
 
-  test('should have not Portal in the dom when rootId is empty', () => {
+  test('Should not have render portal when rootid is empty in the string.', () => {
     render(
       <Portal rootId=''>
-        <span>asdf</span>
+        <span>rootId is empty in the string</span>
       </Portal>
     );
 
     expect(screen.queryByTestId('fakeRootId')).toBeEmptyDOMElement();
-    expect(screen.queryByTestId('fakeRootId')).not.toHaveTextContent('asdf');
+
+    expect(screen.queryByTestId('fakeRootId')).not.toHaveTextContent(
+      'rootId is empty in the string'
+    );
   });
 
-  test('should have not Portal in the dom when children is empty', () => {
+  test('should not have render Portal when children is empty', () => {
     render(<Portal rootId="[data-testid='fakeRootId']">{undefined}</Portal>);
 
     expect(screen.getByTestId('fakeRootId')).toBeInTheDocument();
@@ -35,16 +38,18 @@ describe('Portal component', () => {
     });
   });
 
-  test('should have Portal in the dom and rootId is exist', (done) => {
+  test('should have render Portal when rootId is exist', (done) => {
     render(
       <Portal rootId="[data-testid='fakeRootId']">
-        <span>asdf</span>
+        <span>Portal is rendered</span>
       </Portal>
     );
 
     setTimeout(() => {
       expect(screen.getByTestId('fakeRootId')).toBeInTheDocument();
-      expect(screen.queryByTestId('fakeRootId')).toHaveTextContent('asdf');
+      expect(screen.queryByTestId('fakeRootId')).toHaveTextContent(
+        'Portal is rendered'
+      );
       done();
     }, 1);
   });
@@ -56,12 +61,14 @@ describe('Portal component', () => {
       </Portal>
     );
 
+    expect(screen.getByTestId('fakeRootId')).toBeInTheDocument();
+
     unmount();
 
     expect(screen.getByTestId('fakeRootId')).toBeEmptyDOMElement();
   });
 
-  test('should have different props when it rerender', (done) => {
+  test('should have different props when it render again', (done) => {
     const { rerender } = render(
       <Portal rootId="[data-testid='fakeRootId']">
         <span>first render</span>
