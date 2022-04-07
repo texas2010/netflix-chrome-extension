@@ -55,25 +55,34 @@ describe('useIsElementExist', () => {
     }, 3);
   });
 
-  test(
-    'should get false when #appRootThird is not exist',
-    (done) => {
-      const { result } = renderHook(() => {
-        return useIsElementExist("[data-testid='appRootThird']");
-      });
+  test('should get false when #appRootThird is not exist', (done) => {
+    const { result } = renderHook(() => {
+      return useIsElementExist("[data-testid='appRootThird']");
+    });
+    expect(result.current).toBe(false);
+
+    setTimeout(() => {
+      const divEl1 = document.createElement('div');
+      divEl1.setAttribute('data-testid', 'divEl1');
+      screen.getByTestId('bodyElement').appendChild(divEl1);
+    }, 1);
+
+    setTimeout(() => {
       expect(result.current).toBe(false);
+      done();
+    }, 5000);
+  }, 6000);
 
-      setTimeout(() => {
-        const divEl1 = document.createElement('div');
-        divEl1.setAttribute('data-testid', 'divEl1');
-        screen.getByTestId('bodyElement').appendChild(divEl1);
-      }, 1);
+  test('should get false when empty string in the argument', (done) => {
+    const { result } = renderHook(() => {
+      return useIsElementExist('');
+    });
 
-      setTimeout(() => {
-        expect(result.current).toBe(false);
-        done();
-      }, 1000 * 5);
-    },
-    1000 * 6
-  );
+    expect(result.current).toBe(false);
+
+    setTimeout(() => {
+      expect(result.current).toBe(false);
+      done();
+    }, 3);
+  });
 });

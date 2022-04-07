@@ -6,6 +6,7 @@ const useIsElementExist = (selector: string) => {
   useEffect(() => {
     (async () => {
       const booleanData = await isElementExist(selector);
+
       setElementBooleanData(booleanData);
     })();
   }, [setElementBooleanData, selector]);
