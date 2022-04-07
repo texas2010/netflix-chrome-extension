@@ -54,6 +54,19 @@ describe('Portal component', () => {
     }, 1);
   });
 
+  test('should not have render it when rootId is not exist', (done) => {
+    render(
+      <Portal rootId="[data-testid='notExistRootid']">
+        <span>when rootId is not exist</span>
+      </Portal>
+    );
+
+    setTimeout(() => {
+      expect(screen.queryByTestId('notExistRootid')).not.toBeInTheDocument();
+      done();
+    }, 5005);
+  }, 6000);
+
   test('should unmount when Portal in the dom got removed', () => {
     const { unmount } = render(
       <Portal rootId="[data-testid='fakeRootId']">
