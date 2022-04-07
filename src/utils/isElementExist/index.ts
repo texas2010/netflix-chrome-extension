@@ -51,7 +51,12 @@ const isElementExist = async (selector: string) => {
 
     return data ? true : false;
   } catch (error) {
-    console.error('isElementExist function:', error);
+    console.error(
+      'isElementExist function: ',
+      'something wrong with it -',
+      error
+    );
+    return false;
   }
 };
 
