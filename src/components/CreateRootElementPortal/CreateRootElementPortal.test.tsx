@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-node-access */
 import { render, screen } from '@testing-library/react';
 import CreateRootElementPortal from '.';
 
@@ -42,16 +43,23 @@ describe('CreateRootElementPortal Component', () => {
     expect(screen.queryByTestId('fakeRootId')).toBeEmptyDOMElement();
   });
 
-  test('should not have render it when selector is empty in the string', () => {
+  test('should not have render it when selector is empty in the string', (done) => {
     render(
       <CreateRootElementPortal rootId={'selectorPropNotExist'} selector={''}>
         <div>selector prop is not exist</div>
       </CreateRootElementPortal>
     );
-    expect(screen.queryByTestId('fakeRootId')).toBeEmptyDOMElement();
-    expect(screen.queryByTestId('fakeRootId')).not.toHaveTextContent(
-      'selector prop is not exist'
-    );
+
+    setTimeout(() => {
+      const rootEl = document.querySelector('#selectorPropNotExist');
+
+      expect(rootEl).toBeNull();
+      expect(screen.queryByTestId('fakeRootId')).toBeEmptyDOMElement();
+      expect(screen.queryByTestId('fakeRootId')).not.toHaveTextContent(
+        'selector prop is not exist'
+      );
+      done();
+    }, 1);
   });
 
   test('should render it when selector is exist in the dom.', (done) => {
@@ -65,6 +73,9 @@ describe('CreateRootElementPortal Component', () => {
     );
 
     setTimeout(() => {
+      const rootEl = document.querySelector('#CreateNewRootElement');
+
+      expect(rootEl?.id).toBe('CreateNewRootElement');
       expect(screen.getByTestId('fakeRootId')).toHaveTextContent(
         'this message must be exist now.'
       );
@@ -81,7 +92,11 @@ describe('CreateRootElementPortal Component', () => {
         <h1>selector is not exist in the dom.</h1>
       </CreateRootElementPortal>
     );
+
     setTimeout(() => {
+      const rootEl = document.querySelector('#CreateNewRootElement');
+
+      expect(rootEl).toBeNull();
       expect(screen.queryByTestId('notExistElement')).not.toBeInTheDocument();
       done();
     }, 5005);
