@@ -1,4 +1,4 @@
-import devLog from '../devLog';
+import devLog from '@utils/devLog';
 
 export const observerOptions = {
   childList: true,
@@ -7,10 +7,9 @@ export const observerOptions = {
 
 export const findElement = (selector: string) => {
   return new Promise((resolve, reject) => {
-    const elementExist = document.querySelector(selector);
-    if (elementExist) {
+    if (document.querySelector(selector)) {
       devLog('findElement: exist!', selector);
-      resolve(elementExist);
+      resolve(true);
       return;
     }
 
@@ -21,7 +20,7 @@ export const findElement = (selector: string) => {
             if (document.querySelector(selector)) {
               observer.disconnect();
               devLog('findElement: found!', selector);
-              resolve(document.querySelector(selector));
+              resolve(true);
               clearTimeout(timeoutID);
             }
             break;
@@ -36,20 +35,26 @@ export const findElement = (selector: string) => {
 
     const timeoutID = setTimeout(() => {
       mutationObserver.disconnect();
-      reject();
+      resolve(false);
       devLog('findElement: not exist!', selector);
     }, 1000 * 5);
   });
 };
 
 const isElementExist = async (selector: string) => {
+  if (!selector) {
+    return false;
+  }
   try {
     const data = await findElement(selector);
-    if (data) {
-      return true;
-    }
-    return false;
+
+    return data ? true : false;
   } catch (error) {
+    console.error(
+      'isElementExist function: ',
+      'something wrong with it -',
+      error
+    );
     return false;
   }
 };

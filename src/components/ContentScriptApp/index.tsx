@@ -1,9 +1,9 @@
 import React from 'react';
-import useLocationPage from '../../hooks/useLocationPage';
+import useWindowLocation from '@hooks/useWindowLocation';
 import './index.css';
 
 export const ContentScriptApp = () => {
-  const locationPage = useLocationPage();
+  const locationPage = useWindowLocation();
 
   return (
     <>

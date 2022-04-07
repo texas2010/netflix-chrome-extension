@@ -76,4 +76,28 @@ describe('urlParse', () => {
 
     expect(result).toMatchObject(expected);
   });
+
+  test('should have hash', () => {
+    const input =
+      'https://www.netflix.com/browse/genre/34399?jbv=81453003#testHash';
+
+    const expected = {
+      hash: '#testHash',
+    };
+
+    const result = urlParse(input);
+
+    expect(result).toMatchObject(expected);
+  });
+
+  test('should get item from searchParams', () => {
+    const input =
+      'https://www.netflix.com/browse/my-list?jbv=70155589&asdf=4444&qwer=test';
+    const expected = '70155589';
+
+    const result = urlParse(input);
+
+    expect(result.searchParams.has('jbv')).toBe(true);
+    expect(result.searchParams.get('jbv')).toBe(expected);
+  });
 });

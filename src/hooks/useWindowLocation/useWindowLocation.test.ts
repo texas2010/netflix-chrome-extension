@@ -1,9 +1,9 @@
 import { screen } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
-import useLocationPage from '.';
+import useWindowLocation from '.';
 
-describe('useLocationPage', () => {
+describe('useWindowLocation', () => {
   beforeAll(() => {
     chrome.storage.local.set({ userSettings: { devLog: false } });
   });
@@ -16,7 +16,7 @@ describe('useLocationPage', () => {
   test('should get default origin url from object', () => {
     const expected = 'https://www.fake-website.com/';
 
-    const { result } = renderHook(useLocationPage);
+    const { result } = renderHook(useWindowLocation);
 
     expect(result.current.originUrl).toBe(expected);
   });
@@ -25,7 +25,7 @@ describe('useLocationPage', () => {
     const input = 'https://www.fake-website.com/new-page';
     const expected = 'https://www.fake-website.com/new-page';
 
-    const { result } = renderHook(useLocationPage);
+    const { result } = renderHook(useWindowLocation);
 
     setTimeout(() => {
       const divEl1 = document.createElement('div');
@@ -47,5 +47,5 @@ describe('useLocationPage', () => {
       expect(result.current.originUrl).toBe(expected);
       done();
     }, 4);
-  }, 10);
+  }, 14);
 });
