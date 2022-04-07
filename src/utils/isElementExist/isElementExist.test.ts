@@ -6,7 +6,7 @@ describe('isElementExist async function', () => {
     chrome.storage.local.set({ userSettings: { devLog: false } });
   });
 
-  test('should get false when string argument is empty', async () => {
+  test('should get false when empty string in the argument', async () => {
     await expect(isElementExist('')).resolves.toBe(false);
   });
 
