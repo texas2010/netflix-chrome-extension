@@ -7,10 +7,9 @@ export const observerOptions = {
 
 export const findElement = (selector: string) => {
   return new Promise((resolve, reject) => {
-    // const elementExist = document.querySelector(selector);
     if (document.querySelector(selector)) {
       devLog('findElement: exist!', selector);
-      resolve(document.querySelector(selector));
+      resolve(true);
       return;
     }
 
@@ -21,7 +20,7 @@ export const findElement = (selector: string) => {
             if (document.querySelector(selector)) {
               observer.disconnect();
               devLog('findElement: found!', selector);
-              resolve(document.querySelector(selector));
+              resolve(true);
               clearTimeout(timeoutID);
             }
             break;
