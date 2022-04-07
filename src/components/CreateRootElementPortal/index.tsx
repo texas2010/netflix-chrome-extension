@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import useIsElementExist from '@hooks/useIsElementExist';
 import Portal from '@components/Portal';
 
@@ -16,23 +15,25 @@ const CreateRootElementPortal: CreateRootElementPortalI = ({
   children,
   selector,
 }) => {
-  const isElementExist: Boolean = useIsElementExist(selector || 'nFakeRoot');
+  const isElementExist = useIsElementExist(selector);
 
   useLayoutEffect(() => {
-    const selectorEl: Element | null = document.querySelector(
-      selector || 'nFakeRoot'
-    );
+    const selectorEl = isElementExist
+      ? document.querySelector(selector)
+      : false;
 
-    const rootEl = document.createElement('div');
-    rootEl.setAttribute('id', rootId);
+    if (isElementExist) {
+      const rootEl = document.createElement('div');
+      rootEl.setAttribute('id', rootId);
 
-    if (selectorEl && isElementExist) {
-      selectorEl.appendChild(rootEl);
+      if (selectorEl) {
+        selectorEl.appendChild(rootEl);
+      }
+
+      return () => {
+        rootEl.remove();
+      };
     }
-
-    return () => {
-      rootEl.remove();
-    };
   }, [isElementExist, rootId, selector]);
 
   if (!selector || !rootId || !children || !isElementExist) {

@@ -13,7 +13,6 @@ describe('CreateRootElementPortal Component', () => {
     </divBody>// close divBody`;
   });
 
-  //   should not render it when roodId prop is not exist
   test('should not render it when rootId prop is not exist', () => {
     render(
       <CreateRootElementPortal
@@ -30,21 +29,20 @@ describe('CreateRootElementPortal Component', () => {
     );
   });
 
-  // should not render it when children prop is not exist.
   test('should not render it when children prop is not exist', () => {
     render(
       <CreateRootElementPortal
         rootId={'childrenPropNotExist'}
-        children={undefined}
         selector={"[data-testid='fakeRootId']"}
-      ></CreateRootElementPortal>
+      >
+        {undefined}
+      </CreateRootElementPortal>
     );
 
     expect(screen.queryByTestId('fakeRootId')).toBeEmptyDOMElement();
   });
 
-  // should not render it when selector prop is not exist.
-  test('should not render it when selector prop is not exist', () => {
+  test('should not have render it when selector is empty in the string', () => {
     render(
       <CreateRootElementPortal rootId={'selectorPropNotExist'} selector={''}>
         <div>selector prop is not exist</div>
@@ -56,7 +54,6 @@ describe('CreateRootElementPortal Component', () => {
     );
   });
 
-  // should render it when selector is exist in the dom.
   test('should render it when selector is exist in the dom.', (done) => {
     render(
       <CreateRootElementPortal
@@ -75,19 +72,18 @@ describe('CreateRootElementPortal Component', () => {
     }, 1);
   });
 
-  // should not render it when selector is not exist in the dom.
-  test('should not render it when selector is not exist in the dom', (done) => {
+  test('should not have render it when selector is not exist in the dom', (done) => {
     render(
       <CreateRootElementPortal
         rootId={'CreateNewRootElement'}
-        selector={"[data-testid='notExistRootid']"}
+        selector={"[data-testid='notExistElement']"}
       >
         <h1>selector is not exist in the dom.</h1>
       </CreateRootElementPortal>
     );
     setTimeout(() => {
-      expect(screen.queryByTestId('notExistRootid')).toBeNull();
+      expect(screen.queryByTestId('notExistElement')).not.toBeInTheDocument();
       done();
-    }, 1);
-  });
+    }, 5005);
+  }, 6000);
 });
