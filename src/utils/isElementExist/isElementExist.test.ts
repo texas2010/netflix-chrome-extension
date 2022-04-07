@@ -7,10 +7,6 @@ describe('isElementExist async function', () => {
   });
 
   test('should get false when string argument is empty', async () => {
-    document.body.innerHTML = `<div data-testid='bodyElement'>
-      <div data-testid="fakeAppRoot"></div>
-    </div>`;
-
     await expect(isElementExist('')).resolves.toBe(false);
   });
 
