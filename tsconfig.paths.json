@@ -3,10 +3,16 @@
     "baseUrl": ".",
     "paths": {
       "@app/*": ["./src/*"],
+      "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/components/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@services/*": ["./src/services/*"],
       "@types/*": ["./src/types/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@utils/*": ["./src/utils/*"],
+      "@background/*": ["./src/background/*"],
+      "@content-scripts/*": ["./src/content-scripts/*"],
+      "@options/*": ["./src/options/*"],
+      "@popup/*": ["./src/popup/*"]
     }
   }
 }
