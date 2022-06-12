@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import OptionsApp from '@components/OptionsApp';
-import devLog from '@utils/devLog';
+import OptionsApp from '@options/OptionsApp';
+import devLog from '@services/devLog';
 
 document.title = 'Options Page';
 devLog('Options file');

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import PopupApp from '@components/PopupApp';
-import devLog from '@utils/devLog';
+import PopupApp from '@popup/PopupApp';
+import devLog from '@services/devLog';
 
 document.title = 'Popup Page';
 devLog('popup file');
