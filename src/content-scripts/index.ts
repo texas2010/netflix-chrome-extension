@@ -1,5 +1,5 @@
-import devLog from '@utils/devLog';
-import isElementExist from '@utils/isElementExist';
+import devLog from '@services/devLog';
+import isElementExist from '@services/isElementExist';
 import contentScriptAppRender from './contentScriptAppRender';
 import devBannerMessage from './devBannerMessage';
 import './index.css';
