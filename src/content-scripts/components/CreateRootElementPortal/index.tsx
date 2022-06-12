@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react';
-import useIsElementExist from '@hooks/useIsElementExist';
-import Portal from '@components/Portal';
+import useIsElementExist from '@content-scripts/hooks/useIsElementExist';
+import Portal from '@content-scripts/components/Portal';
 
 interface CreateRootElementPortalI {
   (props: {
