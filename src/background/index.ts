@@ -1,4 +1,4 @@
-import devLog from '@utils/devLog';
+import devLog from '@services/devLog';
 
 devLog('Background file');
 

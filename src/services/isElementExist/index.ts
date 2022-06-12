@@ -1,4 +1,4 @@
-import devLog from '@utils/devLog';
+import devLog from '@services/devLog';
 
 export const observerOptions = {
   childList: true,

@@ -1,4 +1,4 @@
-import devLog from '@utils/devLog';
+import devLog from '@services/devLog';
 
 type setNewUrlT = (url: React.SetStateAction<string>) => void;
 
