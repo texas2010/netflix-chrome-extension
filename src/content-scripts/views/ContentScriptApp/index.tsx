@@ -1,5 +1,5 @@
 import React from 'react';
-import useWindowLocation from '@content-scripts/hooks/useWindowLocation';
+import { useWindowLocation } from '@content-scripts/hooks';
 import './index.css';
 
 export const ContentScriptApp = () => {

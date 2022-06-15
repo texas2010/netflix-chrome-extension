@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
-import useWindowLocation from '.';
+import { useWindowLocation } from '.';
 
 describe('useWindowLocation', () => {
   beforeAll(() => {

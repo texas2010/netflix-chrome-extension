@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+
 import { isElementExist } from '@content-scripts/services';
 
-const useIsElementExist = (selector: string) => {
+export const useIsElementExist = (selector: string) => {
   const [elementBooleanData, setElementBooleanData] = useState<Boolean>(false);
   useEffect(() => {
     (async () => {
@@ -13,5 +14,3 @@ const useIsElementExist = (selector: string) => {
 
   return elementBooleanData;
 };
-
-export default useIsElementExist;

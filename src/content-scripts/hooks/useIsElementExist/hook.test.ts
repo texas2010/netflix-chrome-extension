@@ -1,6 +1,7 @@
 import { screen } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-import useIsElementExist from '.';
+
+import { useIsElementExist } from '.';
 
 describe('useIsElementExist', () => {
   beforeAll(() => {
