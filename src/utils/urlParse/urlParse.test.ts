@@ -1,6 +1,6 @@
-import urlParse from '.';
+import { urlParse } from '.';
 
-describe('urlParse', () => {
+describe('urlParse function', () => {
   test('should throw error when argument is empty', () => {
     expect(urlParse).toThrowError('url argument is required');
   });
