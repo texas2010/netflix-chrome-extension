@@ -1,6 +1,4 @@
-import devLog from '@services/devLog';
-
-devLog('Background file');
+console.log('Background file');
 
 chrome.runtime.onInstalled.addListener((details) => {
   chrome.storage.local.set({
@@ -9,3 +7,5 @@ chrome.runtime.onInstalled.addListener((details) => {
     },
   });
 });
+
+export {};
