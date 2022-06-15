@@ -14,8 +14,8 @@
   "content_scripts": [
     {
       "matches": ["*://*.netflix.com/*"],
-      "css": ["./static/css/contentScript.css"],
-      "js": ["./static/js/contentScript.js"]
+      "css": ["./static/css/content-scripts.css"],
+      "js": ["./static/js/content-scripts.js"]
     }
   ],
   "permissions": ["storage"],
