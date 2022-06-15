@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import isElementExist from '.';
+import { isElementExist } from './isElementExist.service';
 
 describe('isElementExist async function', () => {
   beforeAll(() => {

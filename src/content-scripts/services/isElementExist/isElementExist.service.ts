@@ -5,7 +5,7 @@ export const observerOptions = {
   subtree: true,
 };
 
-export const findElement = (selector: string) => {
+const findElement = (selector: string) => {
   return new Promise((resolve, reject) => {
     if (document.querySelector(selector)) {
       devLog('findElement: exist!', selector);
@@ -41,7 +41,7 @@ export const findElement = (selector: string) => {
   });
 };
 
-const isElementExist = async (selector: string) => {
+export const isElementExist = async (selector: string) => {
   if (!selector) {
     return false;
   }
@@ -58,5 +58,3 @@ const isElementExist = async (selector: string) => {
     return false;
   }
 };
-
-export default isElementExist;

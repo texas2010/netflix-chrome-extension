@@ -1,5 +1,5 @@
 import { devLog } from '@services';
-import isElementExist from '@services/isElementExist';
+import { isElementExist } from '@content-scripts/services';
 import contentScriptAppRender from './contentScriptAppRender';
 import devBannerMessage from './devBannerMessage';
 import './index.css';
