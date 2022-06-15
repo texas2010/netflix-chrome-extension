@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { hrefChangeEventListen } from '@services/hrefChangeEventListen';
+import { hrefChangeEventListen } from '@content-scripts/services';
 import { urlParse } from '@utils';
 
 const useWindowLocation = () => {

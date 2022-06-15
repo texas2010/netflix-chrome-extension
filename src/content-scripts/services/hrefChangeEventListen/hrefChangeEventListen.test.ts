@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 
-import { hrefChangeEventListen } from '.';
+import { hrefChangeEventListen } from './hrefChangeEventListen.service';
 
 describe('hrefChangeEventListen function', () => {
   beforeAll(() => {
