@@ -1,5 +1,5 @@
 // @ts-nocheck
-const chromeStorageMock = {
+export const chromeStorageMock = {
   local: {
     get: function (keys: any, cb: Function) {
       var item: any;
@@ -88,5 +88,3 @@ const chromeStorageMock = {
     removeListener: function () {},
   },
 };
-
-export default chromeStorageMock;

@@ -6,7 +6,7 @@ import '@testing-library/jest-dom';
 import 'jest-location-mock';
 import { chrome } from 'jest-chrome';
 
-import chromeStorageMock from './__mocks__/chromeStorage';
+import { chromeStorageMock } from './__mocks__/chromeStorage';
 
 global.chrome = {
   ...chrome,
