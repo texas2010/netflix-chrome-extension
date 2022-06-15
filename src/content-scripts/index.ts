@@ -1,4 +1,4 @@
-import devLog from '@services/devLog';
+import { devLog } from '@services';
 import isElementExist from '@services/isElementExist';
 import contentScriptAppRender from './contentScriptAppRender';
 import devBannerMessage from './devBannerMessage';

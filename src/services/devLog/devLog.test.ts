@@ -1,4 +1,4 @@
-import devLog, { error } from '.';
+import { devLog, error } from './devLog.service';
 
 describe('devLog function', () => {
   const originalEnv = process.env;
