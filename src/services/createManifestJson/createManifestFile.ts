@@ -1,6 +1,7 @@
 import afs from 'fs/promises';
 import path from 'path';
-import getPackageInfo from './getPackageInfo';
+
+import { getPackageInfo } from './getPackageInfo';
 
 type DefaultIconObjType = {
   16: string;
@@ -63,7 +64,7 @@ const allPropArr = [
   'background',
 ];
 
-const createManifestFile = async () => {
+export const createManifestFile = async () => {
   // check if node_env is not exist.
   if (!process.env.NODE_ENV) {
     throw new Error('NODE_ENV is not exist. it is required to have');
@@ -421,5 +422,3 @@ const createManifestFile = async () => {
     throw err;
   }
 };
-
-export default createManifestFile;

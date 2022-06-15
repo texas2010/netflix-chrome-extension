@@ -9,7 +9,7 @@ export const error = {
   versionRequired: 'version property is required in the package.json',
 };
 
-const getPackageInfo = async () => {
+export const getPackageInfo = async () => {
   // check if node_env is not exist.
   if (!process.env.NODE_ENV) {
     throw new Error('NODE_ENV is not exist. it is required to have');
@@ -66,5 +66,3 @@ const getPackageInfo = async () => {
     throw err; // this code will be reject
   }
 };
-
-export default getPackageInfo;

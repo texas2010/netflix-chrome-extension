@@ -1,5 +1,5 @@
 import { exit } from 'process';
-import createManifestFile from './createManifestFile';
+import { createManifestFile } from './createManifestFile';
 
 if (!process.env.NODE_ENV) {
   throw new Error('NODE_ENV in the env is missing!');

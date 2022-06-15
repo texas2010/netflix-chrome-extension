@@ -1,7 +1,7 @@
 import afs from 'fs/promises';
 import path from 'path';
 
-import createManifestFile, { error } from './createManifestFile';
+import { createManifestFile, error } from './createManifestFile';
 
 describe('createManifestFile async function', () => {
   const originalEnv = process.env;

@@ -1,7 +1,7 @@
 import afs from 'fs/promises';
 import path from 'path';
 
-import getPackageInfo, { error } from './getPackageInfo';
+import { getPackageInfo, error } from './getPackageInfo';
 
 describe('getPackageInfo async function', () => {
   const buildPath = process.env.TEST_BUILD_PATH as string;
