@@ -1,6 +1,7 @@
 import React, { useLayoutEffect } from 'react';
+
+import { Portal } from '@content-scripts/components';
 import { useIsElementExist } from '@content-scripts/hooks';
-import Portal from '@content-scripts/components/Portal';
 
 interface CreateRootElementPortalI {
   (props: {
@@ -10,7 +11,7 @@ interface CreateRootElementPortalI {
   }): null | JSX.Element;
 }
 
-const CreateRootElementPortal: CreateRootElementPortalI = ({
+export const CreateRootElementPortal: CreateRootElementPortalI = ({
   rootId,
   children,
   selector,
@@ -47,5 +48,3 @@ const CreateRootElementPortal: CreateRootElementPortalI = ({
     </>
   );
 };
-
-export default CreateRootElementPortal;

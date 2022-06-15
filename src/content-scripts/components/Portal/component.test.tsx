@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import Portal from '.';
+
+import { Portal } from '.';
 
 describe('Portal component', () => {
   beforeAll(() => {
