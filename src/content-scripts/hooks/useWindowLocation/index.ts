@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { hrefChangeEventListen } from '@services/hrefChangeEventListen';
-import urlParse from '@utils/urlParse';
+import { urlParse } from '@utils';
 
 const useWindowLocation = () => {
   const [rawURL, setRawURL] = useState<string>(window.location.href);

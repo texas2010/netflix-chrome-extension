@@ -1,4 +1,4 @@
-import { urlParse } from '.';
+import { urlParse } from './urlParse.helper';
 
 describe('urlParse function', () => {
   test('should throw error when argument is empty', () => {
