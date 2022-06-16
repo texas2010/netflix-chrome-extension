@@ -1,12 +1,11 @@
 import React from 'react';
-import './index.css';
 
-const Popup = () => {
+import './style.css';
+
+export const PopupApp = () => {
   return (
     <div id='popup'>
       <p>Hello Popup!</p>
     </div>
   );
 };
-
-export default Popup;
