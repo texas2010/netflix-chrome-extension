@@ -23,8 +23,8 @@
     "deleteignore": "rm -rf build/ignore-this/",
     "clean": "rm -rf build/*",
     "premanifest-dev": "npm run clean",
-    "manifest-dev": "NODE_ENV=development ts-node --skip-project src/utils/createManifestJson",
-    "manifest-prod": "NODE_ENV=production ts-node --skip-project src/utils/createManifestJson",
+    "manifest-dev": "NODE_ENV=development ts-node --skip-project src/services/createManifestJson",
+    "manifest-prod": "NODE_ENV=production ts-node --skip-project src/services/createManifestJson",
     "postmanifest-prod": "npm run deleteignore",
     "prestart": "npm run manifest-dev",
     "start": "craco start",
@@ -62,10 +62,16 @@
   "jest": {
     "moduleNameMapper": {
       "@app(.*)$": "<rootDir>/src/$1",
+      "@assets(.*)$": "<rootDir>/src/assets/$1",
       "@components(.*)$": "<rootDir>/src/components/$1",
       "@hooks(.*)$": "<rootDir>/src/hooks/$1",
+      "@services(.*)$": "<rootDir>/src/services/$1",
       "@types(.*)$": "<rootDir>/src/types/$1",
-      "@utils(.*)$": "<rootDir>/src/utils/$1"
+      "@utils(.*)$": "<rootDir>/src/utils/$1",
+      "@background(.*)$": "<rootDir>/src/background/$1",
+      "@content-scripts(.*)$": "<rootDir>/src/content-scripts/$1",
+      "@options(.*)$": "<rootDir>/src/options/$1",
+      "@popup(.*)$": "<rootDir>/src/popup/$1"
     }
   }
 }

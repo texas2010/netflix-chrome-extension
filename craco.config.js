@@ -4,34 +4,29 @@ const CopyPlugin = require('copy-webpack-plugin');
 const rewireEntries = [
   {
     name: 'popup',
-    entry: path.resolve(__dirname, './src/popup/index.tsx'),
-    template: path.resolve(__dirname, './public/index.html'),
+    entry: path.resolve(__dirname, 'src', 'popup', 'index.tsx'),
+    template: path.resolve(__dirname, 'public', 'index.html'),
     outPath: 'popup.html',
   },
   {
     name: 'options',
-    entry: path.resolve(__dirname, './src/options/index.tsx'),
-    template: path.resolve(__dirname, './public/index.html'),
+    entry: path.resolve(__dirname, 'src', 'options', 'index.tsx'),
+    template: path.resolve(__dirname, 'public', 'index.html'),
     outPath: 'options.html',
   },
   {
     name: 'background',
-    entry: path.resolve(__dirname, './src/background/index.ts'),
-    template: path.resolve(__dirname, './public/index.html'),
+    entry: path.resolve(__dirname, 'src', 'background', 'index.ts'),
+    template: path.resolve(__dirname, 'public', 'index.html'),
     outPath: 'ignore-this/background.html',
   },
   {
-    name: 'contentScript',
-    entry: path.resolve(__dirname, './src/contentScript/index.ts'),
-    template: path.resolve(__dirname, './public/index.html'),
-    outPath: 'ignore-this/contentScript.html',
+    name: 'content-scripts',
+    entry: path.resolve(__dirname, 'src', 'content-scripts', 'index.ts'),
+    template: path.resolve(__dirname, 'public', 'index.html'),
+    outPath: 'ignore-this/content-scripts.html',
   },
 ];
-
-// background: './src/background/index.ts',
-// contentScript: './src/contentScript/index.ts',
-// options: './src/options/index.ts',
-// popup: './src/popup/index.ts',
 
 const defaultEntryName = 'main';
 
@@ -92,19 +87,25 @@ function webpackMultipleEntries(config) {
 module.exports = {
   webpack: {
     alias: {
-      '@app': path.resolve(__dirname, './src'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@hooks': path.resolve(__dirname, './src/hooks'),
-      '@types': path.resolve(__dirname, './src/types'),
-      '@utils': path.resolve(__dirname, './src/utils'),
+      '@app': path.resolve(__dirname, 'src'),
+      '@assets': path.resolve(__dirname, 'src', 'assets'),
+      '@components': path.resolve(__dirname, 'src', 'components'),
+      '@hooks': path.resolve(__dirname, 'src', 'hooks'),
+      '@services': path.resolve(__dirname, 'src', 'services'),
+      '@types': path.resolve(__dirname, 'src', 'types'),
+      '@utils': path.resolve(__dirname, 'src', 'utils'),
+      '@background': path.resolve(__dirname, 'src', 'background'),
+      '@content-scripts': path.resolve(__dirname, 'src', 'content-scripts'),
+      '@options': path.resolve(__dirname, 'src', 'options'),
+      '@popup': path.resolve(__dirname, 'src', 'popup'),
     },
     plugins: {
       add: [
         new CopyPlugin({
           patterns: [
             {
-              from: path.resolve('public/assets'),
-              to: path.resolve('build/assets'),
+              from: path.resolve(__dirname, 'src', 'assets'),
+              to: path.resolve(__dirname, 'build', 'assets'),
             },
           ],
         }),

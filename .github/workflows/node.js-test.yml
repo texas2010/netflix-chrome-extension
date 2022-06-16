@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: '16.x'
       - run: mkdir build-test
-      - run: npm ci
+      - run: npm ci --force
 
       - name: Run Build
         run: |
