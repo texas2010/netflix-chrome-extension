@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import { useWindowLocation } from '@content-scripts/hooks';
 
@@ -15,4 +16,9 @@ export const App = () => {
       </h2>
     </>
   );
+};
+
+export const appRender = (elementId: string) => {
+  const appRoot = document.getElementById(elementId) as Element;
+  ReactDOM.render(<App />, appRoot);
 };
