@@ -1,6 +1,6 @@
-import devLog from '@utils/devLog';
-
-devLog('Background file');
+if (process.env.NODE_ENV === 'development') {
+  console.log('Background file');
+}
 
 chrome.runtime.onInstalled.addListener((details) => {
   chrome.storage.local.set({
@@ -9,3 +9,5 @@ chrome.runtime.onInstalled.addListener((details) => {
     },
   });
 });
+
+export {};

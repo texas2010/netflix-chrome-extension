@@ -1,4 +1,4 @@
-const urlParse = (urlStr: string) => {
+export const urlParse = (urlStr: string) => {
   if (!urlStr) {
     throw new Error('url argument is required');
   }
@@ -50,5 +50,3 @@ const urlParse = (urlStr: string) => {
     throw error;
   }
 };
-
-export default urlParse;
