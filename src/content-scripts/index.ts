@@ -2,7 +2,7 @@ import { devLog } from '@services';
 import { isElementExist } from '@content-scripts/services';
 
 import { devBannerMessage } from './devBannerMessage';
-import { contentScriptAppRender } from './contentScriptAppRender';
+import { appRender } from './appRender';
 
 devLog('Content Script file');
 
@@ -19,7 +19,7 @@ window.addEventListener('load', async () => {
   if ((await isElementExist('#appMountPoint')) && theirAppRoot) {
     theirAppRoot.appendChild(mainAppRoot);
     devLog('nAppRoot added in the dom!');
-    contentScriptAppRender();
+    appRender();
   }
 
   devLog('end of window loading.');

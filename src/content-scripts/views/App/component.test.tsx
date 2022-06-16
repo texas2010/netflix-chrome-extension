@@ -1,10 +1,10 @@
 import ReactDOM from 'react-dom';
 
-import { ContentScriptApp } from '.';
+import { App } from '.';
 
-describe('ContentScriptApp component', () => {
+describe('Content Script App component', () => {
   test('should renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<ContentScriptApp />, div);
+    ReactDOM.render(<App />, div);
   });
 });

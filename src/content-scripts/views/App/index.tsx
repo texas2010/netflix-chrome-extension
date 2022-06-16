@@ -4,7 +4,7 @@ import { useWindowLocation } from '@content-scripts/hooks';
 
 import './style.css';
 
-export const ContentScriptApp = () => {
+export const App = () => {
   const locationPage = useWindowLocation();
 
   return (
