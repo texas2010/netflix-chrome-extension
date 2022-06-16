@@ -1,12 +1,11 @@
 import React from 'react';
-import './index.css';
 
-const Options = () => {
+import './style.css';
+
+export const OptionsApp = () => {
   return (
     <div id='options'>
       <p>Hello Options!</p>
     </div>
   );
 };
-
-export default Options;
