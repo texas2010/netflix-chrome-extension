@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { useWindowLocation } from '@content-scripts/hooks';
-import './index.css';
+
+import './style.css';
 
 export const ContentScriptApp = () => {
   const locationPage = useWindowLocation();
@@ -14,5 +16,3 @@ export const ContentScriptApp = () => {
     </>
   );
 };
-
-export default ContentScriptApp;

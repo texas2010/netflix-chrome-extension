@@ -1,8 +1,8 @@
 import { devLog } from '@services';
 import { isElementExist } from '@content-scripts/services';
-import contentScriptAppRender from './contentScriptAppRender';
-import devBannerMessage from './devBannerMessage';
-import './index.css';
+
+import { devBannerMessage } from './devBannerMessage';
+import { contentScriptAppRender } from './contentScriptAppRender';
 
 devLog('Content Script file');
 

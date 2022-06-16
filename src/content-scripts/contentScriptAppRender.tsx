@@ -1,10 +1,8 @@
 import ReactDOM from 'react-dom';
 
-import ContentScriptApp from '@content-scripts/views/ContentScriptApp';
+import { ContentScriptApp } from './views/ContentScriptApp';
 
-const contentScriptAppRender = () => {
+export const contentScriptAppRender = () => {
   const appRoot = document.getElementById('nAppRoot') as Element;
   ReactDOM.render(<ContentScriptApp />, appRoot);
 };
-
-export default contentScriptAppRender;

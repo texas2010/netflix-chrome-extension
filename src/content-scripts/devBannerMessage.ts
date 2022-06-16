@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-anonymous-default-export
-export default (): void => {
+export const devBannerMessage = () => {
   const liEl = document.createElement('li');
   liEl.classList.add('navigation-tab');
 
