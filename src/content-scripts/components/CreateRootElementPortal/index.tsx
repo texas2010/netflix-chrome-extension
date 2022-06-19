@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 import { Portal } from '@content-scripts/components';
 import { useIsElementExist } from '@content-scripts/hooks';
