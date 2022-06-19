@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 
-import { App } from '.';
+import { App } from './App';
 
 describe('Content Script App component', () => {
   test('should renders without crashing', () => {
