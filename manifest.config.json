@@ -19,6 +19,13 @@
     }
   ],
   "permissions": ["storage"],
+  "host_permissions": ["*://*.netflix.com/*"],
+  "web_accessible_resources": [
+    {
+      "resources": ["static/js/inject-script.js"],
+      "matches": ["*://*.netflix.com/*"]
+    }
+  ],
   "icons": {
     "16": "assets/favicon-16.png",
     "48": "assets/favicon-48.png",

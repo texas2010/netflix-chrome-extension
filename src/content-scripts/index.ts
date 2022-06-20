@@ -1,16 +1,26 @@
 import { devLog } from '@services';
-
 // import { isElementExist } from '@content-scripts/services';
-
 // import { devBannerMessage } from './devBannerMessage';
 // import { appRender } from './App';
 
+const port = chrome.runtime.connect();
+
 devLog('Content Script file');
+
+devLog(new Date());
 
 window.addEventListener('load', async () => {
   devLog('window loaded');
 
-  devLog(new Date());
+  const injectScript = (filePath: string, element = 'body') => {
+    const bodyEl = document.getElementsByTagName(element)[0];
+    const scriptEl = document.createElement('script');
+    scriptEl.setAttribute('type', 'text/javascript');
+    scriptEl.setAttribute('src', filePath);
+    bodyEl.appendChild(scriptEl);
+  };
+
+  injectScript(chrome.runtime.getURL('static/js/inject-script.js'));
 
   // if (process.env.NODE_ENV === 'development') {
   //   devBannerMessage();
@@ -27,4 +37,12 @@ window.addEventListener('load', async () => {
   // }
 
   devLog('end of window loading.');
+});
+
+port.onMessage.addListener((message) => {
+  switch (message.type) {
+    default:
+      console.log(message);
+      break;
+  }
 });
