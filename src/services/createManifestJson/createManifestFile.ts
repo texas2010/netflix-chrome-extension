@@ -241,6 +241,8 @@ export const createManifestFile = async () => {
             }
           }
           break;
+        case 'host_permissions':
+          break;
         case 'action':
         case 'background':
         case 'icons':
