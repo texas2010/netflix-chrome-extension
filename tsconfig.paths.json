@@ -11,6 +11,7 @@
       "@utils": ["./src/utils"],
       "@background/*": ["./src/background/*"],
       "@content-scripts/*": ["./src/content-scripts/*"],
+      "@inject-script/*": ["./src/inject-script/*"],
       "@options/*": ["./src/options/*"],
       "@popup/*": ["./src/popup/*"]
     }
