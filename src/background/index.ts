@@ -14,10 +14,9 @@ chrome.runtime.onInstalled.addListener((details) => {
 
 chrome.runtime.onConnect.addListener((port) => {
   port.onMessage.addListener((message) => {
-    console.log(message);
+    console.log('background script received: ', message);
     switch (message.type) {
       default:
-        console.log(message);
         break;
     }
   });
