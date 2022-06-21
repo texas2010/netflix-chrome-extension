@@ -1,5 +1,3 @@
-import { screen } from '@testing-library/react';
-
 import { injectScript } from '.';
 
 describe('inject script function', () => {
