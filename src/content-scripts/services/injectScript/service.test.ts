@@ -35,7 +35,7 @@ describe('inject script function', () => {
       'chrome-extension://EXTENSION_DIR/static'
     );
   });
-  test('should have same file path in the script and argument', () => {
+  test(`should have same file path in the argument and script's src attribute`, () => {
     injectScript('static/javascript/main.js');
 
     const element = document.body.childNodes[0] as Element;
