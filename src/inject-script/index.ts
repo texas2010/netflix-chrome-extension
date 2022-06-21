@@ -18,8 +18,6 @@ const getLimitUserInfoData: GetLimitUserInfoData = (userInfoObj) => {
 
 console.log('injected script file');
 
-// window.postMessage({ type: 'FIRST_POST', text: 'Hello from the site' }, '*'); // example
-
 window.postMessage(
   {
     type: 'START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER',
@@ -40,6 +38,7 @@ window.addEventListener('message', (event) => {
 
   if (event.data && event.data.type) {
     // console.log('inject script received:', event.data);
+
     switch (event.data.type) {
       case 'GET_NETFLIX_USER_INFO':
         window.postMessage(
@@ -52,6 +51,7 @@ window.addEventListener('message', (event) => {
           '*'
         );
         break;
+
       case 'GET_NETFLIX_PROFILE_GATE_STATE':
         window.postMessage(
           {
@@ -61,10 +61,9 @@ window.addEventListener('message', (event) => {
           '*'
         );
         break;
+
       default:
         break;
     }
   }
 });
-
-export {};
