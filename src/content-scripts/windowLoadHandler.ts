@@ -1,12 +1,44 @@
 import { devLog } from '@services';
+
 import { injectScript } from './services';
-// import { isElementExist } from '@content-scripts/services';
-// import { devBannerMessage } from './devBannerMessage';
-// import { appRender } from './App';
+
+interface NetflixDataInterface {
+  profileGateState:
+    | undefined
+    | {
+        data: number;
+      };
+  userInfo: {
+    membershipStatus: string;
+    guid: string | null;
+    name: string | null;
+    userGuid: string | null;
+  };
+}
 
 const port = chrome.runtime.connect();
 
-export const windowLoadHandler = async () => {
+const checkWhichViewOfGuestOrMember = (netflixData: NetflixDataInterface) => {
+  // checking the view of non-logged-in(guest) or logged-in(member)
+  const {
+    userInfo: { membershipStatus, guid },
+  } = netflixData;
+
+  if (membershipStatus.toLowerCase() === 'anonymous' && !guid) {
+    // this is a non-logged-in and we don't need to do anything.
+    console.log('this is a non-logged-in');
+  } else if (membershipStatus.toLowerCase() === 'current_member' && !!guid) {
+    // this is a logged-in. Next thing is checking view of logged-in.
+    console.log('this is a logged-in');
+  } else {
+    devLog(
+      'checkWhichViewOfGuestOrMember function',
+      'something wrong with this.'
+    );
+  }
+};
+
+export const windowLoadHandler = () => {
   devLog('window loaded');
 
   injectScript('static/js/inject-script.js');
@@ -14,7 +46,7 @@ export const windowLoadHandler = async () => {
   port.onMessage.addListener((message) => {
     switch (message.type) {
       default:
-        console.log(message);
+        console.log('global:', message);
         break;
     }
   });
@@ -28,31 +60,24 @@ export const windowLoadHandler = async () => {
       // console.log('Content script received:', event.data);
 
       switch (event.data.type) {
-        case 'NETFLIX_USER_INFO_DATA':
+        case 'START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER':
+          console.log('Content script received:', event.data);
+          checkWhichViewOfGuestOrMember(event.data.result);
+          break;
+
+        case 'POST_NETFLIX_USER_INFO':
           console.log('Content script received:', event.data);
           break;
-        case 'NETFLIX_PROFILE_GATE_STATE_DATA':
+
+        case 'POST_NETFLIX_PROFILE_GATE_STATE':
           console.log('Content script received:', event.data);
           break;
+
         default:
           break;
       }
     }
   });
-
-  // if (process.env.NODE_ENV === 'development') {
-  //   devBannerMessage();
-  // }
-
-  // const mainAppRoot = document.createElement('div');
-  // mainAppRoot.setAttribute('id', 'nAppRoot');
-
-  // const theirAppRoot: Element | null = document.getElementById('appMountPoint');
-  // if ((await isElementExist('#appMountPoint')) && theirAppRoot) {
-  //   theirAppRoot.appendChild(mainAppRoot);
-  //   devLog('nAppRoot added in the dom!');
-  //   appRender('nAppRoot');
-  // }
 
   devLog('end of window loading.');
 };
