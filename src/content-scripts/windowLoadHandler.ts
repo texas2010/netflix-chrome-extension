@@ -1,24 +1,20 @@
 import { devLog } from '@services';
+import { Netflix } from '@types';
 
 import { injectScript } from './services';
 
-interface NetflixDataInterface {
-  profileGateState:
-    | undefined
-    | {
-        data: number;
-      };
-  userInfo: {
-    membershipStatus: string;
-    guid: string | null;
-    name: string | null;
-    userGuid: string | null;
-  };
+interface CheckWhichOfGuestOrMember {
+  (netflixData: {
+    userInfo: Netflix.UserInfo;
+    profileGateState: Netflix.ProfileGateState | undefined;
+  }): void;
 }
 
 const port = chrome.runtime.connect();
 
-const checkWhichViewOfGuestOrMember = (netflixData: NetflixDataInterface) => {
+const checkWhichViewOfGuestOrMember: CheckWhichOfGuestOrMember = (
+  netflixData
+) => {
   // checking the view of non-logged-in(guest) or logged-in(member)
   const {
     userInfo: { membershipStatus, guid },

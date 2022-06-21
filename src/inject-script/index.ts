@@ -1,32 +1,16 @@
-interface NetflixInterface {
-  reactContext: {
-    models: {
-      profileGateState:
-        | undefined
-        | {
-            data: number;
-          };
-      userInfo: {
-        data: UserIntoObjInterface;
-      };
-    };
-  };
-}
-
-interface UserIntoObjInterface {
-  membershipStatus: string;
-  guid: string | null; // account user id
-  name: string | null;
-  userGuid: string | null; // each profile user id
-}
+import { Netflix } from '@types';
 
 declare global {
   interface Window {
-    netflix: NetflixInterface;
+    netflix: Netflix.Global;
   }
 }
 
-const getLimitUserInfoData = (userInfoObj: UserIntoObjInterface) => {
+interface GetLimitUserInfoData {
+  (userInfoObj: Netflix.UserInfo): Netflix.UserInfo;
+}
+
+const getLimitUserInfoData: GetLimitUserInfoData = (userInfoObj) => {
   const { guid, membershipStatus, name, userGuid } = userInfoObj;
 
   return { guid, membershipStatus, name, userGuid };
