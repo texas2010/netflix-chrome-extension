@@ -1,20 +1,12 @@
 import { Netflix } from '@types';
 
+import { getLimitUserInfoData } from './getLimitUserInfoData';
+
 declare global {
   interface Window {
     netflix: Netflix.Global;
   }
 }
-
-interface GetLimitUserInfoData {
-  (userInfoObj: Netflix.UserInfo): Netflix.UserInfo;
-}
-
-const getLimitUserInfoData: GetLimitUserInfoData = (userInfoObj) => {
-  const { guid, membershipStatus, name, userGuid } = userInfoObj;
-
-  return { guid, membershipStatus, name, userGuid };
-};
 
 console.log('injected script file');
 
