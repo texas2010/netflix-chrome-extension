@@ -1,7 +1,7 @@
 export interface Global {
   reactContext: {
     models: {
-      profileGateState: undefined | ProfileGateState;
+      profileGateState: ProfileGateState | undefined;
       userInfo: {
         data: UserInfo;
       };
@@ -10,9 +10,9 @@ export interface Global {
 }
 
 export interface UserInfo {
-  name: string | null;
-  membershipStatus: string;
   guid: string | null; // account user id
+  membershipStatus: 'CURRENT_MEMBER' | 'ANONYMOUS';
+  name: string | null;
   userGuid: string | null; // each profile user id
 }
 
