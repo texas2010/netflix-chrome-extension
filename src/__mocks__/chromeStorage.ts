@@ -1,13 +1,13 @@
 // @ts-nocheck
 export const chromeStorageMock = {
   local: {
-    get: function (keys: any, cb: Function) {
-      var item: any;
+    get: function (keys, cb) {
+      var item;
       if (keys) {
         var local = {};
         // create array if not already
         keys = Array.isArray(keys) ? keys : [keys];
-        keys.forEach((key: string) => {
+        keys.forEach((key) => {
           // can be a simple string or a stringify
           try {
             local[key] = JSON.parse(localStorage.getItem(key));
@@ -24,7 +24,7 @@ export const chromeStorageMock = {
         cb(item);
       }
     },
-    remove: function (keys: any, cb: Function) {
+    remove: function (keys, cb) {
       if (Array.isArray(keys)) {
         keys.forEach((key) => {
           localStorage.removeItem(key);
@@ -37,7 +37,7 @@ export const chromeStorageMock = {
         cb();
       }
     },
-    set: function (obj: any, cb: Function) {
+    set: function (obj, cb) {
       const key = Object.keys(obj)[0];
       localStorage.setItem(key, JSON.stringify(obj[key]));
       if (cb) {
@@ -49,8 +49,8 @@ export const chromeStorageMock = {
     },
   },
   sync: {
-    get: function (key: any, cb: Function) {
-      var item: any;
+    get: function (key, cb) {
+      var item;
       if (key) {
         item = JSON.parse(sessionStorage.getItem(key));
         cb({ [key]: item });
@@ -62,7 +62,7 @@ export const chromeStorageMock = {
         cb(item);
       }
     },
-    remove: function (keys: any, cb: Function) {
+    remove: function (keys, cb) {
       if (Array.isArray(keys)) {
         keys.forEach((key) => {
           sessionStorage.removeItem(key);
@@ -75,7 +75,7 @@ export const chromeStorageMock = {
         cb();
       }
     },
-    set: function (obj: any, cb: Function) {
+    set: function (obj, cb) {
       const key = Object.keys(obj)[0];
       sessionStorage.setItem(key, JSON.stringify(obj[key]));
       if (cb) {
