@@ -1,6 +1,15 @@
+import { WindowMessaging } from '@constants';
 import { Netflix } from '@types';
 
 import { getLimitUserInfoData } from './getLimitUserInfoData';
+
+const {
+  START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
+  GET_NETFLIX_USER_INFO,
+  POST_NETFLIX_USER_INFO,
+  GET_NETFLIX_PROFILE_GATE_STATE,
+  POST_NETFLIX_PROFILE_GATE_STATE,
+} = WindowMessaging.Type;
 
 declare global {
   interface Window {
@@ -12,7 +21,7 @@ console.log('injected script file');
 
 window.postMessage(
   {
-    type: 'START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER',
+    type: START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
     result: {
       userInfo: getLimitUserInfoData(
         window.netflix.reactContext.models.userInfo.data
@@ -32,10 +41,10 @@ window.addEventListener('message', (event) => {
     // console.log('inject script received:', event.data);
 
     switch (event.data.type) {
-      case 'GET_NETFLIX_USER_INFO':
+      case GET_NETFLIX_USER_INFO:
         window.postMessage(
           {
-            type: 'POST_NETFLIX_USER_INFO',
+            type: POST_NETFLIX_USER_INFO,
             result: getLimitUserInfoData(
               window.netflix.reactContext.models.userInfo.data
             ),
@@ -44,10 +53,10 @@ window.addEventListener('message', (event) => {
         );
         break;
 
-      case 'GET_NETFLIX_PROFILE_GATE_STATE':
+      case GET_NETFLIX_PROFILE_GATE_STATE:
         window.postMessage(
           {
-            type: 'POST_NETFLIX_PROFILE_GATE_STATE',
+            type: POST_NETFLIX_PROFILE_GATE_STATE,
             result: window.netflix.reactContext.models.profileGateState,
           },
           '*'

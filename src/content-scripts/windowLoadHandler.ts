@@ -1,3 +1,4 @@
+import { WindowMessaging } from '@constants';
 import { devLog } from '@services';
 import { Netflix } from '@types';
 
@@ -10,7 +11,11 @@ interface CheckWhichOfGuestOrMember {
   }): void;
 }
 
-const port = chrome.runtime.connect();
+const {
+  START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
+  POST_NETFLIX_PROFILE_GATE_STATE,
+  POST_NETFLIX_USER_INFO,
+} = WindowMessaging.Type;
 
 const checkWhichViewOfGuestOrMember: CheckWhichOfGuestOrMember = (
   netflixData
@@ -39,14 +44,6 @@ export const windowLoadHandler = () => {
 
   injectScript('static/js/inject-script.js');
 
-  port.onMessage.addListener((message) => {
-    switch (message.type) {
-      default:
-        console.log('global:', message);
-        break;
-    }
-  });
-
   window.addEventListener('message', (event) => {
     if (event.source !== window) {
       return;
@@ -56,16 +53,16 @@ export const windowLoadHandler = () => {
       // console.log('Content script received:', event.data);
 
       switch (event.data.type) {
-        case 'START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER':
+        case START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER:
           console.log('Content script received:', event.data);
           checkWhichViewOfGuestOrMember(event.data.result);
           break;
 
-        case 'POST_NETFLIX_USER_INFO':
+        case POST_NETFLIX_USER_INFO:
           console.log('Content script received:', event.data);
           break;
 
-        case 'POST_NETFLIX_PROFILE_GATE_STATE':
+        case POST_NETFLIX_PROFILE_GATE_STATE:
           console.log('Content script received:', event.data);
           break;
 
