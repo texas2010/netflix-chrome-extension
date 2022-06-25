@@ -1,3 +1,7 @@
+/*
+Do not use devLog function in this file. or this script will be broke and throw error.
+*/
+
 if (process.env.NODE_ENV === 'development') {
   console.log('Background file');
 
