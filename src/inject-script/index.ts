@@ -9,7 +9,7 @@ const {
   POST_NETFLIX_USER_INFO,
   GET_NETFLIX_PROFILE_GATE_STATE,
   POST_NETFLIX_PROFILE_GATE_STATE,
-} = WindowMessagingConstants.Type;
+} = WindowMessagingConstants;
 
 declare global {
   interface Window {

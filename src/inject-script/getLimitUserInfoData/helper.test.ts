@@ -1,4 +1,5 @@
-import { NetflixConstants } from '@app/constants';
+import { NetflixConstants } from '@constants';
+
 import { getLimitUserInfoData, error } from '.';
 
 describe('getLimitUserInfoData function', () => {
@@ -9,14 +10,14 @@ describe('getLimitUserInfoData function', () => {
   test('should have same argument object and return object', () => {
     const expected = {
       name: null,
-      membershipStatus: NetflixConstants.MembershipStatus.ANONYMOUS,
+      membershipStatus: NetflixConstants.ANONYMOUS,
       userGuid: null,
       guid: null,
     };
 
     const result = getLimitUserInfoData({
       name: null,
-      membershipStatus: NetflixConstants.MembershipStatus.ANONYMOUS,
+      membershipStatus: NetflixConstants.ANONYMOUS,
       userGuid: null,
       guid: null,
     });

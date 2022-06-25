@@ -1,6 +1,6 @@
 import { NetflixConstants } from '@constants';
 
-const { ANONYMOUS, CURRENT_MEMBER } = NetflixConstants.MembershipStatus;
+const { ANONYMOUS, CURRENT_MEMBER } = NetflixConstants;
 
 export interface Global {
   reactContext: {
