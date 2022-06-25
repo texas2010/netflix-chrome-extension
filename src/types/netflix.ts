@@ -1,3 +1,7 @@
+import { NetflixConstants } from '@constants';
+
+const { ANONYMOUS, CURRENT_MEMBER } = NetflixConstants.MembershipStatus;
+
 export interface Global {
   reactContext: {
     models: {
@@ -11,7 +15,7 @@ export interface Global {
 
 export interface UserInfo {
   guid: string | null; // account user id
-  membershipStatus: 'CURRENT_MEMBER' | 'ANONYMOUS';
+  membershipStatus: typeof ANONYMOUS | typeof CURRENT_MEMBER;
   name: string | null;
   userGuid: string | null; // each profile user id
 }

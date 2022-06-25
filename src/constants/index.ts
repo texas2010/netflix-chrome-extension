@@ -1,1 +1,2 @@
-export * as WindowMessaging from './windowMessaging';
+export * as WindowMessagingConstants from './windowMessaging';
+export * as NetflixConstants from './netflix';

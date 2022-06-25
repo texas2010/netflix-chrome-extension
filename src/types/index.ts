@@ -1,1 +1,1 @@
-export * as Netflix from './netflix';
+export * as NetflixTypes from './netflix';

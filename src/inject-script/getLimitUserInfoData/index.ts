@@ -1,7 +1,7 @@
-import { Netflix } from '@types';
+import { NetflixTypes } from '@types';
 
 interface GetLimitUserInfoData {
-  (userInfoObj: Netflix.UserInfo): Netflix.UserInfo;
+  (userInfoObj: NetflixTypes.UserInfo): NetflixTypes.UserInfo;
 }
 
 export const error = {

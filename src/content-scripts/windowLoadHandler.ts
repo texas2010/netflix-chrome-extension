@@ -1,43 +1,13 @@
-import { WindowMessaging } from '@constants';
+import { WindowMessagingConstants } from '@constants';
 import { devLog } from '@services';
-import { Netflix } from '@types';
 
-import { injectScript } from './services';
-
-interface CheckWhichOfGuestOrMember {
-  (netflixData: {
-    userInfo: Netflix.UserInfo;
-    profileGateState: Netflix.ProfileGateState | undefined;
-  }): void;
-}
+import { checkWhichViewOfGuestOrMember, injectScript } from './services';
 
 const {
   START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
   POST_NETFLIX_PROFILE_GATE_STATE,
   POST_NETFLIX_USER_INFO,
-} = WindowMessaging.Type;
-
-const checkWhichViewOfGuestOrMember: CheckWhichOfGuestOrMember = (
-  netflixData
-) => {
-  // checking the view of non-logged-in(guest) or logged-in(member)
-  const {
-    userInfo: { membershipStatus, guid },
-  } = netflixData;
-
-  if (membershipStatus.toLowerCase() === 'anonymous' && !guid) {
-    // this is a non-logged-in and we don't need to do anything.
-    console.log('this is a non-logged-in');
-  } else if (membershipStatus.toLowerCase() === 'current_member' && !!guid) {
-    // this is a logged-in. Next thing is checking view of logged-in.
-    console.log('this is a logged-in');
-  } else {
-    devLog(
-      'checkWhichViewOfGuestOrMember function',
-      'something wrong with this.'
-    );
-  }
-};
+} = WindowMessagingConstants.Type;
 
 export const windowLoadHandler = () => {
   devLog('window loaded');

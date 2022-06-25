@@ -1,5 +1,5 @@
-import { WindowMessaging } from '@constants';
-import { Netflix } from '@types';
+import { WindowMessagingConstants } from '@constants';
+import { NetflixTypes } from '@types';
 
 import { getLimitUserInfoData } from './getLimitUserInfoData';
 
@@ -9,11 +9,11 @@ const {
   POST_NETFLIX_USER_INFO,
   GET_NETFLIX_PROFILE_GATE_STATE,
   POST_NETFLIX_PROFILE_GATE_STATE,
-} = WindowMessaging.Type;
+} = WindowMessagingConstants.Type;
 
 declare global {
   interface Window {
-    netflix: Netflix.Global;
+    netflix: NetflixTypes.Global;
   }
 }
 
