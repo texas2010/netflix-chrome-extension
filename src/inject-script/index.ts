@@ -1,4 +1,7 @@
-import { devLog } from '@services';
+/*
+Do not use console.log function in this file. or this script will be broke and throw error.
+*/
+
 import { WindowMessagingConstants } from '@constants';
 import { NetflixTypes } from '@types';
 
@@ -18,7 +21,7 @@ declare global {
   }
 }
 
-devLog('injected script file');
+console.log('injected script file');
 
 window.postMessage(
   {
@@ -39,7 +42,7 @@ window.addEventListener('message', (event) => {
   }
 
   if (event.data && event.data.type) {
-    devLog('inject script received:', event.data);
+    console.log('inject script received:', event.data);
 
     switch (event.data.type) {
       case GET_NETFLIX_USER_INFO:
