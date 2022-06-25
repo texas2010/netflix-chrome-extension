@@ -1,4 +1,4 @@
-import { WindowMessagingConstants } from '@constants';
+import { WindowMessagingConstants, NetflixConstants } from '@constants';
 import { devLog } from '@services';
 
 import { checkWhichViewOfGuestOrMember, injectScript } from './services';
@@ -20,20 +20,25 @@ export const windowLoadHandler = () => {
     }
 
     if (event.data && event.data.type) {
-      // console.log('Content script received:', event.data);
+      // devLog('Content script received:', event.data);
 
       switch (event.data.type) {
         case START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER:
-          console.log('Content script received:', event.data);
-          checkWhichViewOfGuestOrMember(event.data.result);
+          devLog('Content script received:', event.data);
+          const guestOrMember = checkWhichViewOfGuestOrMember(
+            event.data.result
+          );
+          if (guestOrMember === NetflixConstants.CURRENT_MEMBER) {
+            // what we need to do now? what is next thing for this.
+          }
           break;
 
         case POST_NETFLIX_USER_INFO:
-          console.log('Content script received:', event.data);
+          devLog('Content script received:', event.data);
           break;
 
         case POST_NETFLIX_PROFILE_GATE_STATE:
-          console.log('Content script received:', event.data);
+          devLog('Content script received:', event.data);
           break;
 
         default:
