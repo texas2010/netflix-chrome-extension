@@ -1,5 +1,9 @@
 import { devLog } from '@services';
-import { windowLoadHandler } from './windowLoadHandler';
+
+import {
+  windowLoadHandler,
+  windowMessageHandler,
+} from '@content-scripts/services';
 
 devLog('Content Script file');
 

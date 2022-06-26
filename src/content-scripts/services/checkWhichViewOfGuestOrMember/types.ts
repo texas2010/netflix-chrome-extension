@@ -3,7 +3,7 @@ import { NetflixTypes } from '@types';
 
 const { ANONYMOUS, CURRENT_MEMBER } = NetflixConstants;
 
-type Returned = typeof ANONYMOUS | typeof CURRENT_MEMBER | undefined;
+type Returned = typeof ANONYMOUS | typeof CURRENT_MEMBER | false;
 
 interface NetflixDataParameter {
   userInfo: NetflixTypes.UserInfo | undefined;

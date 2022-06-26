@@ -18,7 +18,7 @@ export const checkWhichViewOfGuestOrMember: CheckWhichOfGuestOrMember = (
   }
   // checking userInfo in the netflixData parameter if userinfo is undefined
   if (!netflixData.userInfo) {
-    return undefined;
+    return false;
   }
 
   // checking the view of non-logged-in(guest) or logged-in(member)
@@ -39,5 +39,5 @@ export const checkWhichViewOfGuestOrMember: CheckWhichOfGuestOrMember = (
     `checkWhichViewOfGuestOrMember - something wrong with membershipStatus: `,
     netflixData
   );
-  return undefined;
+  return false;
 };

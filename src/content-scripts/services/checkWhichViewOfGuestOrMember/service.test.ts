@@ -16,7 +16,7 @@ describe('checkWhichViewOfGuestOrMember function', () => {
       profileGateState: undefined,
     });
 
-    expect(result).toBeUndefined();
+    expect(result).toBe(false);
   });
 
   test('should get ANONYMOUS when view is not logged in', () => {

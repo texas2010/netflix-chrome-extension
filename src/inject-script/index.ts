@@ -26,7 +26,7 @@ console.log('injected script file');
 window.postMessage(
   {
     type: START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
-    result: {
+    payload: {
       userInfo: getLimitUserInfoData(
         window.netflix.reactContext.models.userInfo.data
       ),
@@ -37,19 +37,22 @@ window.postMessage(
 );
 
 window.addEventListener('message', (event) => {
+  // console.log('inject script windowMessageHandler');
+
   if (event.source !== window) {
     return;
   }
 
   if (event.data && event.data.type) {
-    console.log('inject script received:', event.data);
+    // console.log('inject script received:', event.data);
 
     switch (event.data.type) {
       case GET_NETFLIX_USER_INFO:
+        console.log('inject script received:', event.data);
         window.postMessage(
           {
             type: POST_NETFLIX_USER_INFO,
-            result: getLimitUserInfoData(
+            payload: getLimitUserInfoData(
               window.netflix.reactContext.models.userInfo.data
             ),
           },
@@ -58,10 +61,11 @@ window.addEventListener('message', (event) => {
         break;
 
       case GET_NETFLIX_PROFILE_GATE_STATE:
+        console.log('inject script received:', event.data);
         window.postMessage(
           {
             type: POST_NETFLIX_PROFILE_GATE_STATE,
-            result: window.netflix.reactContext.models.profileGateState,
+            payload: window.netflix.reactContext.models.profileGateState,
           },
           '*'
         );
