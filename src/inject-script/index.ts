@@ -1,5 +1,5 @@
 /*
-Do not use console.log function in this file. or this script will be broke and throw error.
+Do not use devLog function in this file. or this script will be broke and throw error.
 */
 
 import { WindowMessagingConstants } from '@constants';
