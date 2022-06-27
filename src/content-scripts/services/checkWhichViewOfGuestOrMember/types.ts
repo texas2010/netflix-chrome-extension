@@ -1,9 +1,6 @@
-import { NetflixConstants } from '@constants';
 import { NetflixTypes } from '@types';
 
-const { ANONYMOUS, CURRENT_MEMBER } = NetflixConstants;
-
-type Returned = typeof ANONYMOUS | typeof CURRENT_MEMBER | false;
+type Returned = NetflixTypes.AnonymousOrCurrentMember | false;
 
 interface NetflixDataParameter {
   userInfo: NetflixTypes.UserInfo | undefined;

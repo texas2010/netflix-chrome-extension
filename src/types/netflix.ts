@@ -15,7 +15,7 @@ export interface Global {
 
 export interface UserInfo {
   guid: string | null; // account user id
-  membershipStatus: typeof ANONYMOUS | typeof CURRENT_MEMBER;
+  membershipStatus: AnonymousOrCurrentMember;
   name: string | null;
   userGuid: string | null; // each profile user id
 }
@@ -23,3 +23,5 @@ export interface UserInfo {
 export interface ProfileGateState {
   data: number;
 }
+
+export type AnonymousOrCurrentMember = typeof ANONYMOUS | typeof CURRENT_MEMBER;

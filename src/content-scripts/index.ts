@@ -10,3 +10,5 @@ devLog('Content Script file');
 devLog(new Date());
 
 window.addEventListener('load', windowLoadHandler);
+
+window.addEventListener('message', windowMessageHandler);
