@@ -1,5 +1,4 @@
 import { NetflixConstants, WindowMessagingConstants } from '@constants';
-import { screen } from '@testing-library/react';
 
 import { windowMessageHandler } from '.';
 import { MessageEventObj } from './types';
@@ -13,371 +12,143 @@ const {
 } = WindowMessagingConstants;
 
 describe('windowMessageHandler in the content script', () => {
+  const inputObj: {
+    data: MessageEventObj | undefined;
+    source: typeof window;
+  } = {
+    data: undefined,
+    source: window,
+  };
+
   beforeAll(() => {
     chrome.storage.local.set({ userSettings: { devLog: false } });
   });
 
-  describe('function', () => {
-    const inputObj: {
-      data: MessageEventObj | undefined;
-      source: typeof window;
-    } = {
-      data: undefined,
-      source: window,
-    };
-
-    afterEach(() => {
-      inputObj.data = undefined;
-    });
-
-    test('should have false when type is start to check which view of guest or member but netflix data is not exist', () => {
-      inputObj.data = {
-        type: START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
-        payload: {
-          userInfo: undefined,
-          profileGateState: undefined,
-        },
-      };
-
-      const event = new MessageEvent<MessageEventObj>('message', inputObj);
-
-      const result = windowMessageHandler(event);
-
-      expect(result).toBe(false);
-    });
-
-    test('should have ANONYMOUS when type is start to check which view of guest or member', () => {
-      inputObj.data = {
-        type: START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
-        payload: {
-          userInfo: {
-            guid: null,
-            membershipStatus: ANONYMOUS,
-            name: null,
-            userGuid: null,
-          },
-          profileGateState: undefined,
-        },
-      };
-
-      const event = new MessageEvent<MessageEventObj>('message', inputObj);
-
-      const result = windowMessageHandler(event);
-
-      expect(result).toBe(ANONYMOUS);
-    });
-
-    test('should have CURRENT_MEMBER when type is start to check which view of guest or member', () => {
-      inputObj.data = {
-        type: START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
-        payload: {
-          userInfo: {
-            guid: 'fake id string',
-            membershipStatus: CURRENT_MEMBER,
-            name: 'John Smith',
-            userGuid: 'fake id string',
-          },
-          profileGateState: undefined,
-        },
-      };
-
-      const event = new MessageEvent<MessageEventObj>('message', inputObj);
-
-      const result = windowMessageHandler(event);
-
-      expect(result).toBe(CURRENT_MEMBER);
-    });
-
-    test('should have netflix user info when input is getting netflix user info', () => {
-      inputObj.data = {
-        type: POST_NETFLIX_USER_INFO,
-        payload: {
-          guid: 'fake id string',
-          membershipStatus: CURRENT_MEMBER,
-          name: 'John Smith',
-          userGuid: 'fake id string',
-        },
-      };
-
-      const expected = {
-        guid: 'fake id string',
-        membershipStatus: CURRENT_MEMBER,
-        name: 'John Smith',
-        userGuid: 'fake id string',
-      };
-
-      const event = new MessageEvent<MessageEventObj>('message', inputObj);
-
-      const result = windowMessageHandler(event);
-
-      expect(result).toEqual(expected);
-    });
-
-    test('should have undefined when when input is getting netflix user info but netflix data is not exist', () => {
-      inputObj.data = {
-        type: POST_NETFLIX_USER_INFO,
-        payload: undefined,
-      };
-      const event = new MessageEvent<MessageEventObj>('message', inputObj);
-
-      const result = windowMessageHandler(event);
-
-      expect(result).toBeUndefined();
-    });
-
-    test('should have netflix profile gate state when input is getting for get netflix profile gate state', () => {
-      inputObj.data = {
-        type: POST_NETFLIX_PROFILE_GATE_STATE,
-        payload: { data: 1 },
-      };
-
-      const expected = {
-        data: 1,
-      };
-
-      const event = new MessageEvent<MessageEventObj>('message', inputObj);
-
-      const result = windowMessageHandler(event);
-
-      expect(result).toEqual(expected);
-    });
-
-    test('should have undefined when input is getting netflix profile gate state but netflix data is not exist', () => {
-      inputObj.data = {
-        type: POST_NETFLIX_PROFILE_GATE_STATE,
-        payload: undefined,
-      };
-      const event = new MessageEvent<MessageEventObj>('message', inputObj);
-
-      const result = windowMessageHandler(event);
-
-      expect(result).toBeUndefined();
-    });
+  afterEach(() => {
+    inputObj.data = undefined;
   });
 
-  describe('Message Event Listener', () => {
-    const inputObj: {
-      data: MessageEventObj | undefined;
-      source: typeof window;
-    } = {
-      data: undefined,
-      source: window,
+  test('should have false when type is start to check which view of guest or member but netflix data is not exist', () => {
+    inputObj.data = {
+      type: START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
+      payload: {
+        userInfo: undefined,
+        profileGateState: undefined,
+      },
     };
 
-    afterEach(() => {
-      inputObj.data = undefined;
-    });
+    const event = new MessageEvent<MessageEventObj>('message', inputObj);
 
-    test('should have false when type is start to check which view of guest or member', () => {
-      // Input object
-      inputObj.data = {
-        type: START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
-        payload: {
-          userInfo: undefined,
-          profileGateState: undefined,
+    const result = windowMessageHandler(event);
+
+    expect(result).toBe(false);
+  });
+
+  test('should have ANONYMOUS when type is start to check which view of guest or member', () => {
+    inputObj.data = {
+      type: START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
+      payload: {
+        userInfo: {
+          guid: null,
+          membershipStatus: ANONYMOUS,
+          name: null,
+          userGuid: null,
         },
-      };
+        profileGateState: undefined,
+      },
+    };
 
-      const messageEventObj = new MessageEvent('message', inputObj);
+    const event = new MessageEvent<MessageEventObj>('message', inputObj);
 
-      // mock jest function
-      const mockCallback = jest.fn((event) => windowMessageHandler(event));
+    const result = windowMessageHandler(event);
 
-      window.addEventListener('message', mockCallback);
+    expect(result).toBe(ANONYMOUS);
+  });
 
-      // Send Message
-      window.dispatchEvent(messageEventObj);
-
-      // checking expect
-      expect(mockCallback.mock.results).toHaveLength(1);
-      expect(mockCallback.mock.results[0].type).toBe('return');
-      expect(mockCallback.mock.results[0].value).toBe(false);
-
-      // Remove event Listener
-      window.removeEventListener('message', mockCallback);
-    });
-
-    test('should have ANONYMOUS when type is start to check which view of guest or member', () => {
-      // Input object
-      inputObj.data = {
-        type: START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
-        payload: {
-          userInfo: {
-            guid: null,
-            membershipStatus: ANONYMOUS,
-            name: null,
-            userGuid: null,
-          },
-          profileGateState: undefined,
-        },
-      };
-
-      const messageEventObj = new MessageEvent('message', inputObj);
-
-      // mock jest function
-      const mockCallback = jest.fn((event) => windowMessageHandler(event));
-
-      window.addEventListener('message', mockCallback);
-
-      // Send Message
-      window.dispatchEvent(messageEventObj);
-
-      // checking expect
-      expect(mockCallback.mock.results).toHaveLength(1);
-      expect(mockCallback.mock.results[0].type).toBe('return');
-      expect(mockCallback.mock.results[0].value).toBe(ANONYMOUS);
-
-      // Remove event Listener
-      window.removeEventListener('message', mockCallback);
-    });
-
-    test('should have CURRENT_MEMBER when type is start to check which view of guest or member', () => {
-      inputObj.data = {
-        type: START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
-        payload: {
-          userInfo: {
-            guid: 'fake id string',
-            membershipStatus: CURRENT_MEMBER,
-            name: 'John Smith',
-            userGuid: 'fake id string',
-          },
-          profileGateState: undefined,
-        },
-      };
-
-      const messageEventObj = new MessageEvent('message', inputObj);
-
-      // mock jest function
-      const mockCallback = jest.fn((event) => windowMessageHandler(event));
-
-      window.addEventListener('message', mockCallback);
-
-      // Send Message
-      window.dispatchEvent(messageEventObj);
-
-      // checking expect
-      expect(mockCallback.mock.results).toHaveLength(1);
-      expect(mockCallback.mock.results[0].type).toBe('return');
-      expect(mockCallback.mock.results[0].value).toBe(CURRENT_MEMBER);
-
-      // Remove event Listener
-      window.removeEventListener('message', mockCallback);
-    });
-
-    test('should have netflix user info when input is getting netflix user info', () => {
-      inputObj.data = {
-        type: POST_NETFLIX_USER_INFO,
-        payload: {
+  test('should have CURRENT_MEMBER when type is start to check which view of guest or member', () => {
+    inputObj.data = {
+      type: START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
+      payload: {
+        userInfo: {
           guid: 'fake id string',
           membershipStatus: CURRENT_MEMBER,
           name: 'John Smith',
           userGuid: 'fake id string',
         },
-      };
+        profileGateState: undefined,
+      },
+    };
 
-      const expected = {
+    const event = new MessageEvent<MessageEventObj>('message', inputObj);
+
+    const result = windowMessageHandler(event);
+
+    expect(result).toBe(CURRENT_MEMBER);
+  });
+
+  test('should have netflix user info when input is getting netflix user info', () => {
+    inputObj.data = {
+      type: POST_NETFLIX_USER_INFO,
+      payload: {
         guid: 'fake id string',
         membershipStatus: CURRENT_MEMBER,
         name: 'John Smith',
         userGuid: 'fake id string',
-      };
+      },
+    };
 
-      const messageEventObj = new MessageEvent('message', inputObj);
+    const expected = {
+      guid: 'fake id string',
+      membershipStatus: CURRENT_MEMBER,
+      name: 'John Smith',
+      userGuid: 'fake id string',
+    };
 
-      // mock jest function
-      const mockCallback = jest.fn((event) => windowMessageHandler(event));
+    const event = new MessageEvent<MessageEventObj>('message', inputObj);
 
-      window.addEventListener('message', mockCallback);
+    const result = windowMessageHandler(event);
 
-      // Send Message
-      window.dispatchEvent(messageEventObj);
+    expect(result).toEqual(expected);
+  });
 
-      // checking expect
-      expect(mockCallback.mock.results).toHaveLength(1);
-      expect(mockCallback.mock.results[0].type).toBe('return');
-      expect(mockCallback.mock.results[0].value).toEqual(expected);
+  test('should have undefined when when input is getting netflix user info but netflix data is not exist', () => {
+    inputObj.data = {
+      type: POST_NETFLIX_USER_INFO,
+      payload: undefined,
+    };
+    const event = new MessageEvent<MessageEventObj>('message', inputObj);
 
-      // Remove event Listener
-      window.removeEventListener('message', mockCallback);
-    });
+    const result = windowMessageHandler(event);
 
-    test('should have undefined when when input is getting netflix user info but netflix data is not exist', () => {
-      inputObj.data = {
-        type: POST_NETFLIX_USER_INFO,
-        payload: undefined,
-      };
+    expect(result).toBeUndefined();
+  });
 
-      const messageEventObj = new MessageEvent('message', inputObj);
+  test('should have netflix profile gate state when input is getting for get netflix profile gate state', () => {
+    inputObj.data = {
+      type: POST_NETFLIX_PROFILE_GATE_STATE,
+      payload: { data: 1 },
+    };
 
-      // mock jest function
-      const mockCallback = jest.fn((event) => windowMessageHandler(event));
+    const expected = {
+      data: 1,
+    };
 
-      window.addEventListener('message', mockCallback);
+    const event = new MessageEvent<MessageEventObj>('message', inputObj);
 
-      // Send Message
-      window.dispatchEvent(messageEventObj);
+    const result = windowMessageHandler(event);
 
-      // checking expect
-      expect(mockCallback.mock.results).toHaveLength(1);
-      expect(mockCallback.mock.results[0].type).toBe('return');
-      expect(mockCallback.mock.results[0].value).toBeUndefined();
+    expect(result).toEqual(expected);
+  });
 
-      // Remove event Listener
-      window.removeEventListener('message', mockCallback);
-    });
+  test('should have undefined when input is getting netflix profile gate state but netflix data is not exist', () => {
+    inputObj.data = {
+      type: POST_NETFLIX_PROFILE_GATE_STATE,
+      payload: undefined,
+    };
+    const event = new MessageEvent<MessageEventObj>('message', inputObj);
 
-    test('should have netflix profile gate state when input is getting for get netflix profile gate state', () => {
-      inputObj.data = {
-        type: POST_NETFLIX_PROFILE_GATE_STATE,
-        payload: { data: 1 },
-      };
+    const result = windowMessageHandler(event);
 
-      const expected = {
-        data: 1,
-      };
-
-      const messageEventObj = new MessageEvent('message', inputObj);
-
-      // mock jest function
-      const mockCallback = jest.fn((event) => windowMessageHandler(event));
-
-      window.addEventListener('message', mockCallback);
-
-      // Send Message
-      window.dispatchEvent(messageEventObj);
-
-      // checking expect
-      expect(mockCallback.mock.results).toHaveLength(1);
-      expect(mockCallback.mock.results[0].type).toBe('return');
-      expect(mockCallback.mock.results[0].value).toEqual(expected);
-
-      // Remove event Listener
-      window.removeEventListener('message', mockCallback);
-    });
-
-    test('should have undefined when input is getting netflix profile gate state but netflix data is not exist', () => {
-      inputObj.data = {
-        type: POST_NETFLIX_PROFILE_GATE_STATE,
-        payload: undefined,
-      };
-
-      const messageEventObj = new MessageEvent('message', inputObj);
-
-      // mock jest function
-      const mockCallback = jest.fn((event) => windowMessageHandler(event));
-
-      window.addEventListener('message', mockCallback);
-
-      // Send Message
-      window.dispatchEvent(messageEventObj);
-
-      // checking expect
-      expect(mockCallback.mock.results).toHaveLength(1);
-      expect(mockCallback.mock.results[0].type).toBe('return');
-      expect(mockCallback.mock.results[0].value).toBeUndefined();
-
-      // Remove event Listener
-      window.removeEventListener('message', mockCallback);
-    });
+    expect(result).toBeUndefined();
   });
 });
