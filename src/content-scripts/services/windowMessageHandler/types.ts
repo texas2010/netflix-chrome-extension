@@ -24,6 +24,7 @@ type MessageEventDataPayload =
 type MessageEventReturned =
   | undefined
   | false
+  | string
   | NetflixTypes.AnonymousOrCurrentMember
   | NetflixTypes.ProfileGateState
   | NetflixTypes.UserInfo;

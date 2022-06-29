@@ -15,7 +15,7 @@ const {
 
 export const windowMessageHandler: WindowMessageHandler = (event) => {
   if (event.source !== window) {
-    return;
+    return 'not equal in the window both';
   }
 
   if (event.data && event.data.type && event.data.payload) {
@@ -55,7 +55,7 @@ export const windowMessageHandler: WindowMessageHandler = (event) => {
         return false;
 
       default:
-        return;
+        return 'default';
     }
   }
 };
