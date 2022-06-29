@@ -1,16 +1,14 @@
 import { NetflixTypes } from '@types';
 
 interface GetLimitUserInfoData {
-  (userInfoObj: NetflixTypes.UserInfo): NetflixTypes.UserInfo;
+  (userInfoObj: undefined | NetflixTypes.UserInfo):
+    | undefined
+    | NetflixTypes.UserInfo;
 }
-
-export const error = {
-  argumentRequired: 'argument object is required',
-};
 
 export const getLimitUserInfoData: GetLimitUserInfoData = (userInfoObj) => {
   if (!userInfoObj) {
-    throw new Error(error.argumentRequired);
+    return undefined;
   }
 
   const { guid, membershipStatus, name, userGuid } = userInfoObj;

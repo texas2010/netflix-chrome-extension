@@ -1,10 +1,10 @@
 import { NetflixConstants } from '@constants';
 
-import { getLimitUserInfoData, error } from '.';
+import { getLimitUserInfoData } from '.';
 
 describe('getLimitUserInfoData function', () => {
   test('should throw error when argument is not exist', () => {
-    expect(getLimitUserInfoData).toThrowError(error.argumentRequired);
+    expect(getLimitUserInfoData(undefined)).toBeUndefined();
   });
 
   test('should have same argument object and return object', () => {
