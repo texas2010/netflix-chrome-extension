@@ -17,8 +17,8 @@ type MessageEventDataPayload =
       userInfo: NetflixTypes.UserInfo | undefined;
       profileGateState: NetflixTypes.ProfileGateState | undefined;
     }
-  | NetflixTypes.ProfileGateState
-  | NetflixTypes.UserInfo
+  | { profileGateState: undefined | NetflixTypes.ProfileGateState }
+  | { userInfo: undefined | NetflixTypes.UserInfo }
   | undefined;
 
 type MessageEventReturned =
@@ -26,8 +26,8 @@ type MessageEventReturned =
   | false
   | string
   | NetflixTypes.AnonymousOrCurrentMember
-  | NetflixTypes.ProfileGateState
-  | NetflixTypes.UserInfo;
+  | { profileGateState: undefined | NetflixTypes.ProfileGateState }
+  | { userInfo: undefined | NetflixTypes.UserInfo };
 
 export interface MessageEventObj {
   type: MessageEventDataType;

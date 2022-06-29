@@ -27,9 +27,11 @@ export const windowMessageHandler: WindowMessageHandler = (event) => {
         window.postMessage(
           {
             type: POST_NETFLIX_USER_INFO,
-            payload: getLimitUserInfoData(
-              window.netflix?.reactContext?.models?.userInfo?.data
-            ),
+            payload: {
+              userInfo: getLimitUserInfoData(
+                window.netflix?.reactContext?.models?.userInfo?.data
+              ),
+            },
           },
           '*'
         );
@@ -45,7 +47,10 @@ export const windowMessageHandler: WindowMessageHandler = (event) => {
         window.postMessage(
           {
             type: POST_NETFLIX_PROFILE_GATE_STATE,
-            payload: window.netflix?.reactContext?.models?.profileGateState,
+            payload: {
+              profileGateState:
+                window.netflix?.reactContext?.models?.profileGateState,
+            },
           },
           '*'
         );

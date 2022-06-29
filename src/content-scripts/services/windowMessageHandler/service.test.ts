@@ -90,6 +90,17 @@ describe('windowMessageHandler in the content script', () => {
     inputObj.data = {
       type: POST_NETFLIX_USER_INFO,
       payload: {
+        userInfo: {
+          guid: 'fake id string',
+          membershipStatus: CURRENT_MEMBER,
+          name: 'John Smith',
+          userGuid: 'fake id string',
+        },
+      },
+    };
+
+    const expected = {
+      userInfo: {
         guid: 'fake id string',
         membershipStatus: CURRENT_MEMBER,
         name: 'John Smith',
@@ -97,18 +108,11 @@ describe('windowMessageHandler in the content script', () => {
       },
     };
 
-    const expected = {
-      guid: 'fake id string',
-      membershipStatus: CURRENT_MEMBER,
-      name: 'John Smith',
-      userGuid: 'fake id string',
-    };
-
     const event = new MessageEvent<MessageEventObj>('message', inputObj);
 
     const result = windowMessageHandler(event);
 
-    expect(result).toEqual(expected);
+    expect(result).toStrictEqual(expected);
   });
 
   test('should have undefined when when input is getting netflix user info but netflix data is not exist', () => {
@@ -126,18 +130,24 @@ describe('windowMessageHandler in the content script', () => {
   test('should have netflix profile gate state when input is getting for get netflix profile gate state', () => {
     inputObj.data = {
       type: POST_NETFLIX_PROFILE_GATE_STATE,
-      payload: { data: 1 },
+      payload: {
+        profileGateState: {
+          data: 1,
+        },
+      },
     };
 
     const expected = {
-      data: 1,
+      profileGateState: {
+        data: 1,
+      },
     };
 
     const event = new MessageEvent<MessageEventObj>('message', inputObj);
 
     const result = windowMessageHandler(event);
 
-    expect(result).toEqual(expected);
+    expect(result).toStrictEqual(expected);
   });
 
   test('should have undefined when input is getting netflix profile gate state but netflix data is not exist', () => {

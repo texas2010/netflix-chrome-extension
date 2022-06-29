@@ -13,7 +13,6 @@ describe('checkWhichViewOfGuestOrMember function', () => {
   test('should get undefined when userInfo have undefined in the argument object', () => {
     const result = checkWhichViewOfGuestOrMember({
       userInfo: undefined,
-      profileGateState: undefined,
     });
 
     expect(result).toBe(false);
@@ -27,7 +26,6 @@ describe('checkWhichViewOfGuestOrMember function', () => {
         name: null,
         membershipStatus: NetflixConstants.ANONYMOUS,
       },
-      profileGateState: undefined,
     });
 
     const expected = NetflixConstants.ANONYMOUS;
@@ -43,7 +41,6 @@ describe('checkWhichViewOfGuestOrMember function', () => {
         name: 'John Smith',
         membershipStatus: NetflixConstants.CURRENT_MEMBER,
       },
-      profileGateState: { data: 1 },
     });
 
     const expected = NetflixConstants.CURRENT_MEMBER;

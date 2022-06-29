@@ -26,9 +26,9 @@ export const windowMessageHandler: WindowMessageHandler = (event) => {
         devLog('Content script received:', event.data);
 
         if ('userInfo' in event.data.payload) {
-          const guestOrMember = checkWhichViewOfGuestOrMember(
-            event.data.payload
-          );
+          const guestOrMember = checkWhichViewOfGuestOrMember({
+            userInfo: event.data.payload.userInfo,
+          });
 
           if (guestOrMember === CURRENT_MEMBER) {
             // what we need to do now? what is next thing for this.
@@ -42,14 +42,14 @@ export const windowMessageHandler: WindowMessageHandler = (event) => {
 
       case POST_NETFLIX_USER_INFO:
         devLog('Content script received:', event.data);
-        if ('membershipStatus' in event.data.payload) {
+        if ('userInfo' in event.data.payload) {
           return event.data.payload;
         }
         return false;
 
       case POST_NETFLIX_PROFILE_GATE_STATE:
         devLog('Content script received:', event.data);
-        if ('data' in event.data.payload) {
+        if ('profileGateState' in event.data.payload) {
           return event.data.payload;
         }
         return false;
