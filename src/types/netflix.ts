@@ -3,14 +3,20 @@ import { NetflixConstants } from '@constants';
 const { ANONYMOUS, CURRENT_MEMBER } = NetflixConstants;
 
 export interface Global {
-  reactContext: {
-    models: {
-      profileGateState: ProfileGateState | undefined;
-      userInfo: {
-        data: UserInfo;
+  reactContext: undefined | ReactContent;
+}
+
+interface ReactContent {
+  models: undefined | Models;
+}
+
+interface Models {
+  profileGateState?: undefined | ProfileGateState;
+  userInfo:
+    | undefined
+    | {
+        data: undefined | UserInfo;
       };
-    };
-  };
 }
 
 export interface UserInfo {
@@ -21,7 +27,7 @@ export interface UserInfo {
 }
 
 export interface ProfileGateState {
-  data: number;
+  data: undefined | number;
 }
 
 export type AnonymousOrCurrentMember = typeof ANONYMOUS | typeof CURRENT_MEMBER;
