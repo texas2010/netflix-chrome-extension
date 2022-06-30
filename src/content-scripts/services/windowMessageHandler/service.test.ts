@@ -3,10 +3,17 @@ import { NetflixConstants, WindowMessagingConstants } from '@constants';
 import { windowMessageHandler } from '.';
 import { MessageEventObj } from './types';
 
-const { ANONYMOUS, CURRENT_MEMBER } = NetflixConstants;
+const {
+  ANONYMOUS,
+  CURRENT_MEMBER,
+  MANAGE_PROFILES_VIEW,
+  MAIN_VIEW,
+  WHO_IS_WATCHING_VIEW,
+} = NetflixConstants;
 
 const {
   START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
+  START_TO_CHECK_WHICH_VIEW_OF_MAIN_OR_OTHER,
   POST_NETFLIX_USER_INFO,
   POST_NETFLIX_PROFILE_GATE_STATE,
 } = WindowMessagingConstants;
@@ -26,9 +33,10 @@ describe('windowMessageHandler in the content script', () => {
 
   afterEach(() => {
     inputObj.data = undefined;
+    document.body.innerHTML = '';
   });
 
-  test('should have false when type is start to check which view of guest or member but netflix data is not exist', () => {
+  test('should have false when input is start to check which view of guest or member but netflix data is not exist', () => {
     inputObj.data = {
       type: START_TO_CHECK_WHICH_VIEW_OF_GUEST_OR_MEMBER,
       payload: {
@@ -160,5 +168,100 @@ describe('windowMessageHandler in the content script', () => {
     const result = windowMessageHandler(event);
 
     expect(result).toBeUndefined();
+  });
+
+  test('should have false when input is start to check to which view of profiles gate or main but profile gate state is not exist', () => {
+    inputObj.data = {
+      type: START_TO_CHECK_WHICH_VIEW_OF_MAIN_OR_OTHER,
+      payload: {
+        profileGateState: undefined,
+      },
+    };
+
+    const event = new MessageEvent('message', inputObj);
+
+    const result = windowMessageHandler(event);
+
+    expect(result).toBe(false);
+  });
+
+  test('should have false when input is start to check to which view of profiles gate or main but profile gate state data is not exist', () => {
+    inputObj.data = {
+      type: START_TO_CHECK_WHICH_VIEW_OF_MAIN_OR_OTHER,
+      payload: {
+        profileGateState: {
+          data: undefined,
+        },
+      },
+    };
+
+    const event = new MessageEvent('message', inputObj);
+
+    const result = windowMessageHandler(event);
+
+    expect(result).toBe(false);
+  });
+
+  test('should have view of main when input is start to check to which view of profiles gate or main', () => {
+    const mainView = document.createElement('div');
+    mainView.setAttribute('id', 'main-view');
+    document.body.appendChild(mainView);
+
+    inputObj.data = {
+      type: START_TO_CHECK_WHICH_VIEW_OF_MAIN_OR_OTHER,
+      payload: {
+        profileGateState: {
+          data: 0,
+        },
+      },
+    };
+
+    const event = new MessageEvent('message', inputObj);
+
+    const result = windowMessageHandler(event);
+
+    expect(result).toBe(MAIN_VIEW);
+  });
+
+  test('should have view of who is watching when input is start to check to which view of profiles gate or main', () => {
+    const profilesGateContainer = document.createElement('div');
+    profilesGateContainer.setAttribute('class', 'profiles-gate-container');
+    document.body.appendChild(profilesGateContainer);
+
+    inputObj.data = {
+      type: START_TO_CHECK_WHICH_VIEW_OF_MAIN_OR_OTHER,
+      payload: {
+        profileGateState: {
+          data: 1,
+        },
+      },
+    };
+
+    const event = new MessageEvent('message', inputObj);
+
+    const result = windowMessageHandler(event);
+
+    expect(result).toBe(WHO_IS_WATCHING_VIEW);
+  });
+
+  test('should have view of manage profiles when input is start to check to which view of profiles gate or main', () => {
+    const profilesGateContainer = document.createElement('div');
+    profilesGateContainer.setAttribute('class', 'profiles-gate-container');
+    document.body.appendChild(profilesGateContainer);
+
+    inputObj.data = {
+      type: START_TO_CHECK_WHICH_VIEW_OF_MAIN_OR_OTHER,
+      payload: {
+        profileGateState: {
+          data: 11,
+        },
+      },
+    };
+
+    const event = new MessageEvent('message', inputObj);
+
+    const result = windowMessageHandler(event);
+
+    expect(result).toBe(MANAGE_PROFILES_VIEW);
   });
 });
