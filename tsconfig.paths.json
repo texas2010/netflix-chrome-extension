@@ -5,12 +5,14 @@
       "@app/*": ["./src/*"],
       "@assets/*": ["./src/assets/*"],
       "@components": ["./src/components"],
+      "@constants": ["./src/constants"],
       "@hooks": ["./src/hooks"],
       "@services": ["./src/services"],
-      "@types/*": ["./src/types/*"],
+      "@types": ["./src/types"],
       "@utils": ["./src/utils"],
       "@background/*": ["./src/background/*"],
       "@content-scripts/*": ["./src/content-scripts/*"],
+      "@inject-script/*": ["./src/inject-script/*"],
       "@options/*": ["./src/options/*"],
       "@popup/*": ["./src/popup/*"]
     }

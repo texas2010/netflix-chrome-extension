@@ -16,7 +16,6 @@ describe('hrefChangeEventListen function', () => {
     const firstPage = 'https://www.fake-website.com/';
 
     const disconnect = hrefChangeEventListen((url) => {
-      console.log('url', url);
       expect(url).toBe(firstPage);
     });
 

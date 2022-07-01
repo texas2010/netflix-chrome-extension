@@ -7,10 +7,15 @@ import 'jest-location-mock';
 import { chrome } from 'jest-chrome';
 
 import { chromeStorageMock } from './__mocks__/chromeStorage';
+import { chromeRuntimeMock } from './__mocks__/chromeRuntime';
 
 global.chrome = {
   ...chrome,
   storage: {
     ...chromeStorageMock,
+  },
+  runtime: {
+    ...chrome.runtime,
+    ...chromeRuntimeMock,
   },
 };
