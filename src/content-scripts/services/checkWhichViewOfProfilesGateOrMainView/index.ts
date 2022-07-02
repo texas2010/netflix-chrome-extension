@@ -14,7 +14,7 @@ interface NetflixDataParameter {
 interface CheckWhichViewOfPRofilesGateOrMainView {
   (netflixData: undefined | NetflixDataParameter):
     | undefined
-    | string
+    | 'default'
     | typeof MAIN_VIEW
     | typeof WHO_IS_WATCHING_VIEW
     | typeof MANAGE_PROFILES_VIEW;
