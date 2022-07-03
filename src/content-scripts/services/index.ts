@@ -5,3 +5,4 @@ export { isElementExist } from './isElementExist';
 export { injectScript } from './injectScript';
 export { windowLoadHandler } from './windowLoadHandler';
 export { windowMessageHandler } from './windowMessageHandler';
+export { whoIsWatchingViewActions } from './whoIsWatchingViewActions';

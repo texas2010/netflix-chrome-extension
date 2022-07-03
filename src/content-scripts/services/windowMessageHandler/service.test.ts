@@ -213,6 +213,12 @@ describe('windowMessageHandler in the content script', () => {
         profileGateState: {
           data: 0,
         },
+        userInfo: {
+          guid: 'fake id string',
+          membershipStatus: CURRENT_MEMBER,
+          name: 'John Smith',
+          userGuid: 'fake id string',
+        },
       },
     };
 
@@ -234,6 +240,12 @@ describe('windowMessageHandler in the content script', () => {
         profileGateState: {
           data: 1,
         },
+        userInfo: {
+          guid: 'fake id string',
+          membershipStatus: CURRENT_MEMBER,
+          name: 'John Smith',
+          userGuid: 'fake id string',
+        },
       },
     };
 
@@ -254,6 +266,12 @@ describe('windowMessageHandler in the content script', () => {
       payload: {
         profileGateState: {
           data: 11,
+        },
+        userInfo: {
+          guid: 'fake id string',
+          membershipStatus: CURRENT_MEMBER,
+          name: 'John Smith',
+          userGuid: 'fake id string',
         },
       },
     };

@@ -4,6 +4,7 @@ import { devLog } from '@services';
 import {
   checkWhichViewOfGuestOrMember,
   checkWhichViewOfProfilesGateOrMainView,
+  whoIsWatchingViewActions,
 } from '@content-scripts/services';
 
 import { WindowMessageHandler } from './types';
@@ -48,6 +49,7 @@ export const windowMessageHandler: WindowMessageHandler = (event) => {
                 type: START_TO_CHECK_WHICH_VIEW_OF_MAIN_OR_OTHER,
                 payload: {
                   profileGateState: event.data.payload.profileGateState,
+                  userInfo: event.data.payload.userInfo,
                 },
               },
               '*'
@@ -63,10 +65,14 @@ export const windowMessageHandler: WindowMessageHandler = (event) => {
       case START_TO_CHECK_WHICH_VIEW_OF_MAIN_OR_OTHER:
         devLog('Content script received:', event.data);
 
-        if ('profileGateState' in event.data.payload) {
+        if (
+          'profileGateState' in event.data.payload &&
+          'userInfo' in event.data.payload
+        ) {
           const profilesGateOrMain = checkWhichViewOfProfilesGateOrMainView({
             profileGateState: event.data.payload.profileGateState,
           });
+
           devLog('profilesGateOrMain', profilesGateOrMain);
 
           if (!profilesGateOrMain) {
@@ -76,13 +82,27 @@ export const windowMessageHandler: WindowMessageHandler = (event) => {
           switch (profilesGateOrMain) {
             case MAIN_VIEW:
               // start to install react views
-              return MAIN_VIEW;
+
+              return profilesGateOrMain;
 
             case WHO_IS_WATCHING_VIEW:
-              return WHO_IS_WATCHING_VIEW;
+              // start to do action
+
+              // check if something is not exist.
+              if (
+                !event.data.payload.userInfo ||
+                !event.data.payload.userInfo.name
+              ) {
+                return false;
+              }
+
+              whoIsWatchingViewActions(event.data.payload.userInfo.name);
+
+              return profilesGateOrMain;
 
             case MANAGE_PROFILES_VIEW:
-              return MANAGE_PROFILES_VIEW;
+              // do nothing.
+              return profilesGateOrMain;
 
             default:
               return 'default';
