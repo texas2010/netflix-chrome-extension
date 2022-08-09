@@ -67,12 +67,14 @@
       "@app(.*)$": "<rootDir>/src/$1",
       "@assets(.*)$": "<rootDir>/src/assets/$1",
       "@components(.*)$": "<rootDir>/src/components/$1",
+      "@constants(.*)$": "<rootDir>/src/constants/$1",
       "@hooks(.*)$": "<rootDir>/src/hooks/$1",
       "@services(.*)$": "<rootDir>/src/services/$1",
       "@types(.*)$": "<rootDir>/src/types/$1",
       "@utils(.*)$": "<rootDir>/src/utils/$1",
       "@background(.*)$": "<rootDir>/src/background/$1",
       "@content-scripts(.*)$": "<rootDir>/src/content-scripts/$1",
+      "@inject-script(.*)$": "<rootDir>/src/inject-script/$1",
       "@options(.*)$": "<rootDir>/src/options/$1",
       "@popup(.*)$": "<rootDir>/src/popup/$1"
     }

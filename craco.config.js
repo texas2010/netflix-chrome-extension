@@ -26,6 +26,12 @@ const rewireEntries = [
     template: path.resolve(__dirname, 'public', 'index.html'),
     outPath: 'ignore-this/content-scripts.html',
   },
+  {
+    name: 'inject-script',
+    entry: path.resolve(__dirname, 'src', 'inject-script', 'index.ts'),
+    template: path.resolve(__dirname, 'public', 'index.html'),
+    outPath: 'ignore-this/inject-script.html',
+  },
 ];
 
 const defaultEntryName = 'main';
@@ -90,12 +96,14 @@ module.exports = {
       '@app': path.resolve(__dirname, 'src'),
       '@assets': path.resolve(__dirname, 'src', 'assets'),
       '@components': path.resolve(__dirname, 'src', 'components'),
+      '@constants': path.resolve(__dirname, 'src', 'constants'),
       '@hooks': path.resolve(__dirname, 'src', 'hooks'),
       '@services': path.resolve(__dirname, 'src', 'services'),
       '@types': path.resolve(__dirname, 'src', 'types'),
       '@utils': path.resolve(__dirname, 'src', 'utils'),
       '@background': path.resolve(__dirname, 'src', 'background'),
       '@content-scripts': path.resolve(__dirname, 'src', 'content-scripts'),
+      '@inject-script': path.resolve(__dirname, 'src', 'inject-script'),
       '@options': path.resolve(__dirname, 'src', 'options'),
       '@popup': path.resolve(__dirname, 'src', 'popup'),
     },
