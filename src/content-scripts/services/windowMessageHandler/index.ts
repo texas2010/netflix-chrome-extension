@@ -82,6 +82,7 @@ export const windowMessageHandler: WindowMessageHandler = (event) => {
           switch (profilesGateOrMain) {
             case MAIN_VIEW:
               // start to install react views
+              console.log('start to install react view');
 
               return profilesGateOrMain;
 
