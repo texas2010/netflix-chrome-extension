@@ -15,7 +15,10 @@ export const devLog = (...args: any) => {
     }
     return;
   });
-  if (process.env.NODE_ENV === 'production') {
+  if (
+    process.env.NODE_ENV === 'production' ||
+    process.env.NODE_ENV === 'test'
+  ) {
     return;
   }
   console.log(...args);

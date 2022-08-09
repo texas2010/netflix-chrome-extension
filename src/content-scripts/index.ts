@@ -1,27 +1,14 @@
 import { devLog } from '@services';
-import { isElementExist } from '@content-scripts/services';
 
-import { devBannerMessage } from './devBannerMessage';
-import { appRender } from './App';
+import {
+  windowLoadHandler,
+  windowMessageHandler,
+} from '@content-scripts/services';
 
 devLog('Content Script file');
 
-window.addEventListener('load', async () => {
-  devLog('window loaded');
+devLog(new Date());
 
-  if (process.env.NODE_ENV === 'development') {
-    devBannerMessage();
-  }
+window.addEventListener('load', windowLoadHandler);
 
-  const mainAppRoot = document.createElement('div');
-  mainAppRoot.setAttribute('id', 'nAppRoot');
-
-  const theirAppRoot: Element | null = document.getElementById('appMountPoint');
-  if ((await isElementExist('#appMountPoint')) && theirAppRoot) {
-    theirAppRoot.appendChild(mainAppRoot);
-    devLog('nAppRoot added in the dom!');
-    appRender('nAppRoot');
-  }
-
-  devLog('end of window loading.');
-});
+window.addEventListener('message', windowMessageHandler);
