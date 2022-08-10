@@ -4,6 +4,7 @@
     getEventListeners()
 */
 
+import { installReactView } from '@content-scripts/App';
 import { isElementExist } from '@content-scripts/services';
 
 interface WhoIsWatchingViewActions {
@@ -40,7 +41,7 @@ export const whoIsWatchingViewActions: WhoIsWatchingViewActions = (
         if (activeProfileName === chosenName) {
           (async () => {
             if (await isElementExist('#main-view')) {
-              console.log('start to install react view');
+              installReactView();
             }
           })();
         }

@@ -1,0 +1,91 @@
+.wrapperDropdown {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.sortByTitle {
+  margin-right: 10px;
+}
+
+.selectorDropdown {
+  font-size: 12px;
+  font-weight: 600;
+  box-sizing: inherit;
+}
+
+.containerStyle {
+  position: relative;
+  z-index: 1;
+}
+
+.button {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  min-width: 4em;
+  position: relative;
+  font-size: 1.5em;
+  background-color: rgb(36, 36, 36);
+  padding: 0.5em 1em;
+  color: white;
+  cursor: pointer;
+  border: 0.1em solid rgb(77, 77, 77);
+  border-radius: 0.2em;
+
+  &:focus {
+    outline-color: rgb(255, 255, 255);
+  }
+
+  &::after {
+    content: '';
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.4em solid rgb(255, 255, 255);
+    transition: transform 0.2s linear 0s;
+    margin-left: 2em;
+  }
+}
+
+.buttonClosed::after {
+  transform: none;
+}
+
+.buttonOpened::after {
+  transform: rotate(180deg);
+}
+
+.dropdownMenu {
+  min-width: 4em;
+  position: absolute;
+  right: 0px;
+  cursor: pointer;
+  color: white;
+  list-style-type: none;
+  border: 0.1em solid rgb(77, 77, 77);
+  margin-top: 0.1em;
+  font-size: 1.5em;
+  z-index: 1;
+  background-color: rgb(36, 36, 36);
+  white-space: nowrap;
+  column-gap: 1.8em;
+  max-height: max(10em, 341.281px - 2rem);
+  overflow: auto;
+  padding: 1rem 0px;
+}
+
+.dropdownMenuItem {
+  min-width: 4em;
+  padding: 0.5em 0.8em;
+  display: block;
+  break-inside: avoid;
+
+  &:focus {
+    background-color: rgb(66, 66, 66);
+    outline-color: rgb(255, 255, 255);
+  }
+
+  &:hover {
+    background-color: rgb(66, 66, 66);
+  }
+}

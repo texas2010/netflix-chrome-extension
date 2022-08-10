@@ -1,0 +1,21 @@
+.galleryContent .galleryLockups.showTitle .slider-item .title-card {
+  .boxart-size-16x9,
+  .boxart-size-32x9 {
+    height: auto;
+  }
+
+  .boxart-size-16x9 {
+    padding: 0;
+  }
+
+  .boxart-image-in-padded-container,
+  .fallback-text-container,
+  .fallback-text {
+    position: relative;
+  }
+
+  .fallback-text {
+    left: 0;
+    right: 0;
+  }
+}

@@ -6,6 +6,7 @@ import {
   checkWhichViewOfProfilesGateOrMainView,
   whoIsWatchingViewActions,
 } from '@content-scripts/services';
+import { installReactView } from '@content-scripts/App';
 
 import { WindowMessageHandler } from './types';
 
@@ -81,9 +82,7 @@ export const windowMessageHandler: WindowMessageHandler = (event) => {
 
           switch (profilesGateOrMain) {
             case MAIN_VIEW:
-              // start to install react views
-              console.log('start to install react view');
-
+              installReactView();
               return profilesGateOrMain;
 
             case WHO_IS_WATCHING_VIEW:
