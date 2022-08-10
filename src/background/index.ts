@@ -14,6 +14,13 @@ chrome.runtime.onInstalled.addListener((details) => {
       devLog: false,
     },
   });
+
+  chrome.storage.sync.set({
+    userSettings: {
+      showTitleInMyList: false,
+      sortByDropdown: 'DEFAULT',
+    },
+  });
 });
 
 chrome.runtime.onConnect.addListener((port) => {

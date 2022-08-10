@@ -1,7 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import {} from '@content-scripts/features';
+import {
+  sortByDropdownInMyListReducer,
+  showOrHideTitleInMyListReducer,
+} from '@content-scripts/features';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    sortByDropdownInMyList: sortByDropdownInMyListReducer,
+    showOrHideTitleInMyList: showOrHideTitleInMyListReducer,
+  },
 });

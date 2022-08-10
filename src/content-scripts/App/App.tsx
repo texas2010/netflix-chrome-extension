@@ -1,11 +1,14 @@
 import { useWindowLocation } from '@content-scripts/hooks';
+import { MyList } from '@content-scripts/views';
 
 import './style.css';
 
 export const App = () => {
   const locationObj = useWindowLocation();
 
-  return (
+  console.log(locationObj);
+
+  const devCode = (
     <>
       {process.env.NODE_ENV === 'development' && (
         <>
@@ -16,5 +19,17 @@ export const App = () => {
         </>
       )}
     </>
+  );
+
+  return (
+    <div id='nMainApp'>
+      {devCode}
+
+      {
+        /* MyList page */
+        locationObj.pathname === '/browse/my-list' &&
+          !locationObj.queryString && <MyList />
+      }
+    </div>
   );
 };

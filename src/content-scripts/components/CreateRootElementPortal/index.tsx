@@ -43,7 +43,6 @@ export const CreateRootElementPortal: CreateRootElementPortalI = ({
 
   return (
     <>
-      <h1>test</h1>
       <Portal rootId={`#${rootId}`}>{children}</Portal>
     </>
   );
